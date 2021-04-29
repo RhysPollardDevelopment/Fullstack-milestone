@@ -12,7 +12,7 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% endblock %}
 
-        {% block extra_meta %}
+        {% block additional_meta %}
         {% endblock %}
 
         {% block corecss %}
@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         {% endblock %}
 
-        {% block extra_css %}
+        {% block additional_css %}
         {% endblock %}
 
         {% block corejs %}
@@ -46,10 +46,10 @@
         <script src="https://js.stripe.com/v3/"></script>
         {% endblock %}
 
-        {% block extra_js %}
+        {% block additional_js %}
         {% endblock %}
 
-        <title>{% block extra_title %}{% endblock %}</title>
+        <title>{% block additional_title %}{% endblock %}</title>
     </head>
 
     <body>
