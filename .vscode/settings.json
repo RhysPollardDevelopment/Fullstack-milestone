@@ -1,25 +1,30 @@
 {
-   "python.linting.pylintEnabled": true,
-   "python.linting.enabled": true,
-   "python.linting.pycodestyleEnabled": false,
-   "python.linting.flake8Enabled": true,
-   "python.terminal.activateEnvironment": false,
-   "python.formatting.autopep8Path": "/home/gitpod/.pyenv/shims/autopep8",
-   "python.linting.flake8Path": "/home/gitpod/.pyenv/shims/flake8",
-   "cornflakes.linter.executablePath": "/home/gitpod/.pyenv/shims/flake8",
-   "files.exclude": {
-      "**/.DS_Store": true,
-      "**/.git": true,
-      "**/.gitp*": true,
-      "**/.hg": true,
-      "**/.svn": true,
-      "**/.vscode": true,
-      "**/core.Microsoft*": true,
-      "**/core.mongo*": true,
-      "**/core.python*": true,
-      "**/CVS": true
-   },
-   "files.autoSave": "off",
-   "workbench.colorTheme": "Visual Studio Dark",
-   "editor.defaultFormatter": "HookyQR.beautify",
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.terminal.activateEnvironment": false,
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.gitp*": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.vscode": true,
+        "**/core.Microsoft*": true,
+        "**/core.mongo*": true,
+        "**/core.python*": true,
+        "**/CVS": true
+    },
+    "files.autoSave": "off",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "python.pythonPath": "C:\\Python38\\python.exe",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true
 }
+
