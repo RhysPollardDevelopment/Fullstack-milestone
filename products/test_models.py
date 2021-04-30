@@ -3,21 +3,19 @@ from products.models import Product, Company
 
 
 class TestProductModels(TestCase):
-    def setUp(self):
-        self.company = Company.objects.create(
-            name="Test Company",
-            description="test company description.",
-            county="Cornwall",
-            company_url="www.testsite.co.uk",
-        )
-        self.product = Product.objects.create(
+    def test_product_to_string(self):
+        """Tests overloaded string function"""
+        product = Product.objects.create(
             name="Test product",
             description="Test description for product.",
-            texture="honey like",
-            flavour="honey flavoured",
-            company=self.company,
         )
+        self.assertEqual(str(product), product.name)
 
-    def test_product_creation(self):
-        product = self.product
-        self.assertTrue(isinstance(product, Company))
+    def test_company_to_string(self):
+        """Tests overloaded string function"""
+        company = Company.objects.create(
+            name="Test Company",
+            description="test company description.",
+            company_url="www.testsite.co.uk",
+        )
+        self.assertEqual(str(company), company.name)

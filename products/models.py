@@ -8,7 +8,9 @@ class Product(models.Model):
     one to many relationship with producing company.
     """
 
-    product_code = models.IntegerField(default=uuid.uuid4, editable=False)
+    product_code = models.CharField(
+        max_length=36, default=uuid.uuid4, editable=False
+    )
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=600)
     image = models.ImageField(null=True, blank=True)
