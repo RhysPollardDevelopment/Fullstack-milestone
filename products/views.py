@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from .models import Product
+from .models import Product, Company
 
 
 def all_products(request):
@@ -24,3 +24,14 @@ def product_details(request, product_id):
     }
 
     return render(request, "products/product_detail.html", context)
+
+
+def partners(request):
+    """
+    Opens a page containing a list of all companies in partnership with the
+    main website.
+    """
+    companies = Company.objects.all()
+    context = {"companies": companies}
+
+    return render(request, "products/partners.html", context)
