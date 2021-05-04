@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Product, Company
+from .models import Product
 
 
 class TestProductViews(TestCase):
@@ -18,3 +18,10 @@ class TestProductViews(TestCase):
         response = self.client.get(f"/products/{product.id}/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "products/product_detail.html")
+
+    def test_get_partners_page(self):
+        response = self.client.get("/products/partners/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "products/partners.html")
+        # Check that rendered context contains 6 products.
+        self.assertEqual(len(response.context["companies"]), 5)
