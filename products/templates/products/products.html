@@ -4,5 +4,14 @@
 {% block additional_title %}| Our Honies{% endblock %}
 
 {% block content %}
-
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+        <div class="col-6">
+            <img src="{{ product.image.url }}" alt="" height="2rem">
+            <p>{{ product.name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
