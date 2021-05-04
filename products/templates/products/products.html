@@ -6,10 +6,11 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <!-- Product loading section-->
         {% for product in products %}
         <div class="col-6">
-            <a href=""><img src="{{ product.image.url }}" alt=""
-                    height="200rem"></a>
+            <a href="{% url 'product_details' product.id %}"><img
+                    src="{{ product.image.url }}" alt="" height="200rem"></a>
             <p>{{ product.name }}</p>
         </div>
         {% endfor %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| {{ product.name }} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Product loading section-->
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>{{ product.texture }}</p>
+        <p>{{ product.flavour }}</p>
+        <img src="{{ product.image.url }}" alt="" height="300rem">
+        <p>{{ product.company.company_url }}</p>
+        <!--Comapny.logo won't load correctly, missing /media/ before it-->
+        <img src="{{ product.company.logo }}" alt="" height="300rem">
+
+    </div>
+</div>
+{% endblock %}
