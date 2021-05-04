@@ -15,6 +15,6 @@ class TestProductViews(TestCase):
             name="Test product",
             description="Product test description",
         )
-        response = self.client.get(f"products/{product.id}")
+        response = self.client.get(f"/products/{product.id}/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "products/products.html")
+        self.assertTemplateUsed(response, "products/product_detail.html")
