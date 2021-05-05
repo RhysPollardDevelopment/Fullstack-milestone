@@ -4,5 +4,19 @@
 {% block additional_title %}| Our Hive{% endblock %}
 
 {% block content %}
-
+<div class="container">
+    <div class="row">
+        <!-- Company info sections-->
+        {% for company in companies %}
+        <div class="col-4">
+            <img src="{{ company.logo.url }}" alt="" height="50rem">
+            <h3>{{ company.name }}</h3>
+            <p>{{ company.description }}</p>
+            <a href="{{ company.company_url }}" class="btn btn-info"
+                target="_blank">Visit
+                Us</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
