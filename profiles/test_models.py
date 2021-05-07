@@ -4,10 +4,16 @@ from .models import UserProfile
 
 
 class TestUserProfileModels(TestCase):
-    def test_UserProfile_to_string(self):
-        """Tests overloaded string function"""
+    def setUp(self):
         newuser = User.objects.create(
-            username="testuser", password="testpassword"
+            username="testuser",
+            password="testpassword"
         )
         profile = UserProfile.objects.create(user=newuser)
+
+    def test_UserProfile_to_string(self):
+        """Tests overloaded string function"""
         self.assertEqual(str(profile), profile.user.username)
+
+    def test_UserProfile_active_subscription_false(self):
+        

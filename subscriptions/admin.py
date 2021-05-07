@@ -1,3 +1,13 @@
 from django.contrib import admin
+from .models import Subscription
 
-# Register your models here.
+
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = (
+        "user_profile",
+        "start_date",
+        "expiry_date",
+    )
+
+
+admin.site.register(Subscription, SubscriptionAdmin)
