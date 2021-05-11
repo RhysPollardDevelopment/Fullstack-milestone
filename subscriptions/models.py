@@ -1,6 +1,5 @@
 from django.db import models
 from profiles.models import UserProfile
-import datetime
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 
@@ -8,7 +7,12 @@ from dateutil.relativedelta import relativedelta
 
 
 class Subscription(models.Model):
-    """ """
+    """
+    Records start date, end date and cancellation date for particular
+    subscription. Cancel method sets cancellation and expiry date.
+
+    All fields optional, start_date is generated on creation.
+    """
 
     user_profile = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL, null=True
@@ -23,7 +27,11 @@ class Subscription(models.Model):
     expiry_date = models.DateTimeField(blank=True, null=True)
 
     def cancel(self):
-        self.cancel_date = datetime.now()
+        """
+        Sets cancel_date and expiry_date, for admin to see and for UserProfile
+        to check if has an active subscription respectively.
+        """
+        self.cancel_date = timezone.now()
         self.expiry_date = self.start_date + relativedelta(months=+2)
 
     # What is user restarts and has subscription ending? Need to
