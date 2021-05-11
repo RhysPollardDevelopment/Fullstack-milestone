@@ -15,9 +15,9 @@ class TestUserProfileModels(TestCase):
         profile = UserProfile.objects.create(user=newuser)
         self.assertEqual(profile.has_active_subscription, False)
 
-    # def test_UserProfile_active_subscription_True(self):
-    #     """Tests whether has active subscription is correctly called"""
-    #     newuser = User.objects.get(username="testuser")
-    #     profile = UserProfile.objects.create(user=newuser)
-    #     Subscription.objects.create(user_profile=profile)
-    #     self.assertEqual(profile.has_active_subscription, True)
+    def test_UserProfile_active_subscription_True(self):
+        """Tests whether has active subscription is correctly called"""
+        newuser = User.objects.get(username="testuser")
+        profile = UserProfile.objects.create(user=newuser)
+        Subscription.objects.create(user_profile=profile)
+        self.assertEqual(profile.has_active_subscription, True)

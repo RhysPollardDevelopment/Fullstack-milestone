@@ -30,14 +30,10 @@ class UserProfile(models.Model):
     # after or equal to today.
     @property
     def has_active_subscription(self):
-        active_subscriptions = UserProfile.objects.filter(
-            subscription__expiry_date__isnull=True
+        active_subscriptions = self.subscription_set.filter(
+            expiry_date__isnull=True
         )
-        print(active_subscriptions.explain())
-        if active_subscriptions.count() > 0:
-            return True
-        else:
-            return False
+        return active_subscriptions.count() > 0
 
     def __str__(self):
         return self.user.username
