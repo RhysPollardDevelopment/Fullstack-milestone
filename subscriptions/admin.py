@@ -7,6 +7,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
         "user_profile",
         "start_date",
         "expiry_date",
+        "cancel_date",
     )
 
 

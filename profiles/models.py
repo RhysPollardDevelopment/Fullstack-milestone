@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 
 
@@ -31,12 +30,14 @@ class UserProfile(models.Model):
     # after or equal to today.
     @property
     def has_active_subscription(self):
-        today = timezone.now().date()
-        active_subscriptions = self.Subscription.objects.filter(
-            expiry_date__gte=today
+        active_subscriptions = UserProfile.objects.filter(
+            subscription__expiry_date__isnull=True
         )
-
-        return active_subscriptions.count() > 0
+        print(active_subscriptions.explain())
+        if active_subscriptions.count() > 0:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return self.user.username

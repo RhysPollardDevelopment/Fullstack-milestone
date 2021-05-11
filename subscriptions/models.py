@@ -18,11 +18,13 @@ class Subscription(models.Model):
     # .db.models.DateTimeField
     start_date = models.DateTimeField(auto_now_add=True)
 
-    def set_expiry_date():
-        end_date = datetime.datetime.today() + relativedelta(month=+1)
-        return end_date
+    cancel_date = models.DateTimeField(blank=True, null=True)
 
-    expiry_date = models.DateTimeField(default=set_expiry_date)
+    expiry_date = models.DateTimeField(blank=True, null=True)
+
+    def cancel(self):
+        self.cancel_date = datetime.now()
+        self.expiry_date = self.start_date + relativedelta(months=+2)
 
     # What is user restarts and has subscription ending? Need to
     # be able to start from end of previous subscription
