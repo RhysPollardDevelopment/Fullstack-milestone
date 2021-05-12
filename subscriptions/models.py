@@ -32,7 +32,8 @@ class Subscription(models.Model):
         to check if has an active subscription respectively.
         """
         self.cancel_date = timezone.now()
-        self.expiry_date = self.start_date + relativedelta(months=+2)
+        difference = relativedelta(self.start_date, self.cancel_date)
+        self.expiry_date = self.start_date + relativedelta(difference.months)
 
     # What is user restarts and has subscription ending? Need to
     # be able to start from end of previous subscription
