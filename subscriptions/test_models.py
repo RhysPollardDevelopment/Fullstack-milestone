@@ -23,15 +23,21 @@ def mock_post_24th():
     return mocked_after_24th
 
 
-# @mock.patch("django.utils.timezone.now", side_effect=mocked_date)
 class TestSubscriptionModel(TestCase):
     @mock.patch("django.utils.timezone.now", side_effect=mock_start)
     def setUp(self, *args):
+        """
+        Uses mock to set start date of new object to 29/09/2020 10:15:30.
+        Necessary as start_date is automatic and un-editable.
+        """
         self.new_sub = Subscription.objects.create()
 
     @mock.patch("django.utils.timezone.now", side_effect=mock_now)
     def test_subscription_cancel_method(self, *args):
-
+        """
+        Mocks a date in the future and compares the calculated expiration
+        date to a pre-determined value.
+        """
         self.new_sub.cancel()
         self.new_sub.save()
         expiration = datetime(2021, 5, 24, 10, 15, 30, tzinfo=timezone.utc)
@@ -41,6 +47,10 @@ class TestSubscriptionModel(TestCase):
 
     @mock.patch("django.utils.timezone.now", side_effect=mock_post_24th)
     def test_cancellation_after_start_day(self, *args):
+        """
+        Mocks a date in the future and compares the calculated expiration
+        date to a pre-determined value after the start date's day value.
+        """
         self.new_sub.cancel()
         self.new_sub.save()
         expiration = datetime(2021, 6, 24, 10, 15, 30, tzinfo=timezone.utc)
