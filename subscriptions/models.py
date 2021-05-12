@@ -30,10 +30,19 @@ class Subscription(models.Model):
         """
         Sets cancel_date and expiry_date, for admin to see and for UserProfile
         to check if has an active subscription respectively.
+
+        Calculates difference between start and cancel dates and applies to
+        the start date to create expiry date.
         """
         self.cancel_date = timezone.now()
-        difference = relativedelta(self.start_date, self.cancel_date)
-        self.expiry_date = self.start_date + relativedelta(difference.months)
+        difference = relativedelta(self.cancel_date, self.start_date)
+
+        # 1 added to the months delta as relativedelta does not count to next
+        # months date (i.e. the 24th) when calculated so is month short.
+        difference.months = difference.months + 1
+        self.expiry_date = self.start_date + relativedelta(
+            months=+difference.months
+        )
 
     # What is user restarts and has subscription ending? Need to
     # be able to start from end of previous subscription
