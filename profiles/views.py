@@ -38,8 +38,40 @@ def profiles(request):
 @login_required
 def update_address(request):
     profile = get_object_or_404(UserProfile, user=request.user)
-
     template = "profiles/update_address.html"
+    context = {
+        "profile": profile,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def change_password(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = "profiles/change_password.html"
+    context = {
+        "profile": profile,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def my_recipes(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = "profiles/my_recipes.html"
+    context = {
+        "profile": profile,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def subscription_history(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = "profiles/subscription_history.html"
     context = {
         "profile": profile,
     }
