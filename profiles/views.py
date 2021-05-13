@@ -33,3 +33,14 @@ def profiles(request):
         "profile": profile,
     }
     return render(request, template, context)
+
+
+@login_required
+def update_address(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = "profiles/update_address.html"
+    context = {
+        "profile": profile,
+    }
+    return render(request, template, context)
