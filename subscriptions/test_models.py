@@ -4,7 +4,8 @@ from .models import Subscription
 from django.utils import timezone
 from unittest import mock
 
-
+# Suggestion for layout when using mock for timezone.now found at:
+# https://snakeycode.wordpress.com/2015/11/04/mocking-django-timezone/
 mocked_start = datetime(2020, 9, 24, 10, 15, 30, tzinfo=timezone.utc)
 mocked_now = datetime(2021, 5, 12, 13, 30, 0, tzinfo=timezone.utc)
 mocked_after_24th = datetime(2021, 5, 26, 13, 30, 0, tzinfo=timezone.utc)
