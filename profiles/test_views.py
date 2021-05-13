@@ -44,3 +44,9 @@ class TestProfileViews(TestCase):
         response = self.client.get("/profiles/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/userprofile.html")
+
+    def test_get_update_details_page(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get("/profiles/update_address/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profiles/update_address.html")
