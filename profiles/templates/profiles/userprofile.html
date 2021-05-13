@@ -16,6 +16,12 @@
         {% endif %}
 
         {{profile.default_street_address1}}
+        <a href="{% url 'update_address' %}" class="btn btn-info">Update
+            address</a>
+        <a href="{% url 'change_password' %}" class="btn btn-info">Update
+            Password</a>
+        <!-- If no recipes, make if statement to prevent clicking -->
+        <a href="{% url 'my_recipes' %}" class="btn btn-info">Saved recipes</a>
     </div>
 </div>
 {% endblock %}

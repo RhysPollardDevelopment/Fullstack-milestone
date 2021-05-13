@@ -50,3 +50,23 @@ class TestProfileViews(TestCase):
         response = self.client.get("/profiles/update_address/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/update_address.html")
+
+    # Create test_post_update_details
+
+    def test_get_change_password_page(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get("/profiles/change_password/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profiles/change_password.html")
+
+    def test_get_all_saved_recipes(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get("/profiles/my_recipes/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profiles/my_recipes.html")
+
+    def test_get_subscription_history(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get("/profiles/subscription_history/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profiles/subscription_history.html")
