@@ -17,10 +17,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from profiles import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Custom path used to redirect password/change on success.
+    path(
+        "accounts/password/change/",
+        views.CustomPasswordChangeView.as_view(),
+        name="account_password_change",
+    ),
     path("accounts/", include("allauth.urls")),
+    #
+    path(
+        "accounts/password/change/done/",
+        views.password_change_done,
+        name="password_change_done",
+    ),
     path("", include("customerservice.urls")),
     path("products/", include("products.urls")),
     path("profiles/", include("profiles.urls")),

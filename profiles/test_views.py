@@ -25,6 +25,7 @@ def login_sample_user(client):
 
 class TestProfileViews(TestCase):
     def setUp(self):
+        """Creates a user object to use in testing"""
         self.user = User.objects.create(
             username="testuser",
             email="testuser@test.com",
@@ -36,22 +37,33 @@ class TestProfileViews(TestCase):
         self.client = Client()
 
     def test_user_loggedin(self):
+        """Confirms user has all required to log in."""
         logged_in = self.client.login(username="testuser", password="12345")
         self.assertTrue(logged_in)
 
     def test_get_user_profile(self):
+        """
+        Test that logged in user can access main profile page.
+        """
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/userprofile.html")
 
     def test_get_update_details_page(self):
+        """
+        Test that user can route to their details page to edit information.
+        """
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/update_address/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/update_address.html")
 
     def test_can_update_details(self):
+        """
+        User should be able to send new information in post method and update
+        their details, results should redirect user to profile page.
+        """
         self.client.login(username="testuser", password="12345")
         response = self.client.post(
             "/profiles/update_address/",
@@ -64,23 +76,36 @@ class TestProfileViews(TestCase):
             },
         )
         self.assertRedirects(response, "/profiles/")
+        # self.assertEqual(
+        #     self.user.userprofile.default_street_address2, "test street"
+        # )
 
-    def test_get_change_password_page(self):
+    def test_get_password_change_done_page(self):
+        """
+        Upon successfully changing password in password_change form, user
+        should be redirected to password done page.
+        """
         self.client.login(username="testuser", password="12345")
-        response = self.client.get("/profiles/change_password/")
+        response = self.client.get("/profiles/password_change_done")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "profiles/change_password.html")
-
-    def test_can_change_password(self):
-        response = self.client.post("/profiles/change_password/")
+        self.assertTemplateUsed(
+            response, "allauth/account/password_change_done.html"
+        )
 
     def test_get_all_saved_recipes(self):
+        """
+        If user has recipes saved then they should be able to acce3ss a page
+        with all recipes saved shown.
+        """
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/my_recipes/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/my_recipes.html")
 
     def test_get_subscription_history(self):
+        """
+        Shows user they're subscription history page.
+        """
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/subscription_history/")
         self.assertEqual(response.status_code, 200)
