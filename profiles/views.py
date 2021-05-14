@@ -38,6 +38,10 @@ def profiles(request):
 @login_required
 def update_address(request):
     profile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == "POST":
+        # Need to add in form
+        messages.success(request, "Successfully Updated Address")
+        return redirect(reverse("profiles"))
     template = "profiles/update_address.html"
     context = {
         "profile": profile,

@@ -51,13 +51,28 @@ class TestProfileViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/update_address.html")
 
-    # Create test_post_update_details
+    def test_can_update_details(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.post(
+            "/profiles/update_address/",
+            {
+                "default_street_address1": "123",
+                "default_street_address2": "test street",
+                "default_town_or_city": "testington",
+                "default_county": "birmingtest",
+                "default_postcode": "T35T",
+            },
+        )
+        self.assertRedirects(response, "/profiles/")
 
     def test_get_change_password_page(self):
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/change_password/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/change_password.html")
+
+    def test_can_change_password(self):
+        response = self.client.post("/profiles/change_password/")
 
     def test_get_all_saved_recipes(self):
         self.client.login(username="testuser", password="12345")
