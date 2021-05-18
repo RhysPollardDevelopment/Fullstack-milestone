@@ -25,7 +25,7 @@ class UserProfileForm(forms.ModelForm):
 
         self.fields["default_phone_number"].widget.attrs["autofocus"] = True
         for field in self.fields:
-            placeholder = f"{placeholders[field]}*"
+            placeholder = f"{placeholders[field]}"
             self.fields[field].widget.attrs["placeholder"] = placeholder
             self.fields[field].widget.attrs[
                 "class"

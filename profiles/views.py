@@ -1,3 +1,4 @@
+from profiles.forms import UserProfileForm
 from django.utils import timezone
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
@@ -52,12 +53,22 @@ def profiles(request):
 @login_required
 def update_address(request):
     profile = get_object_or_404(UserProfile, user=request.user)
+
     if request.method == "POST":
-        # Need to add in form
-        messages.success(request, "Successfully Updated Address")
-        return redirect(reverse("profiles"))
+        form = UserProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully Updated Address")
+            return redirect(reverse("profiles"))
+        else:
+            messages.error(
+                request, "Update failed. Please check form for any errors."
+            )
+    else:
+        form = UserProfileForm(instance=profile)
     template = "profiles/update_address.html"
     context = {
+        "form": form,
         "profile": profile,
     }
     return render(request, template, context)

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import builtins
 import os
 from pathlib import Path
 import dj_database_url
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     "customerservice",
     # other/python packages
     "storages",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -68,6 +70,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "fullstack.urls"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 TEMPLATES = [
     {
@@ -84,6 +88,10 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.media",
+            ],
+            "builtins": [
+                "crispy_forms.templatetags.crispy_forms_tags",
+                "crispy_forms.templatetags.crispy_forms_field",
             ],
         },
     },

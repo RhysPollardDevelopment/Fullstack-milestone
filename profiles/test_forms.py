@@ -20,7 +20,7 @@ class TestUserProfileForm(TestCase):
         form = UserProfileForm()
         self.assertEqual(
             form.fields["default_postcode"].widget.attrs["placeholder"],
-            "Postal Code*",
+            "Postal Code",
         )
 
     def test_form_data_is_invalid(self):
