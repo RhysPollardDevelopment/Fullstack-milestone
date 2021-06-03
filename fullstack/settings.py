@@ -33,7 +33,11 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = "DEVELOPMENT" in os.environ
 
 # Access for local host and heroku app.
-ALLOWED_HOSTS = ["freebees-fullstack-milestone.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "freebees-fullstack-milestone.herokuapp.com",
+    "127.0.0.1",
+    "localhost",
+]
 
 
 # Application definition
@@ -214,6 +218,21 @@ if "USE_AWS" in os.environ:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Stripe
+
+STRIPE_CURRENCY = "gbp"
+# Defines cost of subscription from stripe products portal.
+STRIPE_PRICE_ID = os.getenv("STRIPE_PRICE_ID")
+
+# DJ-stripe keys
+# Stripe_live_scret_key set with default to avoid errors with requiring
+#  active live key
+# https://github.com/dj-stripe/dj-stripe/issues/888
+STRIPE_LIVE_MODE = os.getenv("STRIPE_LIVE_MODE", default=False)
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET ")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 if "DEVELOPMENT" in os.environ:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

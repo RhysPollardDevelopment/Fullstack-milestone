@@ -37,4 +37,5 @@ urlpatterns = [
     path("", include("customerservice.urls")),
     path("products/", include("products.urls")),
     path("profiles/", include("profiles.urls")),
+    path("subscription/", include("subscriptions.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
