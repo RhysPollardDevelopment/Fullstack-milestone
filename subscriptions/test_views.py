@@ -15,7 +15,7 @@ class TestSubscriptionViews(TestCase):
         self.user.set_password("12345")
         self.user.save()
 
-    def test_get_subscriptions_page(self):
+    def test_get_subscriptions_page_when_anonymous(self):
         """Test that user can access main subscription page."""
         response = self.client.get("/subscription/")
         self.assertEqual(response.status_code, 200)
@@ -25,6 +25,7 @@ class TestSubscriptionViews(TestCase):
         self.assertIsNotNone(response.context["products"])
 
     def test_subscription_page_redirect_if_subscription_active(self):
+        """Should redirect user if they have active subscription."""
         StripeSubscription.objects.create(
             subscription_id="testsub",
             start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),

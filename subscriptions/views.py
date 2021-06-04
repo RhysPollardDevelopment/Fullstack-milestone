@@ -10,6 +10,10 @@ import stripe
 
 
 def not_subscribed(user):
+    """
+    Checks if user has an active subscription, if so then redirects to prevent
+    creation of multiple subscriptions at one time.
+    """
     if user.is_authenticated:
         if user.userprofile.has_active_subscription:
             return False
@@ -19,12 +23,13 @@ def not_subscribed(user):
         return True
 
 
+# https://docs.djangoproject.com/en/1.10/topics/auth/default/#django
+# .contrib.auth.decorators.user_passes_test - Found here on django docs.
+
+
 @user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
 def subscription_page(request):
-
-    if request.user.is_authenticated:
-        if request.user.userprofile.has_active_subscription:
-            return redirect(reverse("home"))
+    """Loads page containing details of subscription services and benefits"""
 
     template = "subscriptions/subscriptions_page.html"
     # This relates to the djstripe product object which is the subscription
