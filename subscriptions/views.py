@@ -10,9 +10,11 @@ import stripe
 
 
 def not_subscribed(user):
-    print(user)
-    if user.userprofile.has_active_subscription:
-        return False
+    if user.is_authenticated:
+        if user.userprofile.has_active_subscription:
+            return False
+        else:
+            return True
     else:
         return True
 

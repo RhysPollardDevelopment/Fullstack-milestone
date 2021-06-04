@@ -31,8 +31,7 @@ class TestSubscriptionViews(TestCase):
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
-        print(self.user.userprofile.stripe_customer_id)
-        logged_in = self.client.login(username="testuser", password="12345")
+        self.client.login(username="testuser", password="12345")
         response = self.client.get("/subscription/")
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/")
