@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .webhooks import webhook_received
 
 
 urlpatterns = [
@@ -11,4 +12,5 @@ urlpatterns = [
         views.create_subscription,
         name="create_subscription",
     ),
+    path("webhook/", webhook_received, name="webhook_received"),
 ]
