@@ -12,7 +12,7 @@
             <p class="subtitle">{{ product.name }}</p>
         </div>
         {% endfor %}
-
+        <a href="{% url 'checkout' %}" class="btn btn-info">Payment</a>
     </div>
 </div>
 {% endblock %}

@@ -2,9 +2,13 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http.response import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test, login_required
+from .forms import SubscriptionForm, BillingAddressForm
+from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 
 import stripe
 
@@ -41,3 +45,64 @@ def subscription_page(request):
         "products": products,
     }
     return render(request, template, context)
+
+
+@login_required
+def checkout(request):
+
+    stripe_price_ID = settings.STRIPE_PRICE_ID
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+        customer_id = profile.stripe_customer_id
+        sub_form = SubscriptionForm(
+            initial={
+                "full_name": profile.user.get_full_name(),
+                "phone_number": profile.default_phone_number,
+                "street_address1": profile.default_street_address1,
+                "street_address2": profile.default_street_address2,
+                "town_or_city": profile.default_town_or_city,
+                "county": profile.default_county,
+                "postcode": profile.default_postcode,
+            }
+        )
+
+    except UserProfile.DoesNotExist:
+        sub_form = SubscriptionForm()
+
+    try:
+        billing = stripe.Customer.retrieve(customer_id)
+        if billing.address is not None:
+            bill_form = BillingAddressForm(
+                initial={
+                    "billing_full_name": billing.name,
+                    "billing_phone_number": billing["phone"],
+                    "billing_address1": billing.address["line1"],
+                    "billing_address2": billing.address["line2"],
+                    "billing_town_or_city": billing.address["city"],
+                    "billing_county": billing.address["state"],
+                    "billing_postcode": billing.address["postal_code"],
+                }
+            )
+        else:
+            bill_form = BillingAddressForm()
+    except UserProfile.DoesNotExist:
+        bill_form = BillingAddressForm()
+
+    template = "subscriptions/checkout.html"
+    context = {
+        "stripe_price_ID": stripe_price_ID,
+        "stripe_public_key": stripe_public_key,
+        "profile": profile,
+        "sub_form": sub_form,
+        "bill_form": bill_form,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def complete(request):
+
+    template = "subscriptions/complete.html"
+    return render(request, template)
