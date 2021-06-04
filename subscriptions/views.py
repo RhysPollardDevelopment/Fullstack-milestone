@@ -50,7 +50,10 @@ def subscription_page(request):
 
 @login_required
 def checkout(request):
-
+    """
+    Loads checkout page along with the subscription and billing forms.
+    Prefills forms with any available information from models or stripe.
+    """
     stripe_price_ID = settings.STRIPE_PRICE_ID
     stripe.api_key = settings.STRIPE_SECRET_KEY
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
@@ -73,6 +76,8 @@ def checkout(request):
     except UserProfile.DoesNotExist:
         sub_form = SubscriptionForm()
 
+    # Data for billing form is loaded from Stripe as they handle payments
+    # and is not essential to other areas of site.
     try:
         billing = stripe.Customer.retrieve(customer_id)
         if billing.address is not None:
@@ -106,9 +111,11 @@ def checkout(request):
 @login_required
 def create_subscription(request):
     """
-    Create a Stripe Customer and Subscription object and map them onto the User
-    object.Expects the inbound POST data to look something like this:
+    Create a Stripe Customer and Subscription object and update the customer's
+    strip account.
 
+    Attaches card method to user and also modifies card details before
+    creating subscription.
     """
     # parse request, extract details, and verify assumptions
     if request.method == "POST":
@@ -126,7 +133,8 @@ def create_subscription(request):
             customer_id = profile.stripe_customer_id
 
             stripe.api_key = settings.STRIPE_SECRET_KEY
-
+            # Collects shipping data and assigns it to the session to pass to
+            # the complete view.
             request.session["save_shipping"] = data["saveShipping"]
             request.session["shippingdata"] = {
                 "default_phone_number": data["phone_number"],
@@ -137,9 +145,9 @@ def create_subscription(request):
                 "default_postcode": data["postcode"],
             }
 
-            # set data to shipping info or billing info if checkbox checked.
+            # If sameBilling is true, set data to shipping info or billing
+            # info if false.
             if data["sameBilling"]:
-                print("same")
                 phone = data["phone_number"]
                 address = {
                     "city": data["town_or_city"],
@@ -150,9 +158,7 @@ def create_subscription(request):
                     "country": "GB",
                 }
             else:
-                print("different")
                 phone = data["billing_phone_number"]
-
                 address = {
                     "city": data["billing_town_or_city"],
                     "line1": data["billing_address1"],
@@ -161,8 +167,8 @@ def create_subscription(request):
                     "state": data["billing_county"],
                     "country": "GB",
                 }
-            print(address)
 
+            # Once data is assigned, tries to modify the stripe customer info.
             try:
                 stripe.Customer.modify(
                     customer_id,
@@ -209,7 +215,7 @@ def create_subscription(request):
                 # associate subscription with the user
                 request.user.userprofile.subscription_id = subscription.id
                 request.user.save()
-
+                # returns the subscription object information for front end.
                 return JsonResponse(subscription)
 
             except Exception as e:
@@ -225,10 +231,15 @@ def create_subscription(request):
 
 @login_required
 def complete(request):
+    """
+    Page sent to on successful subscription creation/payment. Also updates user
+    information if save_shipping variable is true.
+    """
     profile = get_object_or_404(UserProfile, user=request.user)
 
     save_shipping = request.session["save_shipping"]
-
+    # Checks the state of save_shipping in the session.
+    # If equals True, updates userprofile delivery address.
     if save_shipping:
         shipping_data = request.session["shippingdata"]
 
@@ -239,5 +250,6 @@ def complete(request):
         # Remove shippingdata for safety reasons, found on
         # https://docs.djangoproject.com/en/3.2/topics/http/sessions/
         del request.session["shippingdata"]
+
     template = "subscriptions/complete.html"
     return render(request, template)
