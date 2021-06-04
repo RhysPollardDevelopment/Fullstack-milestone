@@ -44,9 +44,6 @@ class Subscription(models.Model):
             months=+difference.months
         )
 
-    # What is user restarts and has subscription ending? Need to
-    # be able to start from end of previous subscription
-
 
 class StripeSubscription(models.Model):
     """
@@ -68,6 +65,9 @@ class StripeSubscription(models.Model):
         help_text="The end date of the subscription."
     )
     stripe_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.subscription_id
 
 
 class Invoice(models.Model):
@@ -101,3 +101,6 @@ class Invoice(models.Model):
     town_or_city = models.CharField(max_length=255)
     county = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.invoice_number
