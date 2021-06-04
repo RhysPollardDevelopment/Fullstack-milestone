@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| My Recipes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Your subscription is active!</h1>
+
+        <a href="{% url 'profiles' %}" class="btn btn-info"> Profile </a>
+    </div>
+</div>
+{% endblock %}
