@@ -3,150 +3,153 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
+<head>
 
-        {% block meta %}
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta charset="utf-8">
-        <meta name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% endblock %}
+    {% block meta %}
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% endblock %}
 
-        {% block additional_meta %}
-        {% endblock %}
+    {% block additional_meta %}
+    {% endblock %}
 
-        {% block corecss %}
-        <link rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-            crossorigin="anonymous">
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
-        {% endblock %}
+    {% block corecss %}
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Lato&display=swap">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
 
-        {% block additional_css %}
-        {% endblock %}
+    {% block additional_css %}
+    {% endblock %}
 
-        {% block corejs %}
-        <script src="https://kit.fontawesome.com/e9c73d7092.js"
-            crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
-        <!-- Stripe -->
-        <script src="https://js.stripe.com/v3/"></script>
-        {% endblock %}
+    {% block corejs %}
+    <script src="https://kit.fontawesome.com/e9c73d7092.js"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    {% endblock %}
 
-        {% block additional_js %}
-        {% endblock %}
+    {% block additional_js %}
+    {% endblock %}
 
-        <title>{% block additional_title %}{% endblock %}</title>
-    </head>
+    <title>{% block additional_title %}{% endblock %}</title>
+</head>
 
-    <body>
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button"
-                    data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse"
-                    id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'home' %}">Home
-                                <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{% url 'products' %}">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profiles' %}">My
-                                Profile</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#"
-                                id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                About Us
-                            </a>
-                            <div class="dropdown-menu"
-                                aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item"
-                                    href="{% url 'partners' %}">Partners</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else
-                                    here</a>
-                            </div>
-                        </li>
-                        {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{% url 'account_logout' %}">Log out</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{% url 'account_login' %}">Login</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search"
-                            placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0"
-                            type="submit">Search</button>
-                    </form>
-                </div>
-            </nav>
-        </header>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'subscription_page' %}">SUBSCRIBE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'products' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profiles' %}">My
+                            Profile</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"
+                            id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            About Us
+                        </a>
+                        <div class="dropdown-menu"
+                            aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item"
+                                href="{% url 'partners' %}">Partners</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else
+                                here</a>
+                        </div>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'account_logout' %}">Log out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search"
+                        placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0"
+                        type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
 
-        {% if messages %}
-        <div class="message-container">
-            {% for message in messages %}
-            {% with message.level as level %}
-            {% if level == 40 %}
-            {% include 'includes/toasts/toast_error.html' %}
-            {% elif level == 30 %}
-            {% include 'includes/toasts/toast_warning.html' %}
-            {% elif level == 25 %}
-            {% include 'includes/toasts/toast_success.html' %}
-            {% else %}
-            {% include 'includes/toasts/toast_info.html' %}
-            {% endif %}
-            {% endwith %}
-            {% endfor %}
-        </div>
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        {% with message.level as level %}
+        {% if level == 40 %}
+        {% include 'includes/toasts/toast_error.html' %}
+        {% elif level == 30 %}
+        {% include 'includes/toasts/toast_warning.html' %}
+        {% elif level == 25 %}
+        {% include 'includes/toasts/toast_success.html' %}
+        {% else %}
+        {% include 'includes/toasts/toast_info.html' %}
         {% endif %}
+        {% endwith %}
+        {% endfor %}
+    </div>
+    {% endif %}
 
-        {% block page_header %}
-        {% endblock %}
+    {% block page_header %}
+    {% endblock %}
 
-        {% block content %}
-        {% endblock %}
+    {% block content %}
+    {% endblock %}
 
-        {% block postloadjs %}
-        <script type="text/javascript">
-            $('.toast').toast('show');
-        </script>
-        {% endblock %}
+    {% block postloadjs %}
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
+    {% endblock %}
 
-    </body>
+</body>
 
 </html>
