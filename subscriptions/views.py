@@ -9,8 +9,9 @@ import stripe
 
 
 def subscription_page(request):
-    if request.user.userprofile.is_subscribed:
-        return redirect(reverse("home"))
+    if request.user.is_authenticated:
+        if request.user.userprofile.is_subscribed:
+            return redirect(reverse("home"))
     template = "subscriptions/subscriptions_page.html"
     # This relates to the djstripe product object which is the subscription
     # plan made on the Stripe dashboard.
