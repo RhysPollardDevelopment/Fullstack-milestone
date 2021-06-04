@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -35,8 +36,9 @@ class UserProfile(models.Model):
     # after or equal to today.
     @property
     def has_active_subscription(self):
-        active_subscriptions = self.subscription_set.filter(
-            expiry_date__isnull=True
+        today = timezone.now().date()
+        active_subscriptions = self.stripesubscription_set.filter(
+            end_date__gte=today
         )
         return active_subscriptions.count() > 0
 

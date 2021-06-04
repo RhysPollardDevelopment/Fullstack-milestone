@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from subscriptions.models import Subscription
+from datetime import datetime, timezone
+from django.utils import timezone
+from subscriptions.models import Subscription, StripeSubscription
 
 
 class testerProfileModels(TestCase):
@@ -24,7 +26,12 @@ class testerProfileModels(TestCase):
         has_active_subscription property.
         """
         # Assigns subscription to profile Userprofile
-        Subscription.objects.create(user_profile=self.profile)
+        self.stripe_subscription = StripeSubscription.objects.create(
+            subscription_id="testsub",
+            start_date=datetime(2030, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.profile,
+        )
 
         self.assertEqual(self.profile.has_active_subscription, True)
 
@@ -44,24 +51,34 @@ class testerProfileModels(TestCase):
 
     def test_UserProfile_only_one_active_subscription_True(self):
         """Tests whether has active subscription is correctly called"""
-        # First subscription is added and cancelled before saving to database
-        subscription = Subscription.objects.create(user_profile=self.profile)
-        subscription.cancel()
-        subscription.save()
+        # Three subscriptions are created out of order but with correct dates
+        # to simulate multiple subscription periods.
+        StripeSubscription.objects.create(
+            subscription_id="testsub",
+            start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2020, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.profile,
+        )
 
-        # Second subscription is added and cancelled before saving to database
-        subscription2 = Subscription.objects.create(user_profile=self.profile)
-        subscription2.cancel()
-        subscription2.save()
+        StripeSubscription.objects.create(
+            subscription_id="testsub2",
+            start_date=datetime(2021, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2023, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.profile,
+        )
 
-        # Third subscription is added but not cancelled to simulate
-        # re-subscribing to the service.
-        Subscription.objects.create(user_profile=self.profile)
+        StripeSubscription.objects.create(
+            subscription_id="testsub3",
+            start_date=datetime(2020, 12, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2021, 2, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.profile,
+        )
 
-        # Number of subscriptions without expiry_dates is counted and checked.
+        # Number of subscriptions eith end_dates after today are counted.
         # Confirms number of subscriptions and profile deems self subscribed.
-        active_subscriptions = self.profile.subscription_set.filter(
-            expiry_date__isnull=True
+        today = timezone.now().date()
+        active_subscriptions = self.profile.stripesubscription_set.filter(
+            end_date__gte=today
         ).count()
         self.assertEqual(self.profile.has_active_subscription, True)
         self.assertEqual(active_subscriptions, 1)

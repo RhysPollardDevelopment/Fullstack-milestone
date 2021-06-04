@@ -3,14 +3,16 @@ from .forms import UserProfileForm
 
 
 class TestUserProfileForm(TestCase):
-    def test_form_fields_exclude_user(self):
+    def test_form_fields_exclude(self):
         """
         Uses variable to check whether the return value of .get() on form
         fields is None as should be excluded.
         """
         form = UserProfileForm()
         user_field = form.fields.get("user")
+        stripe_customer_field = form.fields.get("stripe_customer_id")
         self.assertIsNone(user_field)
+        self.assertIsNone(stripe_customer_field)
 
     def test_form_field_has_correct_placeholder(self):
         """
