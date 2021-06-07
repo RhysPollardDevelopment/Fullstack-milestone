@@ -69,18 +69,23 @@
                         <a class="nav-link" href="{% url 'home' %}">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
+                    {% if request.user.userprofile.has_active_subscription %}
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link"
                             href="{% url 'subscription_page' %}">SUBSCRIBE</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link"
                             href="{% url 'products' %}">Products</a>
                     </li>
+                    {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profiles' %}">My
                             Profile</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
                             id="navbarDropdown" role="button"
