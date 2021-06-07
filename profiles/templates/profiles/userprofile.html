@@ -9,13 +9,9 @@
         <h1>My Account</h1>
         {% if profile.has_active_subscription %}
         <h3>Currently subscribed</h3>
-        {% elif subscription != None %}
-        <h3>Active until {{subscription.expiry_date}}</h3>
         {% else %}
         <h3>No active subscription</h3>
         {% endif %}
-
-        {{profile.default_street_address1}}
         <a href="{% url 'update_address' %}" class="btn btn-info">Update
             address</a>
         <a href="{% url 'account_change_password' %}"
@@ -25,6 +21,14 @@
         <a href="{% url 'my_recipes' %}" class="btn btn-info">Saved recipes</a>
         <a href="{% url 'subscription_history' %}"
             class="btn btn-info">subscription_history</a>
+        {% if profile.has_active_subscription %}
+        {% if subscription.cancel_at_end %}
+        <a href="{% url 'reactivate' %}" class="btn btn-info">Renew</a>
+        {% else %}
+        <a href="{% url 'cancel_subscription' %}" class="btn btn-info">Cancel
+            subscription</a>
+        {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -17,6 +17,8 @@ import json
 
 def not_subscribed(user):
     """
+    To prevent access to pages where subscribed users don't need to be.
+
     Checks if user has an active subscription, if so then redirects to prevent
     creation of multiple subscriptions at one time.
     """
@@ -260,6 +262,10 @@ def complete(request):
 
 @login_required
 def cancel_subscription(request):
+    """
+    Stripe request to change stop auto-renewal of subscription, updates
+    attribute on active subscription model also.
+    """
     profile = get_object_or_404(UserProfile, user=request.user)
     today = timezone.now()
     stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
@@ -276,7 +282,10 @@ def cancel_subscription(request):
         print(e)
         return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/cancel_confirmation.html"
-    return render(request, template)
+    context = {
+        "subscription": stripe_sub,
+    }
+    return render(request, template, context)
 
 
 @login_required
@@ -298,4 +307,7 @@ def reactivate(request):
     except Exception as e:
         return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/reactivate_confirmation.html"
-    return render(request, template)
+    context = {
+        "subscription": stripe_sub,
+    }
+    return render(request, template, context)

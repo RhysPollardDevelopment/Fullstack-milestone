@@ -34,7 +34,7 @@ def profiles(request):
     if profile.has_active_subscription:
         subscription = profile.stripesubscription_set.filter(
             end_date__gte=today
-        )
+        )[0]
 
     template = "profiles/userprofile.html"
     context = {
