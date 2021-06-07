@@ -65,6 +65,7 @@ class StripeSubscription(models.Model):
         help_text="The end date of the subscription."
     )
     stripe_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    cancel_at_end = models.BooleanField(default=False)
 
     def __str__(self):
         return self.subscription_id

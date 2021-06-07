@@ -5,6 +5,8 @@ from .models import Invoice, StripeSubscription, Subscription
 from django.utils import timezone
 from unittest import mock
 
+import stripe
+
 # Suggestion for layout when using mock for timezone.now found at:
 # https://snakeycode.wordpress.com/2015/11/04/mocking-django-timezone/
 mocked_start = datetime(2020, 9, 24, 10, 15, 30, tzinfo=timezone.utc)
@@ -47,6 +49,9 @@ class TestSubscriptionModel(TestCase):
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
+
+    def tearDown(self):
+        stripe.Customer.delete(self.user.userprofile.stripe_customer_id)
 
     @mock.patch("django.utils.timezone.now", side_effect=mock_now)
     def test_subscription_cancel_method(self, *args):

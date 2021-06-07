@@ -1,4 +1,3 @@
-from django.http import request
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import StripeSubscription
@@ -19,7 +18,7 @@ class TestSubscriptionViews(TestCase):
         self.user.save()
 
     def tearDown(self):
-        stripe.Customer.delete(self.user.userprofile.stripe_customer.id)
+        stripe.Customer.delete(self.user.userprofile.stripe_customer_id)
 
     def test_get_subscriptions_page_when_anonymous(self):
         """Test that user can access main subscription page."""
@@ -68,7 +67,55 @@ class TestSubscriptionViews(TestCase):
         """
         # User logged in to allow access.
         self.client.login(username="testuser", password="12345")
+        session = self.client.session
+        session["save_shipping"] = True
+        session["shippingdata"] = {
+            "default_phone_number": "0123456",
+            "default_street_address1": "street1",
+            "default_street_address2": "street2",
+            "default_town_or_city": "the city",
+            "default_county": "a county",
+            "default_postcode": "test postcode",
+        }
+        session.save()
 
         response = self.client.get("/subscription/checkout/complete")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "subscriptions/complete.html")
+
+    def test_get_cancel_subscription(self):
+        """
+        Should call cancel_subscription view and be directed to a
+        confirmation page.
+        """
+        # User logged in to allow access.
+        # test_sub = stripe.Subscription.create(
+        #     customer=self.user.userprofile.stripe_customer_id
+        # )
+        # StripeSubscription.objects.create(
+        #     subscription_id=test_sub["id"],
+        #     start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+        #     end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+        #     stripe_user=self.user.userprofile,
+        # )
+        self.client.login(username="testuser", password="12345")
+
+        response = self.client.get("/subscription/cancel_subscription/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "subscriptions/cancel_confirmation.html"
+        )
+
+    def test_get_renew_subscription(self):
+        """
+        Should call cancel_subscription view and be directed to a
+        confirmation page.
+        """
+        # User logged in to allow access.
+        self.client.login(username="testuser", password="12345")
+
+        response = self.client.get("/subscription/reactivate/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "subscriptions/reactivate_confirmation.html"
+        )

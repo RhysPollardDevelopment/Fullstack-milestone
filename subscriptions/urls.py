@@ -13,4 +13,14 @@ urlpatterns = [
         name="create_subscription",
     ),
     path("webhook/", webhook_received, name="webhook_received"),
+    path(
+        "cancel_subscription/",
+        views.cancel_subscription,
+        name="cancel_subscription",
+    ),
+    path(
+        "reactivate/",
+        views.reactivate,
+        name="reactivate",
+    ),
 ]

@@ -32,15 +32,9 @@ def profiles(request):
 
     # Checks is user has an active subscription.
     if profile.has_active_subscription:
-        subscription = profile.subscription_set.filter(
-            expiry_date__isnull=True
+        subscription = profile.stripesubscription_set.filter(
+            end_date__gte=today
         )[0]
-    # If no active subscription, checks if user is in end period of a cancelled
-    # subscription. If not then subscription remains empty.
-    elif profile.subscription_set.filter(expiry_date__gte=today):
-        subscription = profile.subscription_set.filter(expiry_date__gte=today)[
-            0
-        ]
 
     template = "profiles/userprofile.html"
     context = {

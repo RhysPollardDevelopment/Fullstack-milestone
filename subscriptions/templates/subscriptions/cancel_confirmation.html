@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| Subscription Cancelled{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Your subscription has been cancelled</h1>
+        <h3>You have until {{ subscription.end_date }} to renactivate your
+            subscription, or you can start a new subscription after this date.
+        </h3>
+
+        <a href="{% url 'profiles' %}" class="btn btn-info"> Profile </a>
+    </div>
+</div>
+{% endblock %}

@@ -111,7 +111,6 @@ def webhook_received(request):
         subscription would exist in model.
         """
         # set up email to tell customer they have a new subscription.
-        print("Subscription created", data_object)
         # Find customer using stripe ID.
         customer_id = data_object["customer"]
         freebees_customer = UserProfile.objects.get(
