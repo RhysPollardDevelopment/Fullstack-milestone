@@ -90,9 +90,13 @@ def my_recipes(request):
 @login_required
 def subscription_history(request):
     profile = get_object_or_404(UserProfile, user=request.user)
+    today = timezone.now()
+    stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
+    invoices = stripe_sub.invoice_set.all()
 
     template = "profiles/subscription_history.html"
     context = {
         "profile": profile,
+        "invoices": invoices,
     }
     return render(request, template, context)

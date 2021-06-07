@@ -7,6 +7,19 @@
 <div class="container">
     <div class="row">
         <h1>Subscription history</h1>
+        {% for invoice in invoices %}
+        <ul>
+            <li>{{ invoice.invoice_number }}</li>
+            <li>{{ invoice.current_start }}</li>
+            <li>{{ invoice.current_end }}</li>
+            <li>{{ invoice.delivery_name }}</li>
+            <li>{{ invoice.address_1 }}</li>
+            <li>{{ invoice.address_2 }}</li>
+            <li>{{ invoice.town_or_city }}</li>
+            <li>{{ invoice.county }}</li>
+            <li>{{ invoice.postcode }}</li>
+        </ul>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
