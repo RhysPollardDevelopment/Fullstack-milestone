@@ -5,7 +5,6 @@ from .models import Invoice, StripeSubscription, Subscription
 from django.utils import timezone
 from unittest import mock
 
-import stripe
 
 # Suggestion for layout when using mock for timezone.now found at:
 # https://snakeycode.wordpress.com/2015/11/04/mocking-django-timezone/

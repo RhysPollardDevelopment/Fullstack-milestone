@@ -4,6 +4,8 @@ from .models import StripeSubscription
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+import json
+
 
 mock_subscription_object = {
     "id": "testID",
@@ -26,9 +28,14 @@ class TestSubscriptionViews(TestCase):
     # def tearDown(self):
     #     stripe.Customer.delete(self.user.userprofile.stripe_customer_id)
 
-    def test_get_subscriptions_page_when_anonymous(self):
+    @patch("stripe.Product.list")
+    def test_get_subscriptions_page_when_anonymous(self, mock_product_list):
         """Test that user can access main subscription page."""
-        # Asserts get request is successful and loads subscriptions html.
+        mock_product_list.return_value = {
+            "product": "test product",
+            "price": "6.00",
+        }
+        # Assert results
         response = self.client.get("/subscription/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
@@ -92,6 +99,8 @@ class TestSubscriptionViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "subscriptions/complete.html")
 
+    # https://www.obeythetestinggoat.com/book/chapter_mocking.html
+    # Tutorial which made gave idea for how mock worked effectively.
     @patch("stripe.Subscription.modify")
     def test_get_cancel_subscription(self, mock_subscription_modify):
         """
@@ -101,6 +110,8 @@ class TestSubscriptionViews(TestCase):
         If successful should also have updated cancel_at_end on subscription
         model.
         """
+        # https://docs.python.org/3/library/unittest.mock.html#where-to-patch
+        # Official doc which helped understand use of return_value.
         mock_subscription_modify.return_value = mock_subscription_object
         # Create subscription Instance and log in user.
         StripeSubscription.objects.create(
@@ -159,3 +170,52 @@ class TestSubscriptionViews(TestCase):
         self.assertTemplateUsed(
             response, "subscriptions/reactivate_confirmation.html"
         )
+
+    @patch("stripe.Customer.modify")
+    @patch("stripe.Subscription.create")
+    @patch("stripe.PaymentMethod.attach")
+    def test_create_subscription(self, mock_attach, mock_create, mock_update):
+        """
+        Mocks the data sent as a post to the create-subscription view. Data is
+        assigned as required and all API calls are mocked to prevent data
+        creation.
+
+        Should receive a 200 as only awaits a JsonResponse. No templates.
+        """
+        # Mock data and create a return value for subscription.create.
+        mock_create.return_value = {"id": "test_sub_ID", "status": "active"}
+        body_data = {
+            "customerId": "test customer",
+            "paymentMethodId": "test payment",
+            "priceId": "12345",
+            "sameBilling": True,
+            "saveShipping": True,
+            "phone_number": "+01234567",
+            "street_address1": "new",
+            "street_address2": "subcription",
+            "town_or_city": "created",
+            "county": "for",
+            "postcode": "stripe",
+            "full_name": "Tina Tester",
+        }
+        # Change data into Json format to be passed through to the view.
+        # https://www.w3schools.com/python/python_json.asp
+        data = json.dumps(body_data)
+        self.client.login(username="testuser", password="12345")
+
+        # https://stackoverflow.com/questions/18867898/attributeerror-str-
+        # object-has-no-attribute-items
+        # Stack overflow post highlighting need for content_type.
+
+        # https://docs.djangoproject.com/en/3.2/topics/testing/tools/
+        # Django doc specifying layout for post request.
+        response = self.client.post(
+            "/subscription/create-subscription",
+            content_type="application/json",
+            data=data,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_update.called, True)
+        self.assertEqual(mock_create.called, True)
+        self.assertEqual(mock_attach.called, True)

@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -49,6 +49,7 @@ def subscription_page(request):
     return render(request, template, context)
 
 
+@user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
 @login_required
 def checkout(request):
     """
@@ -109,6 +110,7 @@ def checkout(request):
     return render(request, template, context)
 
 
+@user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
 @login_required
 def create_subscription(request):
     """
@@ -214,13 +216,12 @@ def create_subscription(request):
                 )
 
                 # associate subscription with the user
-                request.user.userprofile.subscription_id = subscription.id
-                request.user.save()
+                # request.user.userprofile.subscription_id = subscription.id
+                # request.user.save()
                 # returns the subscription object information for front end.
                 return JsonResponse(subscription)
 
             except Exception as e:
-                print("error")
                 return JsonResponse({"error": str(e)}, status=200)
         else:
             messages.error(
@@ -230,6 +231,7 @@ def create_subscription(request):
         return HttpResponse("Request method not allowed")
 
 
+@user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
 @login_required
 def complete(request):
     """
