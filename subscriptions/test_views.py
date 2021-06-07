@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import StripeSubscription
 from datetime import datetime, timezone
 
+import stripe
+
 
 class TestSubscriptionViews(TestCase):
     def setUp(self):
@@ -15,6 +17,9 @@ class TestSubscriptionViews(TestCase):
         # questions/2619102/djangos-self-client-login-does-not-work-in-unit-tests
         self.user.set_password("12345")
         self.user.save()
+
+    def tearDown(self):
+        stripe.Customer.delete(self.user.userprofile.stripe_customer.id)
 
     def test_get_subscriptions_page_when_anonymous(self):
         """Test that user can access main subscription page."""
