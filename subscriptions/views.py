@@ -260,16 +260,16 @@ def complete(request):
 def cancel_subscription(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     today = timezone.now()
-    sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
+    stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
     try:
         stripe.Subscription.modify(
-            sub.subscription_id, cancel_at_period_end=True
+            stripe_sub.subscription_id, cancel_at_period_end=True
         )
-        sub.cancel_at_end = True
-        sub.save()
+        stripe_sub.cancel_at_end = True
+        stripe_sub.save()
     except Exception as e:
         print(e)
         return JsonResponse({"error": (e.args[0])}, status=403)
@@ -279,5 +279,21 @@ def cancel_subscription(request):
 
 @login_required
 def reactivate(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    today = timezone.now()
+    stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    try:
+        stripe.Subscription.modify(
+            stripe_sub.subscription_id,
+            cancel_at_period_end=False,
+            proration_behavior="none",
+        )
+        stripe_sub.cancel_at_end = False
+        stripe_sub.save()
+    except Exception as e:
+        return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/reactivate_confirmation.html"
     return render(request, template)

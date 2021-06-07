@@ -29,11 +29,13 @@ def mock_post_24th():
 
 class TestSubscriptionModel(TestCase):
     @mock.patch("django.utils.timezone.now", side_effect=mock_start)
-    def setUp(self, *args):
+    @mock.patch("stripe.Customer.create")
+    def setUp(self, mock_create, *args):
         """
         Uses mock to set start date of new object to 29/09/2020 10:15:30.
         Necessary as start_date is automatic and un-editable.
         """
+        mock_create.return_value = {"id": "fakeID"}
         self.new_sub = Subscription.objects.create()
         self.user = User.objects.create(
             username="testuser",
@@ -49,9 +51,6 @@ class TestSubscriptionModel(TestCase):
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
-
-    def tearDown(self):
-        stripe.Customer.delete(self.user.userprofile.stripe_customer_id)
 
     @mock.patch("django.utils.timezone.now", side_effect=mock_now)
     def test_subscription_cancel_method(self, *args):
