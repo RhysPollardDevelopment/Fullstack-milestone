@@ -2,8 +2,14 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import StripeSubscription
 from datetime import datetime, timezone
+from unittest.mock import patch, MagicMock
 
 import stripe
+
+
+mock_subscription_object = {
+    "id": "testID",
+}
 
 
 class TestSubscriptionViews(TestCase):
@@ -67,6 +73,7 @@ class TestSubscriptionViews(TestCase):
         """
         # User logged in to allow access.
         self.client.login(username="testuser", password="12345")
+        # Create data necessary for view.
         session = self.client.session
         session["save_shipping"] = True
         session["shippingdata"] = {
@@ -83,24 +90,33 @@ class TestSubscriptionViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "subscriptions/complete.html")
 
-    def test_get_cancel_subscription(self):
+    @patch("stripe.Subscription.modify")
+    def test_get_cancel_subscription(self, mock_subscription_modify):
         """
         Should call cancel_subscription view and be directed to a
         confirmation page.
+
+        If successful should also have updated cancel_at_end on subscription
+        model.
         """
+        mock_subscription_modify.return_value = mock_subscription_object
         # User logged in to allow access.
-        # test_sub = stripe.Subscription.create(
-        #     customer=self.user.userprofile.stripe_customer_id
-        # )
-        # StripeSubscription.objects.create(
-        #     subscription_id=test_sub["id"],
-        #     start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
-        #     end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
-        #     stripe_user=self.user.userprofile,
-        # )
+        StripeSubscription.objects.create(
+            subscription_id="testID",
+            start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.user.userprofile,
+        )
         self.client.login(username="testuser", password="12345")
 
         response = self.client.get("/subscription/cancel_subscription/")
+
+        self.assertEqual(mock_subscription_modify.called, True)
+        # Load updated date of subscription for assertEqual
+        test = StripeSubscription.objects.get(
+            subscription_id=mock_subscription_object["id"]
+        )
+        self.assertEqual(test.cancel_at_end, True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
             response, "subscriptions/cancel_confirmation.html"

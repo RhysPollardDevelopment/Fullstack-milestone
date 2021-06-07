@@ -133,7 +133,7 @@ def webhook_received(request):
         # invoice.paid could come before subscription.created.
         # If so then no stripesubscription to assign to, causes error.
         first_invoice = stripe.Invoice.retrieve(data_object["latest_invoice"])
-        invoice_shipping = first_invoice["customer_shipping"]
+        invoice_shipping = data_object["latest_invoice"]["customer_shipping"]
         Invoice.objects.create(
             stripe_subscription=new_subscription,
             invoice_number=first_invoice["id"],

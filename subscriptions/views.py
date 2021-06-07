@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.utils import timezone
 
 # Forms and models imported.
 from .forms import SubscriptionForm, BillingAddressForm
@@ -257,6 +258,21 @@ def complete(request):
 
 @login_required
 def cancel_subscription(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    today = timezone.now()
+    sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    try:
+        stripe.Subscription.modify(
+            sub.subscription_id, cancel_at_period_end=True
+        )
+        sub.cancel_at_end = True
+        sub.save()
+    except Exception as e:
+        print(e)
+        return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/cancel_confirmation.html"
     return render(request, template)
 
