@@ -38,4 +38,5 @@ urlpatterns = [
     path("products/", include("products.urls")),
     path("profiles/", include("profiles.urls")),
     path("subscription/", include("subscriptions.urls")),
+    path("recipes/", include("recipes.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

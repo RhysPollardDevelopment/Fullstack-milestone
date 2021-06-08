@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "profiles",
     "subscriptions",
     "customerservice",
+    "recipes",
     # other/python packages
     "storages",
     "crispy_forms",
