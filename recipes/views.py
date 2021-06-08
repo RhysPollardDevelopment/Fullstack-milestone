@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Recipe
 from datetime import datetime, timezone
 
@@ -13,6 +13,10 @@ def all_recipes(request):
     return render(request, template, context)
 
 
-def recipe_detail(request):
+def recipe_detail(request, recipe_title):
+    print(recipe_title)
+    recipe = get_object_or_404(Recipe, title=recipe_title)
+
     template = "recipes/recipe_detail.html"
-    return render(request, template)
+    context = {"recipe": recipe}
+    return render(request, template, context)

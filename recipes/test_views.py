@@ -35,7 +35,7 @@ class TestProductViews(TestCase):
         recipe = Recipe.objects.create(
             title="test recipe", description="Recipe test description"
         )
-        response = self.client.get(f"/recipes/{recipe.title}")
+        response = self.client.get(f"/recipes/{recipe.title}/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
 
