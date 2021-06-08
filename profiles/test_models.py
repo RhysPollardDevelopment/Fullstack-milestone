@@ -1,13 +1,15 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from datetime import datetime, timezone
-from django.utils import timezone
+from unittest.mock import patch
 from subscriptions.models import Subscription, StripeSubscription
 
 
-class testerProfileModels(TestCase):
-    def setUp(self):
+class TestProfileModels(TestCase):
+    @patch("stripe.Customer.create")
+    def setUp(self, mock_create):
         """Creates User object for each new account profile."""
+        mock_create.return_value = {"id": "fakeID"}
         self.user = User.objects.create(
             username="tester", password="testpassword"
         )
@@ -76,7 +78,7 @@ class testerProfileModels(TestCase):
 
         # Number of subscriptions eith end_dates after today are counted.
         # Confirms number of subscriptions and profile deems self subscribed.
-        today = timezone.now().date()
+        today = datetime.now(tz=timezone.utc)
         active_subscriptions = self.profile.stripesubscription_set.filter(
             end_date__gte=today
         ).count()

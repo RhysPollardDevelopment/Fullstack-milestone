@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
+from unittest.mock import patch
 
 
 def create_test_user(client):
@@ -24,8 +25,10 @@ def login_sample_user(client):
 
 
 class TestProfileViews(TestCase):
-    def setUp(self):
+    @patch("stripe.Customer.create")
+    def setUp(self, mock_create):
         """Creates a user object to use in testing"""
+        mock_create.return_value = {"id": "fakeID"}
         self.user = User.objects.create(
             username="testuser",
             email="testuser@test.com",
