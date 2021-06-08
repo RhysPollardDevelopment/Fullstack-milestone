@@ -220,9 +220,10 @@ function handlePaymentThatRequiresCustomerAction({
                     // Starts process of error reporting by throwing error.
                     throw result;
                 } else {
-                    console.log(result.paymentIntent.status)
                     if (result.paymentIntent.status === 'succeeded') {
-
+                        // Change status to active as no other accessible
+                        // way offered to check for success after this point.
+                        subscription.status = 'active'
                         // Show a success message to your customer.
                         return {
                             priceId: priceId,
@@ -294,7 +295,6 @@ function onSubscriptionComplete(result) {
         // Uses location.href to call complete view and move user.
         window.location.href = '/subscription/checkout/complete';
     }
-    console.log("help im stuck")
 }
 
 // Changes state of submit button and card functionality depending on given
