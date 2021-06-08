@@ -7,6 +7,9 @@ from profiles.models import UserProfile
 
 
 def all_recipes(request):
+    """
+    Loads all recipes available at the moment for user to look through.
+    """
     now = datetime.now(tz=timezone.utc)
     # Retrieve all recipes with publish dates before today and order them
     # in descending order.
@@ -20,15 +23,34 @@ def all_recipes(request):
 
 
 def recipe_detail(request, recipe_title):
+    """
+    Directs user to details page for each recipe, if user is anonymous or does
+    not have an active subscription then as restricted variable is passed
+    and content is blocked.
+
+    Only last 3 months recipes are blocked.
+    """
     recipe = get_object_or_404(Recipe, title=recipe_title)
+
+    # https://stackoverflow.com/questions/3345030/splitting-a-string-separated
+    # -by-r-n-into-a-list-of-lines/3345052
+    # Use of splitlines to make textfiles easier to display.
+
+    recipe.ingredients = recipe.ingredients.splitlines()
+
+    recipe.instructions = recipe.instructions.splitlines()
+
     profile = None
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
 
-    # Finds the date time 3 months prior to this point
+    # Finds the date time 3 months prior to today
     three_months = datetime.now(tz=timezone.utc) + relativedelta(months=-3)
 
+    # If recipe publish date is within last 3 months, is restricted to users
+    # without subscriptions.
     if recipe.publish_date > three_months:
+        # Requires check if authenticated to stop error on anonymous users.
         if request.user.is_authenticated and profile.has_active_subscription:
             restricted = False
         else:

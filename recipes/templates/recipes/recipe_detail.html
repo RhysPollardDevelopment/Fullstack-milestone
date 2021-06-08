@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| {{ recipe.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Product loading section-->
+        {% if restricted %}
+        <h1>RESTRICTED</h1>
+        {% endif %}
+        <h2>{{ recipe.title }}</h2>
+        <p>{{ recipe.description }}</p>
+        <img src="{{ recipe.image.url }}" alt="" height="300rem">
+        <ul>
+            {% for ingredient in recipe.ingredients %}
+            <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for instruction in recipe.instructions %}
+            <li>{{ instruction }}</li>
+            {% endfor %}
+        </ul>
+        <p>{{ recipe.featured_product }}</p>
+        <a href="{% url 'product_details' recipe.featured_product.id %}"><img
+                src="{{ recipe.featured_product.image.url }}" alt=""
+                height="150rem"></a>
+        <img src="{{ product.image.url }}" alt="" height="300rem">
+        <a href="{{ product.company.company_url }}"
+            target="_blank">{{ product.company.company_url }}</a>
+        <!--Comapny.logo won't load correctly, missing /media/ before it-->
+        <img src="{{ product.company.logo.url }}" alt="" height="300rem">
+    </div>
+</div>
+{% endblock %}
