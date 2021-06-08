@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| Recipes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Product loading section-->
+        {% for recipe in recipes %}
+        <div class="col-6">
+            <a href="{% url 'recipe_detail' recipe.title %}"><img
+                    src="{{ recipe.image.url }}" alt="" height="400rem"></a>
+            <p>{{ recipe.title }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

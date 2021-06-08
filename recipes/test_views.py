@@ -31,15 +31,15 @@ class TestProductViews(TestCase):
         self.assertTemplateUsed(response, "recipes/recipes.html")
         self.assertIsNotNone(response.context["recipes"])
 
-    def test_get_recipe_page(self):
+    def test_get_recipe_detail_page(self):
         recipe = Recipe.objects.create(
             title="test recipe", description="Recipe test description"
         )
         response = self.client.get(f"/recipes/{recipe.title}")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "recipes/recipe_page.html")
+        self.assertTemplateUsed(response, "recipes/recipe_detail.html")
 
-    def test_get_restricted_recipe_anonymous(self):
+    def test_get_restricted_recipe_detail_unsubscribed(self):
         now = datetime.now(tz=timezone.utc)
         first_of_month = now + relativedelta(day=1)
         recipe = Recipe.objects.create(
@@ -49,10 +49,10 @@ class TestProductViews(TestCase):
         )
         response = self.client.get(f"/recipes/{recipe.title}")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "recipes/recipe_page.html")
+        self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], True)
 
-    def test_get_restricted_recipe_subscribed(self):
+    def test_get_restricted_recipe_detail_subscribed(self):
         now = datetime.now(tz=timezone.utc)
         first_of_month = now + relativedelta(day=1)
         recipe = Recipe.objects.create(
@@ -63,5 +63,5 @@ class TestProductViews(TestCase):
         self.client.login(username="testuser", password="12345")
         response = self.client.get(f"/recipes/{recipe.title}")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "recipes/recipe_page.html")
+        self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], False)
