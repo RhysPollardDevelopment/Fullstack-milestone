@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for recipes\views.py: 85%</title>
+    <title>Coverage for recipes\views.py: 96%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>recipes\views.py</b> :
-            <span class="pc_cov">85%</span>
+            <span class="pc_cov">96%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
-            68 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">58 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">10 missing</button>
+            72 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">69 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">3 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -166,35 +166,47 @@
     <p id="t112" class="pln"><span class="n"><a href="#t112">112</a></span><span class="t"><span class="str">    Edit a recipe retrieved from the database if user is a superuser.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t113" class="pln"><span class="n"><a href="#t113">113</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t114" class="run"><span class="n"><a href="#t114">114</a></span><span class="t">    <span class="nam">recipe</span> <span class="op">=</span> <span class="nam">get_object_or_404</span><span class="op">(</span><span class="nam">Recipe</span><span class="op">,</span> <span class="nam">title</span><span class="op">=</span><span class="nam">recipe_title</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t115" class="run"><span class="n"><a href="#t115">115</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">"POST"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t116" class="mis show_mis"><span class="n"><a href="#t116">116</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">RecipeForm</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">,</span> <span class="nam">request</span><span class="op">.</span><span class="nam">FILES</span><span class="op">,</span> <span class="nam">instance</span><span class="op">=</span><span class="nam">recipe</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t117" class="mis show_mis"><span class="n"><a href="#t117">117</a></span><span class="t">        <span class="nam">print</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t118" class="mis show_mis"><span class="n"><a href="#t118">118</a></span><span class="t">        <span class="nam">print</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">FILES</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t119" class="mis show_mis"><span class="n"><a href="#t119">119</a></span><span class="t">        <span class="key">if</span> <span class="nam">form</span><span class="op">.</span><span class="nam">is_valid</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t120" class="mis show_mis"><span class="n"><a href="#t120">120</a></span><span class="t">            <span class="nam">recipe</span> <span class="op">=</span> <span class="nam">form</span><span class="op">.</span><span class="nam">save</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t121" class="mis show_mis"><span class="n"><a href="#t121">121</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">success</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">"Recipe updated successfully!"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t122" class="mis show_mis"><span class="n"><a href="#t122">122</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">"recipe_detail"</span><span class="op">,</span> <span class="nam">args</span><span class="op">=</span><span class="op">[</span><span class="nam">recipe</span><span class="op">.</span><span class="nam">title</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t123" class="pln"><span class="n"><a href="#t123">123</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t124" class="mis show_mis"><span class="n"><a href="#t124">124</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t125" class="pln"><span class="n"><a href="#t125">125</a></span><span class="t">                <span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t126" class="pln"><span class="n"><a href="#t126">126</a></span><span class="t">                <span class="str">"Errors trying to update. Please check form is correct."</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t127" class="pln"><span class="n"><a href="#t127">127</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t128" class="pln"><span class="n"><a href="#t128">128</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t129" class="run"><span class="n"><a href="#t129">129</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">RecipeForm</span><span class="op">(</span><span class="nam">instance</span><span class="op">=</span><span class="nam">recipe</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t130" class="run"><span class="n"><a href="#t130">130</a></span><span class="t">        <span class="nam">print</span><span class="op">(</span><span class="nam">form</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t131" class="pln"><span class="n"><a href="#t131">131</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t132" class="run"><span class="n"><a href="#t132">132</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t133" class="pln"><span class="n"><a href="#t133">133</a></span><span class="t">        <span class="str">"recipe"</span><span class="op">:</span> <span class="nam">recipe</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t134" class="pln"><span class="n"><a href="#t134">134</a></span><span class="t">        <span class="str">"form"</span><span class="op">:</span> <span class="nam">form</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t">    <span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t136" class="run"><span class="n"><a href="#t136">136</a></span><span class="t">    <span class="nam">template</span> <span class="op">=</span> <span class="str">"recipes/update_recipe.html"</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t137" class="run"><span class="n"><a href="#t137">137</a></span><span class="t">    <span class="key">return</span> <span class="nam">render</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">template</span><span class="op">,</span> <span class="nam">context</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t115" class="pln"><span class="n"><a href="#t115">115</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t116" class="pln"><span class="n"><a href="#t116">116</a></span><span class="t">    <span class="com"># If method is post, load the form with data, files and model instance.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t117" class="run"><span class="n"><a href="#t117">117</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">"POST"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t118" class="run"><span class="n"><a href="#t118">118</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">RecipeForm</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">,</span> <span class="nam">request</span><span class="op">.</span><span class="nam">FILES</span><span class="op">,</span> <span class="nam">instance</span><span class="op">=</span><span class="nam">recipe</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t">        <span class="com"># If valid, save the model instance and redirect to updated page.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t121" class="run"><span class="n"><a href="#t121">121</a></span><span class="t">        <span class="key">if</span> <span class="nam">form</span><span class="op">.</span><span class="nam">is_valid</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t122" class="run"><span class="n"><a href="#t122">122</a></span><span class="t">            <span class="nam">form</span><span class="op">.</span><span class="nam">save</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t123" class="run"><span class="n"><a href="#t123">123</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">success</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">"Recipe updated successfully!"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t124" class="run"><span class="n"><a href="#t124">124</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">"recipe_detail"</span><span class="op">,</span> <span class="nam">args</span><span class="op">=</span><span class="op">[</span><span class="nam">recipe</span><span class="op">.</span><span class="nam">title</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t125" class="pln"><span class="n"><a href="#t125">125</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t126" class="mis show_mis"><span class="n"><a href="#t126">126</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t127" class="pln"><span class="n"><a href="#t127">127</a></span><span class="t">                <span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t128" class="pln"><span class="n"><a href="#t128">128</a></span><span class="t">                <span class="str">"Errors trying to update. Please check form is correct."</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t129" class="pln"><span class="n"><a href="#t129">129</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t130" class="pln"><span class="n"><a href="#t130">130</a></span><span class="t">    <span class="com">#  Method is get, fill form with stored information.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t131" class="pln"><span class="n"><a href="#t131">131</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t132" class="run"><span class="n"><a href="#t132">132</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">RecipeForm</span><span class="op">(</span><span class="nam">instance</span><span class="op">=</span><span class="nam">recipe</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t133" class="pln"><span class="n"><a href="#t133">133</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t134" class="run"><span class="n"><a href="#t134">134</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t">        <span class="str">"recipe"</span><span class="op">:</span> <span class="nam">recipe</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t136" class="pln"><span class="n"><a href="#t136">136</a></span><span class="t">        <span class="str">"form"</span><span class="op">:</span> <span class="nam">form</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t137" class="pln"><span class="n"><a href="#t137">137</a></span><span class="t">    <span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t138" class="run"><span class="n"><a href="#t138">138</a></span><span class="t">    <span class="nam">template</span> <span class="op">=</span> <span class="str">"recipes/update_recipe.html"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t139" class="run"><span class="n"><a href="#t139">139</a></span><span class="t">    <span class="key">return</span> <span class="nam">render</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">template</span><span class="op">,</span> <span class="nam">context</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t140" class="pln"><span class="n"><a href="#t140">140</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t142" class="run"><span class="n"><a href="#t142">142</a></span><span class="t"><span class="op">@</span><span class="nam">user_passes_test</span><span class="op">(</span><span class="nam">is_superuser</span><span class="op">,</span> <span class="nam">login_url</span><span class="op">=</span><span class="str">"/"</span><span class="op">,</span> <span class="nam">redirect_field_name</span><span class="op">=</span><span class="key">None</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t143" class="run"><span class="n"><a href="#t143">143</a></span><span class="t"><span class="op">@</span><span class="nam">login_required</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t144" class="run"><span class="n"><a href="#t144">144</a></span><span class="t"><span class="key">def</span> <span class="nam">delete_recipe</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">recipe_title</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t145" class="pln"><span class="n"><a href="#t145">145</a></span><span class="t">    <span class="str">"""Delete a recipe from the database."""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t146" class="run"><span class="n"><a href="#t146">146</a></span><span class="t">    <span class="nam">recipe</span> <span class="op">=</span> <span class="nam">get_object_or_404</span><span class="op">(</span><span class="nam">Recipe</span><span class="op">,</span> <span class="nam">title</span><span class="op">=</span><span class="nam">recipe_title</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t147" class="run"><span class="n"><a href="#t147">147</a></span><span class="t">    <span class="nam">recipe</span><span class="op">.</span><span class="nam">delete</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t148" class="run"><span class="n"><a href="#t148">148</a></span><span class="t">    <span class="nam">messages</span><span class="op">.</span><span class="nam">success</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">"Recipe deleted successfully."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t149" class="run"><span class="n"><a href="#t149">149</a></span><span class="t">    <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">"recipes"</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-06-09 21:24 +0100
+            created at 2021-06-09 23:13 +0100
         </p>
     </div>
 </div>

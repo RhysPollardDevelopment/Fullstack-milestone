@@ -125,7 +125,7 @@ def update_recipe(request, recipe_title):
         else:
             messages.error(
                 request,
-                "Errors trying to update. Please check form is correct.",
+                "An error was found. Please check form is correct.",
             )
     #  Method is get, fill form with stored information.
     else:
@@ -137,3 +137,13 @@ def update_recipe(request, recipe_title):
     }
     template = "recipes/update_recipe.html"
     return render(request, template, context)
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def delete_recipe(request, recipe_title):
+    """Delete a recipe from the database."""
+    recipe = get_object_or_404(Recipe, title=recipe_title)
+    recipe.delete()
+    messages.success(request, "Recipe deleted successfully.")
+    return redirect(reverse("recipes"))

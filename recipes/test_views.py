@@ -1,3 +1,4 @@
+from django.contrib.messages import get_messages
 from recipes.forms import RecipeForm
 from django.test import TestCase
 from unittest.mock import patch
@@ -21,7 +22,7 @@ from subscriptions.models import StripeSubscription
 settings.MEDIA_ROOT = tempfile.mkdtemp()
 
 
-class TestProductViews(TestCase):
+class TestRecipeViews(TestCase):
     # Mocking create to avoid calling stripe.
     @patch("stripe.Customer.create")
     def setUp(self, mock_create):
@@ -162,7 +163,7 @@ class TestProductViews(TestCase):
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], False)
 
-    def test_get_add_product_page(self):
+    def test_get_add_recipe_page(self):
 
         self.client.login(username="superuser", password="superpassword")
 
@@ -182,7 +183,7 @@ class TestProductViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/")
 
-    def test_can_add_product(self):
+    def test_can_add_recipe(self):
         """
         Test that user can successfully validate and add new recipe.
         """
@@ -202,8 +203,8 @@ class TestProductViews(TestCase):
         )
 
         recipe_info = {
-            "title": "Add product",
-            "description": "Added product",
+            "title": "Add recipe",
+            "description": "Added recipe",
             "publish_date": datetime.now(tz=timezone.utc),
             "image": test_image,
             "ingredients": "Test for the text file.",
@@ -221,10 +222,10 @@ class TestProductViews(TestCase):
 
         self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/recipes/recipe/Add%20product/")
+        self.assertRedirects(response, "/recipes/recipe/Add%20recipe/")
 
-    def test_get_update_product_page(self):
-        """User can access the edit product page if superuser."""
+    def test_get_update_recipe_page(self):
+        """User can access the edit recipe page if superuser."""
 
         self.client.login(username="superuser", password="superpassword")
 
@@ -234,8 +235,8 @@ class TestProductViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/update_recipe.html")
 
-    def test_successfully_update_product_page(self):
-        """User can access the edit product page if superuser."""
+    def test_successfully_update_recipe_page(self):
+        """User can access the edit recipe page if superuser."""
 
         self.client.login(username="superuser", password="superpassword")
 
@@ -269,3 +270,55 @@ class TestProductViews(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/recipes/recipe/updated%20recipe/")
+
+    def test_fail_to_update_recipe_page(self):
+        """Code will alert user is form is not valid."""
+
+        self.client.login(username="superuser", password="superpassword")
+
+        # Updated info to save to model.
+        recipe_info = {
+            "title": "updated recipe",
+            "description": "New description",
+            "featured_product": 2,
+        }
+
+        # Post data to update_recipe.
+        response = self.client.post(
+            f"/recipes/update_recipe/{self.recipe_unrestricted.title}/",
+            data=recipe_info,
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # https://stackoverflow.com/questions/2897609/how-can-i-unit-test-
+        # django-messages
+        # Check for error message matching invalid form.
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "An error was found. Please check form is correct.",
+        )
+
+    def test_delete_recipe(self):
+        """User can access the delete recipe page if superuser."""
+
+        self.client.login(username="superuser", password="superpassword")
+
+        delete = Recipe.objects.create(
+            title="Deleted",
+            description="REcipe to delete",
+            publish_date=datetime.now(tz=timezone.utc)
+            + relativedelta(months=+2),
+            image=self.test_image,
+            ingredients="Test for the text file.",
+            instructions="Pseudo instructions for testing purposes.",
+            featured_product=self.product,
+        )
+
+        response = self.client.get(f"/recipes/delete_recipe/{delete.title}/")
+        self.assertRedirects(response, "/recipes/")
+
+        # Check if record still exists.
+        existing = Recipe.objects.filter(title=delete.title)
+        self.assertEqual(len(existing), 0)
