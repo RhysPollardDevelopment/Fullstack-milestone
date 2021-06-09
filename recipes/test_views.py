@@ -1,13 +1,24 @@
+from recipes.forms import RecipeForm
 from django.test import TestCase
 from unittest.mock import patch
-from .models import Recipe
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
 import tempfile
+from django.core.files.uploadedfile import SimpleUploadedFile
+from PIL import Image
+from io import BytesIO
+from django.conf import settings
+import shutil
 
 from django.contrib.auth.models import User
 from products.models import Product
+from .models import Recipe
 from subscriptions.models import StripeSubscription
+
+# Temporary media root to prevent adding test images to Media folder.
+# suggestion from https://stackoverflow.com/questions/46273403/how-delete
+# -image-files-after-unit-test-finished
+settings.MEDIA_ROOT = tempfile.mkdtemp()
 
 
 class TestProductViews(TestCase):
@@ -18,6 +29,7 @@ class TestProductViews(TestCase):
         Creates user, superuser objects for logging in along with the
         necessary recipes, products and subscriptions for required tests
         """
+
         # Mocks the return value for fake Customer.create function.
         mock_create.return_value = {"id": "fakeID"}
 
@@ -27,10 +39,13 @@ class TestProductViews(TestCase):
             email="testuser@test.com",
         )
         # Need to call set_password identified at https://stackoverflow.com/
-        # questions/2619102/djangos-self-client-login-does-not-work-in-unit-tests
+        # questions/2619102/djangos-self-client-login-does-not-work-in-
+        # unit-tests
         self.user.set_password("12345")
         self.user.save()
 
+        # Code to create a super user https://stackoverflow.com/questions/
+        # 3495114/how-to-create-admin-user-in-django-tests-py
         self.superuser = User.objects.create_superuser(
             "superuser", "superuser@test.com", password="superpassword"
         )
@@ -88,6 +103,10 @@ class TestProductViews(TestCase):
             instructions="Pseudo instructions for testing purposes.",
             featured_product=self.product,
         )
+
+    def tearDown(self):
+        """Clears temp folder after tests"""
+        shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
 
     def test_get_all_recipes(self):
         """
@@ -151,10 +170,48 @@ class TestProductViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/add_recipe.html")
 
-    def test_add_product_redirect_if_not_superuser(self):
+    def test_redirect_if_not_superuser(self):
 
         self.client.login(username="testuser", password="12345")
 
         response = self.client.get("/recipes/add/")
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/")
+
+    def test_can_add_product(self):
+
+        self.client.login(username="superuser", password="superpassword")
+
+        # https://forum.djangoproject.com/t/mock-image-raising-error-invalid
+        # -image-or-corrupt/4513 - This method used to create an image file
+        # which was not corrupt or invalid.
+        f = BytesIO()
+        image = Image.new("RGB", (100, 100))
+        image.save(f, "png")
+        f.seek(0)
+        test_image = SimpleUploadedFile(
+            "test_image.png",
+            content=f.read(),
+        )
+
+        recipe_info = {
+            "title": "Add product",
+            "description": "Added product",
+            "publish_date": datetime.now(tz=timezone.utc),
+            "image": test_image,
+            "ingredients": "Test for the text file.",
+            "instructions": "Pseudo instructions for testing purposes.",
+            "featured_product": 1,
+        }
+        image_data = {"image_field": test_image}
+
+        response = self.client.post(
+            "/recipes/add/",
+            recipe_info,
+        )
+
+        form = RecipeForm(recipe_info, files=image_data)
+
+        self.assertTrue(form.is_valid())
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/recipes/recipe/Add%20product/")

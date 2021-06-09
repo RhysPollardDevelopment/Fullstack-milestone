@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.widgets import TextInput
+from django.forms.widgets import TextInput, Textarea
 from .models import Recipe
 
 
@@ -24,7 +24,7 @@ class RecipeForm(forms.ModelForm):
         # Set up help texts for more complicated inputs.
         help_texts = {
             "ingredients": (
-                "Ensure that each instruction is entered onto a new line."
+                "Ensure that each ingredient is entered onto a new line."
             ),
             "instructions": (
                 "Ensure that each instruction is entered onto a new line."
@@ -38,16 +38,18 @@ class RecipeForm(forms.ModelForm):
             "description": TextInput(
                 attrs={"placeholder": "Recipe description"}
             ),
-            "ingredients": TextInput(attrs={"placeholder": "Ingredients list"}),
-            "instructions": TextInput(
-                attrs={"placeholder": "Instructions list"}
+            "ingredients": Textarea(
+                attrs={"placeholder": "Enter your ingredients here."}
             ),
+            "instructions": Textarea(
+                attrs={"placeholder": "Enter your instructions here."}
+            ),
+            "publish_date": TextInput(attrs={"placeholder": "DD/MM/YYYY"}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         for field in self.fields:
-            self.fields[field].widget.attrs[
-                "class"
-            ] = "border-black rounded-0 profile-form-input"
+            self.fields[field].widget.attrs["class"] = "border-black rounded-0"
             self.fields[field].label = False

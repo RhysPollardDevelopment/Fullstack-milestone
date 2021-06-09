@@ -1,19 +1,21 @@
-from django.core.checks import messages
-from django.http import request
-from django.shortcuts import render, get_object_or_404
-from .models import Recipe
+from django.contrib import messages
+from django.shortcuts import redirect, render, get_object_or_404, reverse
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+from .models import Recipe
 from profiles.models import UserProfile
+from .forms import RecipeForm
 
 
 def is_superuser(user):
-    if user.is_superuser:
-        return True
+    if user.is_authenticated:
+        if user.is_superuser:
+            return True
+        else:
+            return False
     else:
-        messages.Error(request, "Only Freebees staff can do that.")
         return False
 
 
@@ -77,6 +79,27 @@ def recipe_detail(request, recipe_title):
 @user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
 @login_required
 def add_recipe(request):
+    """
+    Add a recipe to the database if user is a superuser.
+    """
 
+    if request.method == "POST":
+        form = RecipeForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            recipe = form.save()
+            messages.success(request, "Recipe added successfully!")
+            return redirect(reverse("recipe_detail", args=[recipe.title]))
+        else:
+            messages.error(
+                request,
+                "Failed to create recipe. Please check form is correct.",
+            )
+    else:
+        form = RecipeForm()
+
+    context = {
+        "form": form,
+    }
     template = "recipes/add_recipe.html"
-    return render(request, template)
+    return render(request, template, context)
