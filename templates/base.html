@@ -96,8 +96,8 @@
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
                             <a class="dropdown-item"
-                                href="{% url 'profiles' %}">My
-                                Profile</a>
+                                href="{% url 'add_recipe' %}">Add
+                                Recipe</a>
                             <div class="dropdown-divider"></div>
                             {% endif %}
                             <a class="dropdown-item"

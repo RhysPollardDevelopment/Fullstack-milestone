@@ -166,19 +166,26 @@ class TestProductViews(TestCase):
 
         self.client.login(username="superuser", password="superpassword")
 
-        response = self.client.get("/recipes/add/")
+        response = self.client.get("/recipes/add_recipe/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/add_recipe.html")
 
     def test_redirect_if_not_superuser(self):
+        """
+        Testing if user is redirected from a view with the decorator of
+        user_pass_test(is_subscribed).
+        """
 
         self.client.login(username="testuser", password="12345")
 
-        response = self.client.get("/recipes/add/")
+        response = self.client.get("/recipes/add_recipe/")
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/")
 
     def test_can_add_product(self):
+        """
+        Test that user can successfully validate and add new recipe.
+        """
 
         self.client.login(username="superuser", password="superpassword")
 
@@ -206,7 +213,7 @@ class TestProductViews(TestCase):
         image_data = {"image_field": test_image}
 
         response = self.client.post(
-            "/recipes/add/",
+            "/recipes/add_recipe/",
             recipe_info,
         )
 
@@ -215,3 +222,50 @@ class TestProductViews(TestCase):
         self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/recipes/recipe/Add%20product/")
+
+    def test_get_update_product_page(self):
+        """User can access the edit product page if superuser."""
+
+        self.client.login(username="superuser", password="superpassword")
+
+        response = self.client.get(
+            f"/recipes/update_recipe/{self.recipe_unrestricted.title}/"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipes/update_recipe.html")
+
+    def test_successfully_update_product_page(self):
+        """User can access the edit product page if superuser."""
+
+        self.client.login(username="superuser", password="superpassword")
+
+        # Create image to load onto new page and avoid error.
+        f = BytesIO()
+        image = Image.new("RGB", (100, 100))
+        image.save(f, "png")
+        f.seek(0)
+        test_image = SimpleUploadedFile(
+            "test_image.png",
+            content=f.read(),
+        )
+
+        # Updated info to save to model.
+        recipe_info = {
+            "title": "updated recipe",
+            "description": "New description",
+            "publish_date": datetime.now(tz=timezone.utc),
+            "image": test_image,
+            "ingredients": "New ingredients.",
+            "instructions": "Pseudo instructions for testing purposes.",
+            "featured_product": 1,
+        }
+        image_data = {"image_field": test_image}
+
+        # Post data to update_recipe.
+        response = self.client.post(
+            f"/recipes/update_recipe/{self.recipe_unrestricted.title}/",
+            data=recipe_info,
+            files=image_data,
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/recipes/recipe/updated%20recipe/")

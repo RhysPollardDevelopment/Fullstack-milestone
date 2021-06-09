@@ -103,3 +103,37 @@ def add_recipe(request):
     }
     template = "recipes/add_recipe.html"
     return render(request, template, context)
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def update_recipe(request, recipe_title):
+    """
+    Edit a recipe retrieved from the database if user is a superuser.
+    """
+    recipe = get_object_or_404(Recipe, title=recipe_title)
+
+    # If method is post, load the form with data, files and model instance.
+    if request.method == "POST":
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+
+        # If valid, save the model instance and redirect to updated page.
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Recipe updated successfully!")
+            return redirect(reverse("recipe_detail", args=[recipe.title]))
+        else:
+            messages.error(
+                request,
+                "Errors trying to update. Please check form is correct.",
+            )
+    #  Method is get, fill form with stored information.
+    else:
+        form = RecipeForm(instance=recipe)
+
+    context = {
+        "recipe": recipe,
+        "form": form,
+    }
+    template = "recipes/update_recipe.html"
+    return render(request, template, context)
