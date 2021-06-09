@@ -14,7 +14,10 @@ class TestProductViews(TestCase):
     # Mocking create to avoid calling stripe.
     @patch("stripe.Customer.create")
     def setUp(self, mock_create):
-        """Creates a user object to use in testing"""
+        """
+        Creates user, superuser objects for logging in along with the
+        necessary recipes, products and subscriptions for required tests
+        """
         # Mocks the return value for fake Customer.create function.
         mock_create.return_value = {"id": "fakeID"}
 
@@ -27,6 +30,10 @@ class TestProductViews(TestCase):
         # questions/2619102/djangos-self-client-login-does-not-work-in-unit-tests
         self.user.set_password("12345")
         self.user.save()
+
+        self.superuser = User.objects.create_superuser(
+            "superuser", "superuser@test.com", password="superpassword"
+        )
 
         # Creates subscription instance so user can use has-active_subscription
         StripeSubscription.objects.create(
@@ -99,7 +106,7 @@ class TestProductViews(TestCase):
         Should be able to load a recipe detail page with 200 status.
         """
         response = self.client.get(
-            f"/recipes/{self.recipe_unrestricted.title}/"
+            f"/recipes/recipe/{self.recipe_unrestricted.title}/"
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
@@ -111,7 +118,10 @@ class TestProductViews(TestCase):
         have access but the restricted variable should equal true as this will
         determine whether any content is blocked.
         """
-        response = self.client.get(f"/recipes/{self.recipe_restricted.title}/")
+
+        response = self.client.get(
+            f"/recipes/recipe/{self.recipe_restricted.title}/"
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], True)
@@ -121,11 +131,30 @@ class TestProductViews(TestCase):
         Test for subscribed users accessing recipe_details, should
         have full access as restricted variable is False.
         """
+
         # Log in user as must be authenticated and subscribed
         self.client.login(username="testuser", password="12345")
 
         # Assert
-        response = self.client.get(f"/recipes/{self.recipe_restricted.title}/")
+        response = self.client.get(
+            f"/recipes/recipe/{self.recipe_restricted.title}/"
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], False)
+
+    def test_get_add_product_page(self):
+
+        self.client.login(username="superuser", password="superpassword")
+
+        response = self.client.get("/recipes/add/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipes/add_recipe.html")
+
+    def test_add_product_redirect_if_not_superuser(self):
+
+        self.client.login(username="testuser", password="12345")
+
+        response = self.client.get("/recipes/add/")
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/")

@@ -1,9 +1,20 @@
+from django.core.checks import messages
+from django.http import request
 from django.shortcuts import render, get_object_or_404
 from .models import Recipe
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from profiles.models import UserProfile
+
+
+def is_superuser(user):
+    if user.is_superuser:
+        return True
+    else:
+        messages.Error(request, "Only Freebees staff can do that.")
+        return False
 
 
 def all_recipes(request):
@@ -61,3 +72,11 @@ def recipe_detail(request, recipe_title):
     template = "recipes/recipe_detail.html"
     context = {"recipe": recipe, "restricted": restricted}
     return render(request, template, context)
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def add_recipe(request):
+
+    template = "recipes/add_recipe.html"
+    return render(request, template)
