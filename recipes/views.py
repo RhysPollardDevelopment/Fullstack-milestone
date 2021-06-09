@@ -34,7 +34,7 @@ def recipe_detail(request, recipe_title):
 
     # https://stackoverflow.com/questions/3345030/splitting-a-string-separated
     # -by-r-n-into-a-list-of-lines/3345052
-    # Use of splitlines to make textfiles easier to display.
+    # Use of splitlines to make textfiles easier to read.
 
     recipe.ingredients = recipe.ingredients.splitlines()
 

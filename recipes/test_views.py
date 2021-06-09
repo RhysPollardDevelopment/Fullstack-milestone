@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 import tempfile
 
 from django.contrib.auth.models import User
+from products.models import Product
 from subscriptions.models import StripeSubscription
 
 
@@ -34,22 +35,51 @@ class TestProductViews(TestCase):
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
+
         # Test image file to satisfy recipe image field.
         # https://stackoverflow.com/questions/26298821/django-testing-
         # model-with-imagefield
         self.test_image = tempfile.NamedTemporaryFile(suffix="jpg").name
+
+        self.product = Product.objects.create(
+            name="Test product",
+            description="Product test description",
+            image=self.test_image,
+        )
+
         # Create two recipes, one in past and one in future.
-        self.recipe = Recipe.objects.create(
+        self.recipe_unrestricted = Recipe.objects.create(
             title="test recipe",
             description="Recipe test description",
-            publish_date=datetime(2021, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
+            publish_date=datetime(2020, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
             image=self.test_image,
+            ingredients="Test for the text file.",
+            instructions="Pseudo instructions for testing purposes.",
+            featured_product=self.product,
         )
         Recipe.objects.create(
             title="too new",
             description="Should not load as date is not before now.",
-            publish_date=datetime(2030, 6, 1, 12, 0, 0, tzinfo=timezone.utc),
+            publish_date=datetime.now(tz=timezone.utc)
+            + relativedelta(months=+2),
             image=self.test_image,
+            ingredients="Test for the text file.",
+            instructions="Pseudo instructions for testing purposes.",
+            featured_product=self.product,
+        )
+
+        # Create recipe which is always within last 3 months.
+        now = datetime.now(tz=timezone.utc)
+        first_of_month = now + relativedelta(day=1)
+
+        self.recipe_restricted = Recipe.objects.create(
+            title="Restricted",
+            description="Recipe test description",
+            publish_date=first_of_month,
+            image=self.test_image,
+            ingredients="Test for the text file.",
+            instructions="Pseudo instructions for testing purposes.",
+            featured_product=self.product,
         )
 
     def test_get_all_recipes(self):
@@ -62,15 +92,18 @@ class TestProductViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipes.html")
         # Test that view only retrieves recipes before todays date.
-        self.assertEqual(response.context["recipes"].count(), 1)
+        self.assertEqual(response.context["recipes"].count(), 2)
 
-    def test_get_recipe_detail_page(self):
+    def test_get_recipe_detail_page_no_restrictions(self):
         """
         Should be able to load a recipe detail page with 200 status.
         """
-        response = self.client.get(f"/recipes/{self.recipe.title}/")
+        response = self.client.get(
+            f"/recipes/{self.recipe_unrestricted.title}/"
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
+        self.assertEqual(response.context["restricted"], False)
 
     def test_get_restricted_recipe_detail_unsubscribed(self):
         """
@@ -78,14 +111,7 @@ class TestProductViews(TestCase):
         have access but the restricted variable should equal true as this will
         determine whether any content is blocked.
         """
-        now = datetime.now(tz=timezone.utc)
-        first_of_month = now + relativedelta(day=1)
-        recipe = Recipe.objects.create(
-            title="unsuscribed",
-            description="Recipe test description",
-            publish_date=first_of_month,
-        )
-        response = self.client.get(f"/recipes/{recipe.title}/")
+        response = self.client.get(f"/recipes/{self.recipe_restricted.title}/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], True)
@@ -95,15 +121,11 @@ class TestProductViews(TestCase):
         Test for subscribed users accessing recipe_details, should
         have full access as restricted variable is False.
         """
-        now = datetime.now(tz=timezone.utc)
-        first_of_month = now + relativedelta(day=1)
-        recipe = Recipe.objects.create(
-            title="Subscribed",
-            description="Recipe test description",
-            publish_date=first_of_month,
-        )
+        # Log in user as must be authenticated and subscribed
         self.client.login(username="testuser", password="12345")
-        response = self.client.get(f"/recipes/{recipe.title}/")
+
+        # Assert
+        response = self.client.get(f"/recipes/{self.recipe_restricted.title}/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipe_detail.html")
         self.assertEqual(response.context["restricted"], False)

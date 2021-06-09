@@ -2,6 +2,9 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from unittest.mock import patch
+from datetime import datetime, timezone
+
+from subscriptions.models import StripeSubscription
 
 
 def create_test_user(client):
@@ -109,6 +112,13 @@ class TestProfileViews(TestCase):
         """
         Shows user they're subscription history page.
         """
+        StripeSubscription.objects.create(
+            subscription_id="testID",
+            start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            stripe_user=self.user.userprofile,
+        )
+
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/subscription_history/")
         self.assertEqual(response.status_code, 200)
