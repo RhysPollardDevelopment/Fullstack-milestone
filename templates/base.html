@@ -97,6 +97,9 @@
 
                             {% if request.user.is_superuser %}
                             <a class="dropdown-item"
+                                href="{% url 'add_product' %}">Add
+                                Product</a>
+                            <a class="dropdown-item"
                                 href="{% url 'add_recipe' %}">Add
                                 Recipe</a>
                             <div class="dropdown-divider"></div>

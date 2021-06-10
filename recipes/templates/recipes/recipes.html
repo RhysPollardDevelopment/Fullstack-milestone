@@ -12,6 +12,7 @@
             <a href="{% url 'recipe_detail' recipe.title %}"><img
                     src="{{ recipe.image.url }}" alt="" height="400rem"></a>
             <p>{{ recipe.title }}</p>
+            {% if request.user.is_superuser %}
             <a href="{% url 'update_recipe' recipe.title %}"
                 class="btn btn-info">Edit</a>
             <button type="button" class="btn btn-danger delete"
@@ -19,6 +20,7 @@
                 data-info="{% url 'delete_recipe' recipe.title %}">
                 Delete
             </button>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
