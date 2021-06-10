@@ -7,7 +7,12 @@ import tempfile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image
 from io import BytesIO
+from django.conf import settings
+import shutil
 from django.contrib.auth.models import User
+
+# New images are created in a tempfolder for deletion.
+settings.MEDIA_ROOT - tempfile.mkdtemp()
 
 
 class TestProductViews(TestCase):
@@ -33,6 +38,10 @@ class TestProductViews(TestCase):
             description="Product test description",
             image=self.test_image,
         )
+
+    def tearDown(self):
+        """Clears temp folder after tests"""
+        shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
 
     def test_get_all_products(self):
         """
@@ -224,6 +233,10 @@ class TestCompanyViews(TestCase):
             logo=self.test_image,
             company_url="www.test.com",
         )
+
+    def tearDown(self):
+        """Clears temp folder after tests"""
+        shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
 
     def test_get_partners_page(self):
         """
