@@ -12,7 +12,7 @@ import shutil
 from django.contrib.auth.models import User
 
 # New images are created in a tempfolder for deletion.
-settings.MEDIA_ROOT - tempfile.mkdtemp()
+settings.MEDIA_ROOT = tempfile.mkdtemp()
 
 
 class TestProductViews(TestCase):
