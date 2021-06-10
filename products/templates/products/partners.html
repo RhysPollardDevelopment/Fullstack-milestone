@@ -15,8 +15,44 @@
             <a href="{{ company.company_url }}" class="btn btn-info"
                 target="_blank">Visit
                 Us</a>
+            {% if request.user.is_superuser %}
+            <a href="{% url 'update_company' company.id %}"
+                class="btn btn-info">Edit</a>
+            <button type="button" class="btn btn-danger delete"
+                data-toggle="modal" data-target="#deleteConfirm"
+                data-info="{% url 'delete_company' company.id %}">
+                Delete
+            </button>
+            {% endif %}
         </div>
+
         {% endfor %}
     </div>
 </div>
-{% endblock %}
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete this walk?
+                </h5>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-info" id="cancel"> Cancel
+                </button>
+                <button class="btn btn-danger" id="confirm">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'recipes/js/delete.js' %}" type="text/javascript">
+    </script>
+    {% endblock %}

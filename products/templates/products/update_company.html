@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_title %}| Editing {company.name}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="{% url 'update_company' company.id %}" method="POST"
+        class="form mb-2" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        {% if field.name != 'logo' %}
+        {{ field| as_crispy_field }}
+        {% else %}
+        {{ field }}
+        {% endif %}
+        {% endfor %}
+        <div class="text-right">
+            <a href="{% url 'partners' %}" class="btn btn-danger"> Cancel</a>
+            <button class="btn btn-success" type="submit">Edit
+                Company</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

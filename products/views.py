@@ -53,7 +53,7 @@ def add_product(request):
 
         if form.is_valid():
             product = form.save()
-            messages.success(request, "product added successfully!")
+            messages.success(request, "Product added successfully!")
             return redirect(reverse("product_details", args=[product.id]))
         else:
             messages.error(
@@ -85,7 +85,7 @@ def update_product(request, product_id):
         # If valid, save the model instance and redirect to updated page.
         if form.is_valid():
             form.save()
-            messages.success(request, "product updated successfully!")
+            messages.success(request, "Product updated successfully!")
             return redirect(reverse("product_details", args=[product.id]))
         else:
             messages.error(
@@ -110,5 +110,81 @@ def delete_product(request, product_id):
     """Delete a product from the database."""
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
-    messages.success(request, "product deleted successfully.")
+    messages.success(request, "Product deleted successfully.")
     return redirect(reverse("products"))
+
+
+# Company CRUD views.
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def add_company(request):
+    """
+    Add a company to the database if user is a superuser.
+    """
+
+    if request.method == "POST":
+        form = CompanyForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Company added successfully!")
+            return redirect(reverse("partners"))
+        else:
+            messages.error(
+                request,
+                "Failed to create company. Please check form is correct.",
+            )
+    else:
+        form = CompanyForm()
+
+    context = {
+        "form": form,
+    }
+    template = "products/add_company.html"
+    return render(request, template, context)
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def update_company(request, company_id):
+    """
+    Edit a company retrieved from the database if user is a superuser.
+    """
+    company = get_object_or_404(Company, pk=company_id)
+
+    # If method is post, load the form with data, files and model instance.
+    if request.method == "POST":
+        form = CompanyForm(request.POST, request.FILES, instance=company)
+
+        # If valid, save the model instance and redirect to updated page.
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Company updated successfully!")
+            return redirect(reverse("partners"))
+        else:
+            messages.error(
+                request,
+                "An error was found. Please check form is correct.",
+            )
+    #  Method is get, fill form with stored information.
+    else:
+        form = CompanyForm(instance=company)
+
+    context = {
+        "company": company,
+        "form": form,
+    }
+    template = "products/update_company.html"
+    return render(request, template, context)
+
+
+@user_passes_test(is_superuser, login_url="/", redirect_field_name=None)
+@login_required
+def delete_company(request, company_id):
+    """Delete a company from the database."""
+    company = get_object_or_404(Company, pk=company_id)
+    company.delete()
+    messages.success(request, "Company deleted successfully.")
+    return redirect(reverse("partners"))
