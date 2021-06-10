@@ -84,6 +84,7 @@
                         <a class="nav-link"
                             href="{% url 'recipes' %}">Recipes</a>
                     </li>
+                    {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
                             id="profileDropdown" role="button"
@@ -93,7 +94,7 @@
                         </a>
                         <div class="dropdown-menu"
                             aria-labelledby="profileDropdown">
-                            {% if request.user.is_authenticated %}
+
                             {% if request.user.is_superuser %}
                             <a class="dropdown-item"
                                 href="{% url 'add_recipe' %}">Add
@@ -103,10 +104,9 @@
                             <a class="dropdown-item"
                                 href="{% url 'profiles' %}">My
                                 Profile</a>
-                            {% endif %}
                         </div>
                     </li>
-
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
                             id="navbarDropdown" role="button"
