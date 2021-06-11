@@ -3,8 +3,10 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from dateutil.relativedelta import relativedelta
 
 from .models import UserProfile
+from recipes.models import Recipe
 
 from allauth.account.views import PasswordChangeView
 
@@ -90,9 +92,35 @@ def my_recipes(request):
 @login_required
 def subscription_history(request):
     profile = get_object_or_404(UserProfile, user=request.user)
-    today = timezone.now()
-    stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
-    invoices = stripe_sub.invoice_set.all()
+
+    # Collects list of all profiles subscription models.
+    stripe_sub = list(profile.stripesubscription_set.all())
+
+    recipes_list = Recipe.objects.all()
+
+    invoices = []
+
+    # For each subscription in the list, it checks runs through every invoice.
+    for sub in stripe_sub:
+        sub_invoices = list(sub.invoice_set.all())
+
+        # Each invoice checks if a recipe publish date falls between the
+        # start and end of the invoice period.
+        for sub_invoice in sub_invoices:
+            for recipe in recipes_list:
+                d = recipe.publish_date
+                # If so then this is what customer received access to and is
+                # added as part of the invoice list.
+                if (
+                    sub_invoice.current_start < d
+                    and sub_invoice.current_end > d
+                ):
+                    sub_invoice.recipe = recipe
+            invoices.append(sub_invoice)
+
+    # https://www.w3schools.com/python/ref_list_sort.asp - ref for reverse.
+    # https://wiki.python.org/moin/HowTo/Sorting#Sortingbykeys - using keys.
+    invoices.sort(key=lambda x: x.current_start, reverse=True)
 
     template = "profiles/subscription_history.html"
     context = {

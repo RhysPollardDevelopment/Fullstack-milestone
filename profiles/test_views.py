@@ -1,30 +1,12 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from django.urls import reverse
 from unittest.mock import patch
 from datetime import datetime, timezone
+import tempfile
 
-from subscriptions.models import StripeSubscription
-
-
-def create_test_user(client):
-    user_data = {
-        "username": "testuser",
-        "password": "12345",
-        "password2": "12345",
-    }
-    client.post(reverse("users:register"), data=user_data)
-
-
-def login_sample_user(client):
-    logged_in = client.post(
-        reverse("users:login"),
-        data={
-            "username": "testuser",
-            "password": "12345",
-        },
-    )
-    return logged_in
+from subscriptions.models import StripeSubscription, Invoice
+from recipes.models import Recipe
+from products.models import Product
 
 
 class TestProfileViews(TestCase):
@@ -110,16 +92,58 @@ class TestProfileViews(TestCase):
 
     def test_get_subscription_history(self):
         """
-        Shows user they're subscription history page.
+        Shows user they're subscription history page, primarily invoices and
+        monthly subscription bonuses such as recipes to access and products
+        delivered.
         """
-        StripeSubscription.objects.create(
+        # Creates all the data required to mock a subscription history.
+        sub = StripeSubscription.objects.create(
             subscription_id="testID",
             start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
+        Invoice.objects.create(
+            stripe_subscription=sub,
+            invoice_number="123456",
+            current_start=datetime(
+                2021, 1, 10, 0, 0, 0, 0, tzinfo=timezone.utc
+            ),
+            current_end=datetime(2021, 2, 10, 0, 0, 0, 0, tzinfo=timezone.utc),
+            delivery_name="test user",
+            address_1="12",
+            address_2="test street",
+            town_or_city="test town",
+            county="test county",
+            postcode="T35T",
+        )
 
+        test_image = tempfile.NamedTemporaryFile(suffix="jpg").name
+
+        product = Product.objects.create(
+            name="Product",
+            description="Product description",
+            image=test_image,
+        )
+
+        recipe = Recipe.objects.create(
+            title="recipe title",
+            description="recipe description",
+            image=test_image,
+            publish_date=datetime(2021, 1, 15, tzinfo=timezone.utc),
+            featured_product=product,
+        )
+
+        # Logs in user to test client.
         self.client.login(username="testuser", password="12345")
         response = self.client.get("/profiles/subscription_history/")
+
+        # Asserts that response is successfull and loads correct page.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/subscription_history.html")
+
+        # Asserts that the invoice has been loaded in context with appropriate
+        # recipe.
+        invoices = response.context["invoices"][0]
+        self.assertEqual(len(response.context["invoices"]), 1)
+        self.assertEqual(recipe.title, invoices.recipe.title)
