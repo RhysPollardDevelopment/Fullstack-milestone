@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from dateutil.relativedelta import relativedelta
 
 from .models import UserProfile
 from recipes.models import Recipe

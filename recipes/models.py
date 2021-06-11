@@ -15,7 +15,7 @@ class Recipe(models.Model):
     description = models.CharField(max_length=400)
     ingredients = models.TextField(null=True)
     instructions = models.TextField(null=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True)
     publish_date = models.DateTimeField(
         null=True,
         help_text="Date used to determine loading date and user access.",

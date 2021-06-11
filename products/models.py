@@ -13,7 +13,7 @@ class Product(models.Model):
     )
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=600)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True)
     texture = models.CharField(max_length=254, blank=True, null=True)
     flavour = models.CharField(max_length=254, blank=True, null=True)
     company = models.ForeignKey(

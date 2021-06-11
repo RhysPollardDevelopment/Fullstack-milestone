@@ -1,15 +1,5 @@
 from django.contrib import admin
-import stripe
-from .models import Subscription, StripeSubscription, Invoice
-
-
-class Subscription_Admin(admin.ModelAdmin):
-    list_display = (
-        "user_profile",
-        "start_date",
-        "expiry_date",
-        "cancel_date",
-    )
+from .models import StripeSubscription, Invoice
 
 
 class StripeSubscriptionAdmin(admin.ModelAdmin):
@@ -38,6 +28,5 @@ class InvoiceAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(Subscription, Subscription_Admin)
 admin.site.register(StripeSubscription, StripeSubscriptionAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
