@@ -1,0 +1,7 @@
+Hi {{ customer. }},
+
+It looks as though your payment method has failed for your subscription purchase or renewal.
+
+Contact us at {{ contact_email }} to sort this out and update your card information.
+
+Freebees Team

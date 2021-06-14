@@ -1,0 +1,12 @@
+Hello, {{ invoice.delivery_name }}!,
+
+It looks as though your subscription to Freebees has been cancelled as of {{ cancelled }}
+
+Your subscription which began on {{ subscription.start_date }} has been cancelled effective immediately.
+This means you will not be receiving any further honey or access to our site's recipes.
+
+If you have not expected or asked for this, it may be due to a faulty payment or external error.
+
+If you wish to find out more or solve this error, please contact us as {{ contact_email }}.
+
+Freebees Team

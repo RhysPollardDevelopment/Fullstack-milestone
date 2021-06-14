@@ -1,0 +1,1 @@
+Freebees Subscription Cancelled for {{ invoice.delivery_name }}

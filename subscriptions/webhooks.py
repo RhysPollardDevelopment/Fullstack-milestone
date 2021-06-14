@@ -107,21 +107,64 @@ def webhook_received(request):
             )
 
     if event_type == "invoice.payment_failed":
-        # If the payment fails or the customer does not have a valid payment
-        #  method,
-        # an invoice.payment_failed event is sent, the subscription becomes
-        #  past_due.
         # Use this webhook to notify your user that their payment has
         # failed and to retrieve new card details.
-        print("invoice.payment_failed")
+        # Create email for customer.
+        print(data_object)
+        # customer_id = data_object["customer"]
+        # freebees_customer = UserProfile.objects.get(
+        #     stripe_customer_id=customer_id
+        # )
+        # subscription = StripeSubscription.objects.get()
+
+        # customer_email = freebees_customer.user.email
+        # subject = render_to_string(
+        #     "subscriptions/email_templates/payment_failed_subject.txt"
+        # )
+        # body = render_to_string(
+        #     "subscriptions/email_templates/payment_failed_body.txt",
+        #     {
+        #         "user": user,
+        #         "contact_email": settings.DEFAULT_FROM_EMAIL,
+        #     },
+        # )
+
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
     if event_type == "customer.subscription.deleted":
-        # handle subscription cancelled automatically based
-        # upon your subscription settings. Or if the user cancels it.
-        # print(data)
-
         # Use to send customer an email informing them and change subscription
-        print("customer.subscription.deleted")
+        print("customer.subscription.deleted", data_object)
+
+        customer_id = data_object["customer"]
+        freebees_customer = UserProfile.objects.get(
+            stripe_customer_id=customer_id
+        )
+
+        subscription_id = data_object["id"]
+        subscription = StripeSubscription.objects.get(
+            subscription_id=subscription_id
+        )
+
+        invoice = subscription.invoice_set.all().order_by("current_end")[0]
+
+        cancelled = timezone.now()
+
+        customer_email = freebees_customer.user.email
+        subject = render_to_string(
+            "subscriptions/email_templates/subscription_deleted_subject.txt",
+            {"invoice": invoice},
+        )
+        body = render_to_string(
+            "subscriptions/email_templates/subscription_deleted_body.txt",
+            {
+                "invoice": invoice,
+                "subscription": subscription,
+                "cancelled": cancelled,
+                "contact_email": settings.DEFAULT_FROM_EMAIL,
+            },
+        )
+
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
     if event_type == "customer.subscription.created":
         """
@@ -190,7 +233,6 @@ def webhook_received(request):
 
     if event_type == "customer.subscription.updated":
         # set up email to tell customer they have a new subscription.
-        print("Subscription updated", data_object["cancel_at_period_end"])
         customer_id = data_object["customer"]
         freebees_customer = UserProfile.objects.get(
             stripe_customer_id=customer_id
@@ -231,8 +273,7 @@ def webhook_received(request):
                     "contact_email": settings.DEFAULT_FROM_EMAIL,
                 },
             )
-        print("sending mail")
-        print(subscription.cancel_at_end)
+
         customer_email = freebees_customer.user.email
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
