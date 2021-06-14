@@ -192,6 +192,7 @@ def create_subscription(request):
                         },
                         "phone": data["phone_number"],
                     },
+                    email=profile.user.email,
                 )
 
                 # Attach the payment method to the customer

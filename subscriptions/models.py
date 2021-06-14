@@ -1,9 +1,5 @@
 from django.db import models
 from profiles.models import UserProfile
-from django.utils import timezone
-from dateutil.relativedelta import relativedelta
-
-# Create your models here.
 
 
 class StripeSubscription(models.Model):

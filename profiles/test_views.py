@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from datetime import datetime, timezone
 import tempfile
 
@@ -38,26 +38,41 @@ class TestProfileViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/userprofile.html")
 
-    def test_get_update_details_page(self):
+    @patch("stripe.Customer.modify")
+    @patch("stripe.Customer.retrieve")
+    def test_get_update_details_page(self, mock_retrieve, mock_update):
         """
         Test that user can route to their details page to edit information.
         """
+
         self.client.login(username="testuser", password="12345")
-        response = self.client.get("/profiles/update_address/")
+
+        response = self.client.get("/profiles/update/address/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/update_address.html")
+        self.assertEqual(mock_update.called, False)
+        self.assertEqual(mock_retrieve.called, True)
 
-    def test_can_update_details(self):
+    @patch("stripe.Customer.modify")
+    @patch("stripe.Customer.retrieve")
+    def test_can_update_details(self, mock_retrieve, mock_update):
         """
         User should be able to send new information in post method and update
         their details, results should redirect user to profile page.
         """
         self.client.login(username="testuser", password="12345")
+
         self.user.userprofile.default_street_address2 = "test road"
+
         response = self.client.post(
-            "/profiles/update_address/",
+            "/profiles/update/address/",
             {
+                "default_phone_number": "123456",
+                "default_street_address1": "124",
                 "default_street_address2": "test street",
+                "default_town_or_city": "Fake town",
+                "default_county": "Falsehood",
+                "default_postcode": "T35T",
             },
         )
         # Loads updated object from database to compare street_address2
@@ -67,6 +82,36 @@ class TestProfileViews(TestCase):
         self.assertEqual(
             updated.userprofile.default_street_address2, "test street"
         )
+        self.assertEqual(mock_update.called, True)
+        self.assertEqual(mock_retrieve.called, True)
+
+    @patch("stripe.Customer.modify")
+    def test_can_update_billing(self, mock_update):
+        """
+        User should be able to send new information in post method and update
+        their details, results should redirect user to profile page.
+        """
+
+        self.client.login(username="testuser", password="12345")
+
+        self.user.userprofile.default_street_address2 = "test road"
+
+        response = self.client.post(
+            "/profiles/update/billing/",
+            {
+                "billing_address1": "987",
+                "billing_address2": "billing street",
+                "billing_town_or_city": "billtown",
+                "billing_county": "Moneyshire",
+                "billing_postcode": "81LL",
+                "billing_phone_number": "12345678",
+                "billing_full_name": "testuser",
+            },
+        )
+        # Loads updated object from database to compare street_address2
+        self.assertRedirects(response, "/profiles/")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(mock_update.called, True)
 
     def test_get_password_change_done_page(self):
         """

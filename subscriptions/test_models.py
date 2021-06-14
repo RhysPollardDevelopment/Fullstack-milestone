@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.test import TestCase
-from .models import Invoice, StripeSubscription, Subscription
+from .models import Invoice, StripeSubscription
 from django.utils import timezone
 from unittest import mock
 
@@ -35,7 +35,6 @@ class TestSubscriptionModel(TestCase):
         Necessary as start_date is automatic and un-editable.
         """
         mock_create.return_value = {"id": "fakeID"}
-        self.new_sub = Subscription.objects.create()
         self.user = User.objects.create(
             username="testuser",
             email="testuser@test.com",
@@ -50,32 +49,6 @@ class TestSubscriptionModel(TestCase):
             end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
-
-    @mock.patch("django.utils.timezone.now", side_effect=mock_now)
-    def test_subscription_cancel_method(self, *args):
-        """
-        Mocks a date in the future and compares the calculated expiration
-        date to a pre-determined value.
-        """
-        self.new_sub.cancel()
-        self.new_sub.save()
-        expiration = datetime(2021, 5, 24, 10, 15, 30, tzinfo=timezone.utc)
-        self.assertEqual(self.new_sub.start_date, mocked_start)
-        self.assertEqual(self.new_sub.expiry_date, expiration)
-        self.assertEqual(self.new_sub.cancel_date, mocked_now)
-
-    @mock.patch("django.utils.timezone.now", side_effect=mock_post_24th)
-    def test_cancellation_after_start_day(self, *args):
-        """
-        Mocks a date in the future and compares the calculated expiration
-        date to a pre-determined value after the start date's day value.
-        """
-        self.new_sub.cancel()
-        self.new_sub.save()
-        expiration = datetime(2021, 6, 24, 10, 15, 30, tzinfo=timezone.utc)
-        self.assertEqual(self.new_sub.start_date, mocked_start)
-        self.assertEqual(self.new_sub.expiry_date, expiration)
-        self.assertEqual(self.new_sub.cancel_date, mocked_after_24th)
 
     def test_stripesubscription_to_string(self):
         """Test overloaded string functions"""
