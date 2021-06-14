@@ -1,0 +1,9 @@
+We're so glad to see you've decided to stay!
+
+Your account will renew for £6.00 on {{ subscription.end_date }} as per usual.
+
+We can't wait to keep supporting our bees and partners with your help.
+
+Stay sweet!
+
+Freebees

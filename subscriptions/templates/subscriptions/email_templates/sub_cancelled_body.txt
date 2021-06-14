@@ -1,0 +1,12 @@
+We're sad to see you go!
+
+While you may be leaving, you still have access to all our features until {{ subscription.end_date }}
+
+So any recipes are still yours to access and you'll still receive any honey which we would deliver during this time.
+You're also welcome to reactivate your subscription anytime before the end date and continue as normal.
+
+If this wasn't you then please contact us at {{ contact_email }}.
+
+Stay sweet until we see you again!
+
+Freebees

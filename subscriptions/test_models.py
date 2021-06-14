@@ -6,30 +6,9 @@ from django.utils import timezone
 from unittest import mock
 
 
-# Suggestion for layout when using mock for timezone.now found at:
-# https://snakeycode.wordpress.com/2015/11/04/mocking-django-timezone/
-mocked_start = datetime(2020, 9, 24, 10, 15, 30, tzinfo=timezone.utc)
-mocked_now = datetime(2021, 5, 12, 13, 30, 0, tzinfo=timezone.utc)
-mocked_after_24th = datetime(2021, 5, 26, 13, 30, 0, tzinfo=timezone.utc)
-mocked_same_day_of_month = datetime(2021, 5, 24, 11, 0, 0, tzinfo=timezone.utc)
-
-
-def mock_start():
-    return mocked_start
-
-
-def mock_now():
-    return mocked_now
-
-
-def mock_post_24th():
-    return mocked_after_24th
-
-
 class TestSubscriptionModel(TestCase):
-    @mock.patch("django.utils.timezone.now", side_effect=mock_start)
     @mock.patch("stripe.Customer.create")
-    def setUp(self, mock_create, *args):
+    def setUp(self, mock_create):
         """
         Uses mock to set start date of new object to 29/09/2020 10:15:30.
         Necessary as start_date is automatic and un-editable.

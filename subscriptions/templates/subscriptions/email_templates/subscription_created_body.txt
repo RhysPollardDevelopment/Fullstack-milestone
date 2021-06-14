@@ -1,0 +1,17 @@
+Welcome to Freebees, {{ invoice.delivery_name }}!,
+
+Thank you for purchasing a Freebees subscription, we're so happy to have you as part of the hive.
+
+If you've ordered before the 1st of the month then you should be receiving your honey by the 4th at the below address:
+
+{{ invoice.address_1 }} {{ invoice.address_2 }}
+{{ invoice.town_or_city }}
+{{ invoice.postcode }}
+
+In the meantime take a look at all our recipes on our website!
+
+You can check your subscription status and invoices at any time by logging into your profile.
+If you have any other questions, send us a buzz at {{ contact_email }}.
+
+Stay sweet!
+Freebees

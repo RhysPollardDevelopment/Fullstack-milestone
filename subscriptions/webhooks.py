@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from profiles.models import UserProfile
 from .models import StripeSubscription, Invoice
@@ -61,7 +63,7 @@ def webhook_received(request):
                 subscription_id=subscription
             )
             invoice_shipping = data_object["customer_shipping"]
-            Invoice.objects.create(
+            invoice = Invoice.objects.create(
                 stripe_subscription=active_subscription,
                 invoice_number=data_object["id"],
                 current_start=datetime.fromtimestamp(
@@ -83,6 +85,26 @@ def webhook_received(request):
                 ),
             )
             active_subscription.save()
+
+            # Create email for customer.
+            customer_email = active_subscription.user.email
+            subject = render_to_string(
+                "subscriptions/email_templates/invoice_paid_subject.txt",
+                {
+                    "invoice": invoice,
+                },
+            )
+            body = render_to_string(
+                "subscriptions/email_templates/invoice_paid_body.txt",
+                {
+                    "invoice": invoice,
+                    "contact_email": settings.DEFAULT_FROM_EMAIL,
+                },
+            )
+
+            send_mail(
+                subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email]
+            )
 
     if event_type == "invoice.payment_failed":
         # If the payment fails or the customer does not have a valid payment
@@ -133,7 +155,7 @@ def webhook_received(request):
         # If so then no stripesubscription to assign to, causes error.
         first_invoice = stripe.Invoice.retrieve(data_object["latest_invoice"])
         invoice_shipping = first_invoice["customer_shipping"]
-        Invoice.objects.create(
+        invoice = Invoice.objects.create(
             stripe_subscription=new_subscription,
             invoice_number=first_invoice["id"],
             current_start=datetime.fromtimestamp(
@@ -150,10 +172,69 @@ def webhook_received(request):
             postcode=invoice_shipping["address"]["postal_code"],
         )
 
+        # Create email for customer.
+        customer_email = freebees_customer.user.email
+        subject = render_to_string(
+            "subscriptions/email_templates/subscription_created_subject.txt",
+            {"invoice": invoice},
+        )
+        body = render_to_string(
+            "subscriptions/email_templates/subscription_created_body.txt",
+            {
+                "invoice": invoice,
+                "contact_email": settings.DEFAULT_FROM_EMAIL,
+            },
+        )
+
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
+
     if event_type == "customer.subscription.updated":
         # set up email to tell customer they have a new subscription.
-        print("Subscription updated")
-        print(data_object)
+        print("Subscription updated", data_object["cancel_at_period_end"])
+        customer_id = data_object["customer"]
+        freebees_customer = UserProfile.objects.get(
+            stripe_customer_id=customer_id
+        )
+        today = timezone.now()
+        subscription = freebees_customer.stripesubscription_set.filter(
+            end_date__gte=today
+        )[0]
+
+        if data_object["cancel_at_period_end"]:
+            subscription.cancel_at_end = True
+            subscription.save()
+
+            # Create email for customer.
+
+            subject = render_to_string(
+                "subscriptions/email_templates/sub_cancelled_subject.txt",
+                {"subscription": subscription},
+            )
+            body = render_to_string(
+                "subscriptions/email_templates/sub_cancelled_body.txt",
+                {
+                    "subscription": subscription,
+                    "contact_email": settings.DEFAULT_FROM_EMAIL,
+                },
+            )
+        else:
+            subscription.cancel_at_end = False
+            subscription.save()
+            subject = render_to_string(
+                "subscriptions/email_templates/sub_reactivated_subject.txt",
+                {"subscription": subscription},
+            )
+            body = render_to_string(
+                "subscriptions/email_templates/sub_reactivated_body.txt",
+                {
+                    "subscription": subscription,
+                    "contact_email": settings.DEFAULT_FROM_EMAIL,
+                },
+            )
+        print("sending mail")
+        print(subscription.cancel_at_end)
+        customer_email = freebees_customer.user.email
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
     return JsonResponse({"status": "success"})
 

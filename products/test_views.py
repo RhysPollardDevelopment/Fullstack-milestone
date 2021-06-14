@@ -104,6 +104,8 @@ class TestProductViews(TestCase):
             "image": test_image,
         }
 
+        image_data = {"image_field": test_image}
+
         response = self.client.post(
             "/products/add_product/",
             product_info,

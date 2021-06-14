@@ -1,0 +1,11 @@
+Hi {{ invoice.delivery_name }},
+
+Thank you for your payment to renew your Freebees subscription! 
+We hope you enjoy the next batch of honey from our amazing partners.
+
+If you want to see your account or update youe details let our busy bees know through your profile page.
+If you have any other questions, send us a buzz at {{ contact_email }}.
+
+Stay sweet!
+
+Freebees Team

@@ -1,0 +1,1 @@
+Freebees subscription {{ subscription }} cancelled.

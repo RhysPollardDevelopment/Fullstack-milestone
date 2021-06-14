@@ -219,3 +219,61 @@ class TestSubscriptionViews(TestCase):
         self.assertEqual(mock_update.called, True)
         self.assertEqual(mock_create.called, True)
         self.assertEqual(mock_attach.called, True)
+
+    @patch("stripe.Customer.modify")
+    @patch("stripe.Subscription.create")
+    @patch("stripe.PaymentMethod.attach")
+    def test_create_subscription_different_billing(
+        self, mock_attach, mock_create, mock_update
+    ):
+        """
+        Mocks the data sent as a post to the create-subscription view. Data is
+        assigned as required and all API calls are mocked to prevent data
+        creation.
+
+        Should receive a 200 as only awaits a JsonResponse. No templates.
+        """
+        # Mock data and create a return value for subscription.create.
+        mock_create.return_value = {"id": "test_sub_ID", "status": "active"}
+        body_data = {
+            "customerId": "test customer",
+            "paymentMethodId": "test payment",
+            "priceId": "12345",
+            "sameBilling": False,
+            "saveShipping": True,
+            "phone_number": "+01234567",
+            "street_address1": "new",
+            "street_address2": "subcription",
+            "town_or_city": "created",
+            "county": "for",
+            "postcode": "stripe",
+            "full_name": "Tina Tester",
+            "billing_full_name": "Colin Mockerie",
+            "billing_town_or_city": "not same",
+            "billing_address1": "different",
+            "billing_address2": "other sub",
+            "billing_postcode": "stripe2",
+            "billing_county": "from",
+            "billing_phone_number": "987654321",
+        }
+        # Change data into Json format to be passed through to the view.
+        # https://www.w3schools.com/python/python_json.asp
+        data = json.dumps(body_data)
+        self.client.login(username="testuser", password="12345")
+
+        # https://stackoverflow.com/questions/18867898/attributeerror-str-
+        # object-has-no-attribute-items
+        # Stack overflow post highlighting need for content_type.
+
+        # https://docs.djangoproject.com/en/3.2/topics/testing/tools/
+        # Django doc specifying layout for post request.
+        response = self.client.post(
+            "/subscription/create-subscription",
+            content_type="application/json",
+            data=data,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_update.called, True)
+        self.assertEqual(mock_create.called, True)
+        self.assertEqual(mock_attach.called, True)

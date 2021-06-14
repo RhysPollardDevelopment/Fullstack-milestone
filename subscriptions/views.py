@@ -150,9 +150,10 @@ def create_subscription(request):
                 "default_postcode": data["postcode"],
             }
 
-            # If sameBilling is true, set data to shipping info or billing
-            # info if false.
+            # If same billing is true, load billing form.
             if data["sameBilling"]:
+                billing_form = None
+
                 phone = data["phone_number"]
                 address = {
                     "city": data["town_or_city"],
@@ -163,15 +164,24 @@ def create_subscription(request):
                     "country": "GB",
                 }
             else:
-                phone = data["billing_phone_number"]
-                address = {
-                    "city": data["billing_town_or_city"],
-                    "line1": data["billing_address1"],
-                    "line2": data["billing_address2"],
-                    "postal_code": data["billing_postcode"],
-                    "state": data["billing_county"],
-                    "country": "GB",
-                }
+                billing_form = BillingAddressForm(data)
+                # If form is valid then data is equal to billing information.
+                if billing_form.is_valid():
+
+                    phone = data["billing_phone_number"]
+                    address = {
+                        "city": data["billing_town_or_city"],
+                        "line1": data["billing_address1"],
+                        "line2": data["billing_address2"],
+                        "postal_code": data["billing_postcode"],
+                        "state": data["billing_county"],
+                        "country": "GB",
+                    }
+                else:
+                    messages.error(
+                        request,
+                        "Update failed. Please check form for any errors.",
+                    )
 
             # Once data is assigned, tries to modify the stripe customer info.
             try:
@@ -218,9 +228,6 @@ def create_subscription(request):
                     expand=["latest_invoice.payment_intent"],
                 )
 
-                # associate subscription with the user
-                # request.user.userprofile.subscription_id = subscription.id
-                # request.user.save()
                 # returns the subscription object information for front end.
                 return JsonResponse(subscription)
 
@@ -277,8 +284,8 @@ def cancel_subscription(request):
         stripe.Subscription.modify(
             stripe_sub.subscription_id, cancel_at_period_end=True
         )
-        stripe_sub.cancel_at_end = True
-        stripe_sub.save()
+        # stripe_sub.cancel_at_end = True
+        # stripe_sub.save()
     except Exception as e:
         print(e)
         return JsonResponse({"error": (e.args[0])}, status=403)
@@ -303,8 +310,8 @@ def reactivate(request):
             cancel_at_period_end=False,
             proration_behavior="none",
         )
-        stripe_sub.cancel_at_end = False
-        stripe_sub.save()
+        # stripe_sub.cancel_at_end = False
+        # stripe_sub.save()
     except Exception as e:
         return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/reactivate_confirmation.html"
