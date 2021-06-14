@@ -1,1 +1,1 @@
-Freebees subscription {{ subscription }} reactivated!
+Freebees subscription reactivated!

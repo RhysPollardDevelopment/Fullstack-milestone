@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import Product, Company
-from .forms import ProductForm, CompanyForm
+from .forms import CompanyForm
 from unittest.mock import patch
 from django.contrib.messages import get_messages
 import tempfile
@@ -103,8 +103,6 @@ class TestProductViews(TestCase):
             "description": "Product Added description",
             "image": test_image,
         }
-
-        image_data = {"image_field": test_image}
 
         response = self.client.post(
             "/products/add_product/",
@@ -287,8 +285,6 @@ class TestCompanyViews(TestCase):
             "logo": test_image,
             "company_url": "www.newcompany.com",
         }
-
-        image_data = {"image_field": test_image}
 
         response = self.client.post(
             "/products/partners/add_company/",

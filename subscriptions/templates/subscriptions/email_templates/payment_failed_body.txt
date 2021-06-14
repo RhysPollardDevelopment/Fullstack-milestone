@@ -1,4 +1,4 @@
-Hi {{ customer. }},
+Hi {{ invoice.delivery_name }},
 
 It looks as though your payment method has failed for your subscription purchase or renewal.
 

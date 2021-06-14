@@ -111,44 +111,50 @@ def webhook_received(request):
         # failed and to retrieve new card details.
         # Create email for customer.
         print(data_object)
-        # customer_id = data_object["customer"]
-        # freebees_customer = UserProfile.objects.get(
-        #     stripe_customer_id=customer_id
-        # )
-        # subscription = StripeSubscription.objects.get()
+        customer_id = data_object["customer"]
+        freebees_customer = UserProfile.objects.get(
+            stripe_customer_id=customer_id
+        )
+        subscription = StripeSubscription.objects.get()
 
-        # customer_email = freebees_customer.user.email
-        # subject = render_to_string(
-        #     "subscriptions/email_templates/payment_failed_subject.txt"
-        # )
-        # body = render_to_string(
-        #     "subscriptions/email_templates/payment_failed_body.txt",
-        #     {
-        #         "user": user,
-        #         "contact_email": settings.DEFAULT_FROM_EMAIL,
-        #     },
-        # )
+        invoice = subscription.invoice_set.all().order_by("current_end")[0]
+
+        customer_email = freebees_customer.user.email
+        subject = render_to_string(
+            "subscriptions/email_templates/payment_failed_subject.txt"
+        )
+        body = render_to_string(
+            "subscriptions/email_templates/payment_failed_body.txt",
+            {
+                "invoice": invoice,
+                "contact_email": settings.DEFAULT_FROM_EMAIL,
+            },
+        )
 
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
     if event_type == "customer.subscription.deleted":
         # Use to send customer an email informing them and change subscription
-        print("customer.subscription.deleted", data_object)
-
         customer_id = data_object["customer"]
         freebees_customer = UserProfile.objects.get(
             stripe_customer_id=customer_id
         )
 
+        # Find user subscription.
         subscription_id = data_object["id"]
         subscription = StripeSubscription.objects.get(
             subscription_id=subscription_id
         )
 
+        # Find most recent invoice for customer details.
         invoice = subscription.invoice_set.all().order_by("current_end")[0]
 
         cancelled = timezone.now()
 
+        subscription.end_date = cancelled
+        subscription.save()
+
+        # Construct email.
         customer_email = freebees_customer.user.email
         subject = render_to_string(
             "subscriptions/email_templates/subscription_deleted_subject.txt",
@@ -250,7 +256,6 @@ def webhook_received(request):
 
             subject = render_to_string(
                 "subscriptions/email_templates/sub_cancelled_subject.txt",
-                {"subscription": subscription},
             )
             body = render_to_string(
                 "subscriptions/email_templates/sub_cancelled_body.txt",
@@ -278,7 +283,3 @@ def webhook_received(request):
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
 
     return JsonResponse({"status": "success"})
-
-    # customer.subscription.trial_will_end -
-
-    # past_due - email customer about fact it has failed?
