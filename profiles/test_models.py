@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from datetime import datetime, timezone
 from unittest.mock import patch
-from subscriptions.models import Subscription, StripeSubscription
+from subscriptions.models import StripeSubscription
 
 
 class TestProfileModels(TestCase):
@@ -42,11 +42,6 @@ class TestProfileModels(TestCase):
         Tests that when a subscription is cancelled the userprofile property
         correctly registers the change to false for active subscritpion.
         """
-        subscription = Subscription.objects.create(user_profile=self.profile)
-
-        # Subscription is cancelled and change saved to database.
-        subscription.cancel()
-        subscription.save()
 
         # Assert: As subscription is cancelled, should produce false result.
         self.assertEqual(self.profile.has_active_subscription, False)

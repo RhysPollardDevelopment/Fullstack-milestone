@@ -104,16 +104,11 @@ class TestProductViews(TestCase):
             "image": test_image,
         }
 
-        image_data = {"image_field": test_image}
-
         response = self.client.post(
             "/products/add_product/",
             product_info,
         )
 
-        form = ProductForm(product_info, files=image_data)
-
-        self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/products/2/")
 
@@ -298,7 +293,7 @@ class TestCompanyViews(TestCase):
             company_info,
         )
 
-        form = CompanyForm(company_info, files=image_data)
+        form = CompanyForm(company_info)
         print(form.errors)
 
         self.assertTrue(form.is_valid())

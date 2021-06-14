@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from datetime import datetime, timezone
 import tempfile
 

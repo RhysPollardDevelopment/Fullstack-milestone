@@ -211,16 +211,12 @@ class TestRecipeViews(TestCase):
             "instructions": "Pseudo instructions for testing purposes.",
             "featured_product": 1,
         }
-        image_data = {"image_field": test_image}
 
         response = self.client.post(
             "/recipes/add_recipe/",
             recipe_info,
         )
 
-        form = RecipeForm(recipe_info, files=image_data)
-
-        self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/recipes/recipe/Add%20recipe/")
 
