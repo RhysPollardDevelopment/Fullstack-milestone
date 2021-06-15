@@ -25,9 +25,6 @@ class TestSubscriptionViews(TestCase):
         self.user.set_password("12345")
         self.user.save()
 
-    # def tearDown(self):
-    #     stripe.Customer.delete(self.user.userprofile.stripe_customer_id)
-
     @patch("stripe.Product.list")
     def test_get_subscriptions_page_when_anonymous(self, mock_product_list):
         """Test that user can access main subscription page."""

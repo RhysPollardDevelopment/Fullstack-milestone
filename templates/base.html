@@ -84,6 +84,25 @@
                         <a class="nav-link"
                             href="{% url 'recipes' %}">Recipes</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#"
+                            id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            About Us
+                        </a>
+                        <div class="dropdown-menu"
+                            aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                                href="{% url 'about' %}">Our Story</a>
+                            <a class="dropdown-item"
+                                href="{% url 'partners' %}">Partners</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'contact' %}">Contact</a>
+                    </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
@@ -113,20 +132,6 @@
                         </div>
                     </li>
                     {% endif %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"
-                            id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            About Us
-                        </a>
-                        <div class="dropdown-menu"
-                            aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item"
-                                href="{% url 'partners' %}">Partners</a>
-                        </div>
-                    </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link"
@@ -139,12 +144,6 @@
                     </li>
                     {% endif %}
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search"
-                        placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0"
-                        type="submit">Search</button>
-                </form>
             </div>
         </nav>
     </header>
