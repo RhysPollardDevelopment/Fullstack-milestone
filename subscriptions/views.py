@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.utils import timezone
 
+
 # Forms and models imported.
 from .forms import SubscriptionForm, BillingAddressForm
 from profiles.models import UserProfile
@@ -271,8 +272,8 @@ def complete(request):
 @login_required
 def cancel_subscription(request):
     """
-    Stripe request to change stop auto-renewal of subscription, updates
-    attribute on active subscription model also.
+    Stripe request to change stop auto-renewal of subscription, model value
+    for cancel at end is updated by webhook.
     """
     profile = get_object_or_404(UserProfile, user=request.user)
     today = timezone.now()
@@ -284,10 +285,7 @@ def cancel_subscription(request):
         stripe.Subscription.modify(
             stripe_sub.subscription_id, cancel_at_period_end=True
         )
-        # stripe_sub.cancel_at_end = True
-        # stripe_sub.save()
     except Exception as e:
-        print(e)
         return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/cancel_confirmation.html"
     context = {
@@ -298,8 +296,13 @@ def cancel_subscription(request):
 
 @login_required
 def reactivate(request):
+    """
+    Sends request to stripe to change cancel at end to false then waits for the
+    webhook to show the update before changing model value to false also.
+    """
     profile = get_object_or_404(UserProfile, user=request.user)
     today = timezone.now()
+
     stripe_sub = profile.stripesubscription_set.filter(end_date__gte=today)[0]
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -310,8 +313,6 @@ def reactivate(request):
             cancel_at_period_end=False,
             proration_behavior="none",
         )
-        # stripe_sub.cancel_at_end = False
-        # stripe_sub.save()
     except Exception as e:
         return JsonResponse({"error": (e.args[0])}, status=403)
     template = "subscriptions/reactivate_confirmation.html"

@@ -36,7 +36,7 @@ class UserProfile(models.Model):
     # after or equal to today.
     @property
     def has_active_subscription(self):
-        today = timezone.now().date()
+        today = timezone.now()
         active_subscriptions = self.stripesubscription_set.filter(
             end_date__gte=today
         )

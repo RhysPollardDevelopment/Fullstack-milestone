@@ -110,7 +110,6 @@ def webhook_received(request):
         # Use this webhook to notify your user that their payment has
         # failed and to retrieve new card details.
         # Create email for customer.
-        print(data_object)
         customer_id = data_object["customer"]
         freebees_customer = UserProfile.objects.get(
             stripe_customer_id=customer_id

@@ -48,8 +48,8 @@ class TestSubscriptionViews(TestCase):
         # Stripesubscription created to allow has_active_subscription test.
         StripeSubscription.objects.create(
             subscription_id="testsub",
-            start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
-            end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            start_date=datetime(2020, 5, 5, 12, 0, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2030, 6, 5, 12, 0, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
         )
         self.client.login(username="testuser", password="12345")
@@ -123,12 +123,6 @@ class TestSubscriptionViews(TestCase):
 
         self.assertEqual(mock_subscription_modify.called, True)
 
-        # Load updated date of subscription for assertEqual
-        test = StripeSubscription.objects.get(
-            subscription_id=mock_subscription_object["id"]
-        )
-
-        self.assertEqual(test.cancel_at_end, True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
             response, "subscriptions/cancel_confirmation.html"
@@ -146,23 +140,18 @@ class TestSubscriptionViews(TestCase):
         # Create subscription Instance and log in user.
         StripeSubscription.objects.create(
             subscription_id="testID",
-            start_date=datetime(2020, 5, 5, 12, 0, 0, tzinfo=timezone.utc),
-            end_date=datetime(2030, 6, 5, 12, 0, 0, tzinfo=timezone.utc),
+            start_date=datetime(2020, 5, 5, 12, 0, 0, 0, tzinfo=timezone.utc),
+            end_date=datetime(2030, 6, 5, 12, 0, 0, 0, tzinfo=timezone.utc),
             stripe_user=self.user.userprofile,
             cancel_at_end=True,
         )
+
         self.client.login(username="testuser", password="12345")
 
         # Assert results
         response = self.client.get("/subscription/reactivate/")
 
-        # Load updated date of subscription for assertEqual
-        test_renew = StripeSubscription.objects.get(
-            subscription_id=mock_subscription_object["id"]
-        )
-
         self.assertEqual(mock_update.called, True)
-        self.assertEqual(test_renew.cancel_at_end, False)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
             response, "subscriptions/reactivate_confirmation.html"
