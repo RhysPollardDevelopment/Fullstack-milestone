@@ -80,9 +80,9 @@ Admin Stories
 
 #### Features implementation
 In the decision of which features to create and their priority, a list was constructed to compare viability vs importance. Each object was scored from 1-5 in importance (how necessary to the site) and viability (how easily it could be achieved) and then plotted on a chat to decide which features were essential for minimum viable product (MVP) and which were set for future goals/stretch goals.
-[alt test](readmedocs\featurestable.png "Viability/importance Table")
+[alt text](readmedocs\featurestable.png "Viability/importance Table")
 
-[alt test](readmedocs\feasiblitychart.png "Viability/importance Table")
+[alt text](readmedocs\feasiblitychart.png "Viability/importance Table")
 
 ### Scope Plane
 To prevent scope creep and to maintain a robust service for users, a minimum viable product (MVP) was created with each task considered part of an epic goal. These goals were broken down into sprints which could be achieved and altered as required to maintain focus on important features.
@@ -104,14 +104,14 @@ The structure for this site was chosen around each ap containing as much likewis
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
 The main app was split into the following apps:
+[alt text](readmedocs\drawSQL-export-2021-06-16_15_51.png)
 
-* CustomerService:
+* CustomerService:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.
 
-* Products app:
+* Products app:  
 Displays example products from pseudo-companies and manages all CRUD operations in relation to product instances in model.
-"""
-    Products Model
+..* Products Model
     
         product_code = models.CharField(
             max_length=36, default=uuid.uuid4, editable=False
@@ -139,4 +139,106 @@ Displays example products from pseudo-companies and manages all CRUD operations 
     
 """
 
-* 
+*  Profiles app:  
+Stores User information and stripe customer id. Also has a property to decide if user has an active subscription or not.
+"""
+    Profiles Model
+
+        user = models.OneToOneField(User, on_delete=models.CASCADE)
+        stripe_customer_id = models.CharField(max_length=255, null=True)
+        default_phone_number = models.CharField(
+            max_length=13, null=True, blank=True
+        )
+        default_street_address1 = models.CharField(
+            max_length=80, null=True, blank=True
+        )
+        default_street_address2 = models.CharField(
+            max_length=80, null=True, blank=True
+        )
+        default_town_or_city = models.CharField(
+            max_length=40, null=True, blank=True
+        )
+        default_county = models.CharField(max_length=80, null=True, blank=True)
+        default_postcode = models.CharField(max_length=20, null=True, blank=True)
+
+        # Checks if there is an active subscription with an expiry date
+        # after or equal to today.
+        @property
+        def has_active_subscription(self):
+            today = timezone.now()
+            active_subscriptions = self.stripesubscription_set.filter(
+                end_date__gte=today
+            )
+            return active_subscriptions.count() > 0
+"""
+
+* Recipes app:  
+Displays recipes to the user and manages all CRUD operations in relation to recipe instances in model.
+"""
+    Recipes Model
+    
+        title = models.CharField(max_length=255)
+        description = models.CharField(max_length=400)
+        ingredients = models.TextField(null=True)
+        instructions = models.TextField(null=True)
+        image = models.ImageField(null=True)
+        publish_date = models.DateTimeField(
+            null=True,
+            help_text="Date used to determine loading date and user access.",
+        )
+        featured_product = models.ForeignKey(
+            Product, null=True, on_delete=models.SET_NULL
+        )
+"""
+* Subscriptions app:  
+Stores key information from stripe to prevent need for frequent API calls. Invoices are also stored to reduce calls to stripe API and allow local assignment and comparison against products earnt for monthly subscriptions.
+"""
+    StripeSubscription Model
+
+        subscription_id = models.CharField(
+            max_length=255,
+            help_text="Stripe subscription Id for communicating with stripe.",
+        )
+        start_date = models.DateTimeField(
+            help_text="The start date of the subscription."
+        )
+        end_date = models.DateTimeField(
+            help_text="The end date of the subscription."
+        )
+        stripe_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+        cancel_at_end = models.BooleanField(default=False)
+
+        def __str__(self):
+            return self.subscription_id
+    }
+
+    Invoice Model
+
+        stripe_subscription = models.ForeignKey(
+            StripeSubscription, null=True, on_delete=models.CASCADE
+        )
+        invoice_number = models.CharField(
+            max_length=255, null=True, help_text="Stripe invoice code."
+        )
+
+        current_start = models.DateTimeField(
+            null=True, help_text="The start date of current invoice period."
+        )
+        current_end = models.DateTimeField(
+            null=True, help_text="The end date of current invoice period."
+        )
+        delivery_name = models.CharField(
+            null=True,
+            max_length=255,
+            help_text="Name of person whom delivery is for.",
+        )
+        address_1 = models.CharField(max_length=255)
+        address_2 = models.CharField(max_length=255)
+        town_or_city = models.CharField(max_length=255)
+        county = models.CharField(max_length=255)
+        postcode = models.CharField(max_length=255)
+
+        def __str__(self):
+            return self.invoice_number
+    
+"""
