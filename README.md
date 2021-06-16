@@ -111,7 +111,8 @@ Used to control manage views for pages regarding information about the company t
 * Products app:
 Displays example products from pseudo-companies and manages all CRUD operations in relation to product instances in model.
 """
-    Products Model{
+    Products Model
+    
         product_code = models.CharField(
             max_length=36, default=uuid.uuid4, editable=False
         )
@@ -128,14 +129,14 @@ Displays example products from pseudo-companies and manages all CRUD operations 
             return self.name
     }
 
-    Companies Model{
-        class Meta:
-            verbose_name_plural = "Companies"
+    Companies Model
 
         name = models.CharField(max_length=100)
         description = models.TextField(max_length=600)
         logo = models.ImageField(null=True, blank=True)
         county = models.CharField(max_length=40, null=True, blank=True)
         company_url = models.URLField(max_length=250)
-    }
+    
 """
+
+* 
