@@ -67,7 +67,7 @@ To decide on what requirements would be necessary for the site, user stories wer
 27.	As an authenticated user, I want resubscription to be easy and require less steps than originally subscribing.
 28.	As a subscribed user, I want to be able to cancel my subscription easily.
 
-Admin Stories
+#### Admin Stories
 1.	As an admin, I want to add a new product to the application.
 2.	As an admin, I want to update existing products on the store.
 3.	As an admin, I want to delete existing products from the store.
@@ -80,6 +80,7 @@ Admin Stories
 
 #### Features implementation
 In the decision of which features to create and their priority, a list was constructed to compare viability vs importance. Each object was scored from 1-5 in importance (how necessary to the site) and viability (how easily it could be achieved) and then plotted on a chat to decide which features were essential for minimum viable product (MVP) and which were set for future goals/stretch goals.
+
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/featurestable.png "Viability/importance Table")
 
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/feasiblitychart.png "feature importance graph")
@@ -96,22 +97,22 @@ Minimum Viable Product:
 * Profile page for updating details.
 * Email verification/confirmation.
 
-Other features are considered stretch goals or future goals should the website continue to be developed and can be found in the [features](#Features) section.
+Other features are considered future goals should the website continue to be developed and can be found in the [features](#Features) section.
 
 ### Structure Plane
 The structure for this site was chosen around each ap containing as much likewise information and views as was necessary, therefore each app often contains multiple models and instances of data.
 
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
-The main app was split into the following apps:
+The main app was split into the following models, with invoice and recipes only loosely being connected by their dates:
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/drawSQL-export-2021-06-16_15_51.png "Entity relationship Diagram")
 
-* CustomerService:  
+* **CustomerService**:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.
 
-* Products app:  
-Displays example products from pseudo-companies and manages all CRUD operations in relation to product instances in model.
-..* Products Model
+* **Products app**:  
+Displays example products from pseudo-companies and manages all CRUD operations in relation to product instances in model.  
+Products Model
     
         product_code = models.CharField(
             max_length=36, default=uuid.uuid4, editable=False
@@ -136,12 +137,10 @@ Displays example products from pseudo-companies and manages all CRUD operations 
         logo = models.ImageField(null=True, blank=True)
         county = models.CharField(max_length=40, null=True, blank=True)
         company_url = models.URLField(max_length=250)
-    
-"""
 
-*  Profiles app:  
-Stores User information and stripe customer id. Also has a property to decide if user has an active subscription or not.
-"""
+
+*  **Profiles app**:  
+Stores User information and stripe customer id. Also has a property to decide if user has an active subscription or not.  
     Profiles Model
 
         user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -170,11 +169,9 @@ Stores User information and stripe customer id. Also has a property to decide if
                 end_date__gte=today
             )
             return active_subscriptions.count() > 0
-"""
 
-* Recipes app:  
-Displays recipes to the user and manages all CRUD operations in relation to recipe instances in model.
-"""
+* **Recipes app**:  
+Displays recipes to the user and manages all CRUD operations in relation to recipe instances in model.  
     Recipes Model
     
         title = models.CharField(max_length=255)
@@ -189,10 +186,9 @@ Displays recipes to the user and manages all CRUD operations in relation to reci
         featured_product = models.ForeignKey(
             Product, null=True, on_delete=models.SET_NULL
         )
-"""
-* Subscriptions app:  
-Stores key information from stripe to prevent need for frequent API calls. Invoices are also stored to reduce calls to stripe API and allow local assignment and comparison against products earnt for monthly subscriptions.
-"""
+
+* **Subscriptions app**:  
+Stores key information from stripe to prevent need for frequent API calls. Invoices are also stored to reduce calls to stripe API and allow local assignment and comparison against products earnt for monthly subscriptions.  
     StripeSubscription Model
 
         subscription_id = models.CharField(
@@ -240,5 +236,121 @@ Stores key information from stripe to prevent need for frequent API calls. Invoi
 
         def __str__(self):
             return self.invoice_number
-    
-"""
+
+### Wireframes
+All wireframes have been constructed using the Balsamiq tool at the beginning of the project. Any key or major changes to design and purpose were redesigned before being made in html and are includes within the documents below.
+
+Designs were focussed on large, pleasant images to engage users and form a positive, emotional response from the website.
+
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+* Wireframe
+
+### Surface Design
+* Colour scheme
+* Typography
+* Images:
+* Forms:
+
+
+## Features
+#### Common Features:
+* Navigation header:  
+Navigation bar for all view breakpoints, has stylized content and design to follow common expectations of using to navigate the main branches of the website.
+* Dynamic visibility/access:  
+Some features are only visible (or accessible) when a user is authenticated and logged in, such as the login/register navigation being removed and profile displayed in its place. Similarly some navigation links (e.g. Subscription button and pages) are hidden and some content made available is user is subscribed.
+* Toasts/Messages:  
+All pages have access to the messages function pop up to display anu success or error messages from the system.
+* Footer:  
+Footer containing an extra set of navigation links and some site legal information across every page.
+
+#### Other Features:
+* Login authentication system:  
+Users can register, login and store their security information in django-all-auth using back end validation.
+* Subscriptions:  
+Stripe api used to create a payment method and intent which can call for monthly payments to maintain subscription.
+* Subscription form:  
+Use of stripe card element for dynamic error and updating features. Form also supports delivery and billing address with hidden forms selectable through use of a checkbox.
+* Password Reset:  
+Django-all-auth provided password reset system to allow users to change or be sent a reset link for their Freebees password.
+* Recipe Collection:  
+List of recipes with associated Freebees honey to accompany the recipe's theme. Restricted to subscribed users if posted within the last 3 months.
+* Profile Page:  
+Page for users to see their subscription status, subscription history and updated certain details.
+* Partners page:  
+Html page for displaying partner companies which are known to practice the form of beekeeping advocated by Freebees website.
+* Honey product examples:  
+Examples of the most common/best rated products offered by fake partner companies which customer can receive as part of their subscription.
+* Subscription cancellation/reactivation:  
+Subscribed users can cancel their subscription and reactivate until the end of their alloted time.
+*  Subscription history:  
+Page in profile which highlights invoices from current and previous subscriptions along with any recipes or products that were received as part of subscription.
+* Automated emails:  
+Webhooks from stripe are used to not only create and update subscription models, but send emails to customers on any major changes or updates to their subscription.
+
+#### Future goals:
+* Filter for recipes on main recipe list.
+* Pagination for recipes, subscription history and maybe products as site grows.
+* Promotional offers.
+* 12 month/6 month subscriptions.
+* Individual product purchases and shopping cart.
+* Monthly email notifications.
+* Subscription tiers: have option of extra additional honey per month.
+
+## Technologies
+
+### Required:
+HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
+
+#### Languages
+* [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+* [CSS3](https://developer.mozilla.org/en-US/docs/Archive/CSS3)
+* [Javascript 6](https://developer.mozilla.org/en-US/docs/Web/JavaScript) Specifically ECMAScript 6/2015
+* [Python 3.9.5](https://www.python.org/)
+
+#### Libraries, Frameworks and Tools
+* [Bootstrap v4.7.0](https://getbootstrap.com/): Front end framework for development of websites, offers pre-designed components and classes which can be further customised.
+* [jQuery](https://jquery.com/): Library of base JavaScript, allowing the use of interactivity and features on components and simplifying DOM.
+* Git: Version control system used to catalogue project development.
+* [Django](https://www.djangoproject.com/): Framework used for this project.
+* [Stripe](https://stripe.com/gb): Payment/subscription authentication system which handles payment for this app.
+* [Heroku](https://www.heroku.com/): Website for deployment and hosting of Freebees.
+* [Psycopg2](https://pypi.org/project/psycopg2/): Adapter to allow PostresSQL to interact with python.
+* [Gunicorn](https://gunicorn.org/): Green unicorn, WSGI deployment tool.
+* [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/): Package for displaying forms.
+* [AWS S3 Bucket](https://aws.amazon.com/): Cloud storage system for static and media files.
+* [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html): Package to aid with file transfer to S3 bucket.
+* [Pillow](https://python-pillow.org/): Package for processing and saving images.
+* [Black](https://black.readthedocs.io/en/stable/): Python formatter, aids in committing to PEP8.
+* [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools): Online resource in Chrome browser, used to make edit pages quickly to diagnose problems or test changes.
+* [Google Fonts](https://fonts.google.com/): Library used to embed and link expanded font choices into the project.
+* [Gmail](https://www.google.com/gmail/): Email service used to deliver emails from python.
+* [favicon-generator](https://www.favicon-generator.org/): Favicon generator which converts images into favicons for use in the browser tab.
+* [Adobe Color](https://color.adobe.com/explore): Online tool used for identifying colour palettes and themes. Used to extrapolate colours from images and find suitable colour rnges.
+* [Balsamiq](https://balsamiq.com/): Wireframing tool for concept creation and design for website.
+* [Font-Awesome](https://fontawesome.com/): Library offering a wide icon set for use in projects.
+* [Autoprefixer CSS Online](https://autoprefixer.github.io/): parsed CSS and produced webkit vendor prefixes for CSS stylings to work correctly on other browsers.
+* [Visual Studio Code](https://code.visualstudio.com/): A programming environment for developing which allows for extensions and testing.
+* [Prettier](https://prettier.io/): A tool used in combination with VS Code to format and style code.
+* [Jasmine](https://jasmine.github.io/): A tool used in combination with VS code to perform unit testing.
+* [ESLint](https://eslint.org/): Linting tool installed in visual studio code.
+* [Pep8 Online](http://pep8online.com/): Linting tool online used to correct python code and ensure was pep8 compliant. 
+* [Am i responsive](http://ami.responsivedesign.is/): Tool used to see if a webpage is responsive across multiple screens.
+* [Responsinator](http://www.responsinator.com/): Website which mocks multiple phones and devices of different sizes and orientations.
+* [Clip Paint Studio](https://www.clipstudio.net/en/): Used to adjust some images and create landing page header.
+* [Compressjpeg.com](https://compressjpeg.com/): To make larger images smaller and easy to load.
+
+#### Databases:
+* [PostgresSQL](https://www.postgresql.org/): The relational database used for the deployed project.
+* [SQlite3]
+
+## Testing
+All testing can be found in [Testing.md]()
+
+## Deployment
