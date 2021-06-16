@@ -292,7 +292,6 @@ class TestCompanyViews(TestCase):
         )
 
         form = CompanyForm(company_info)
-        print(form.errors)
 
         self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
