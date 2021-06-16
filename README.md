@@ -80,9 +80,9 @@ Admin Stories
 
 #### Features implementation
 In the decision of which features to create and their priority, a list was constructed to compare viability vs importance. Each object was scored from 1-5 in importance (how necessary to the site) and viability (how easily it could be achieved) and then plotted on a chat to decide which features were essential for minimum viable product (MVP) and which were set for future goals/stretch goals.
-[alt text](readmedocs\featurestable.png "Viability/importance Table")
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/featurestable.png "Viability/importance Table")
 
-[alt text](readmedocs\feasiblitychart.png "Viability/importance Table")
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/feasiblitychart.png "feature importance graph")
 
 ### Scope Plane
 To prevent scope creep and to maintain a robust service for users, a minimum viable product (MVP) was created with each task considered part of an epic goal. These goals were broken down into sprints which could be achieved and altered as required to maintain focus on important features.
@@ -104,7 +104,7 @@ The structure for this site was chosen around each ap containing as much likewis
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
 The main app was split into the following apps:
-[alt text](readmedocs\drawSQL-export-2021-06-16_15_51.png)
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/drawSQL-export-2021-06-16_15_51.png "Entity relationship Diagram")
 
 * CustomerService:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.
