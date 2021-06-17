@@ -3,6 +3,8 @@
 This is my final Milestone project, the goal of which is a full-stack e-commerce site capable of handling some form of transaction from a customer.
 I have chosen to build a subscription based service for sale and support of ethically produced honey.
 
+[Live Website](https://freebees-fullstack-milestone.herokuapp.com/)
+
 ## Table of Contents
 1. 
 2. [UX](#User-experience-(UX))
@@ -14,6 +16,9 @@ I have chosen to build a subscription based service for sale and support of ethi
 8. [Deployment]
 9. [Credits]
 10. [Acknowledgement]
+
+## Live Site
+[Live Website](https://freebees-fullstack-milestone.herokuapp.com/)S
 
 ## User Experience (UX):
 The purpose of Freebees was a website designed to support apiasts and smaller scale farms who use biodynamic/natural beekeeping practices and offer an alternative to the more commonly available forms of honey which are often made using unnecessary and unpleasant practices. The site's purpose was also designed with the intent of supporting other charities in the care and conservation of the UK's wildlife.
@@ -257,44 +262,46 @@ Designs were focussed on large, pleasant images to engage users and form a posit
 * Typography
 * Images:
 * Forms:
+    * Date time picker for recipe publish date gracefully regressed to a text input with a format applied as django crispy forms does not have a date time picker widget. I have decided to keep this as date pickers can vary heavily between browsers and this is more than effective for the website's purpose.
 
 
 ## Features
 #### Common Features:
-* Navigation header:  
+* **Navigation header**:  
 Navigation bar for all view breakpoints, has stylized content and design to follow common expectations of using to navigate the main branches of the website.
-* Dynamic visibility/access:  
+* **Dynamic visibility/access**:  
 Some features are only visible (or accessible) when a user is authenticated and logged in, such as the login/register navigation being removed and profile displayed in its place. Similarly some navigation links (e.g. Subscription button and pages) are hidden and some content made available is user is subscribed.
-* Toasts/Messages:  
+* **Toasts/Messages**:  
 All pages have access to the messages function pop up to display anu success or error messages from the system.
-* Footer:  
+* **Footer**:  
 Footer containing an extra set of navigation links and some site legal information across every page.
 
 #### Other Features:
-* Login authentication system:  
+* **Login authentication system**:  
 Users can register, login and store their security information in django-all-auth using back end validation.
-* Subscriptions:  
+* **Subscriptions**:  
 Stripe api used to create a payment method and intent which can call for monthly payments to maintain subscription.
-* Subscription form:  
+* **Subscription form**:  
 Use of stripe card element for dynamic error and updating features. Form also supports delivery and billing address with hidden forms selectable through use of a checkbox.
-* Password Reset:  
+* **Password Reset**:  
 Django-all-auth provided password reset system to allow users to change or be sent a reset link for their Freebees password.
-* Recipe Collection:  
+* **Recipe Collection**:  
 List of recipes with associated Freebees honey to accompany the recipe's theme. Restricted to subscribed users if posted within the last 3 months.
-* Profile Page:  
+* **Profile Page**:  
 Page for users to see their subscription status, subscription history and updated certain details.
-* Partners page:  
+* **Partners page**:  
 Html page for displaying partner companies which are known to practice the form of beekeeping advocated by Freebees website.
-* Honey product examples:  
+* **Honey product examples**:  
 Examples of the most common/best rated products offered by fake partner companies which customer can receive as part of their subscription.
-* Subscription cancellation/reactivation:  
+* **Subscription cancellation/reactivation**:  
 Subscribed users can cancel their subscription and reactivate until the end of their alloted time.
-*  Subscription history:  
+*  **Subscription history**:  
 Page in profile which highlights invoices from current and previous subscriptions along with any recipes or products that were received as part of subscription.
-* Automated emails:  
+* **Automated emails**:  
 Webhooks from stripe are used to not only create and update subscription models, but send emails to customers on any major changes or updates to their subscription.
 
 #### Future goals:
+Goals to be implemented should the project be continued at a future point in further releases.
 * Filter for recipes on main recipe list.
 * Pagination for recipes, subscription history and maybe products as site grows.
 * Promotional offers.
@@ -351,17 +358,17 @@ HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
 * [SQlite3]
 
 ## Testing
-All testing can be found in [Testing.md]()
+All testing can be found in [Testing.md](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/TESTING.md)
 
 ## Deployment
 
 #### Environmental Setup:
 1. It is worth setting up a virtual environment and any settings within Python before starting any project to ensure a clean stable working environment. This will contain any packages, linters and installations and prevents cross project errors and version issues.
-..* Python 3 has a built in virtual environment called [venv](https://docs.python.org/3/tutorial/venv.html) which can be created using the below code:  
+    * Python 3 has a built in virtual environment called [venv](https://docs.python.org/3/tutorial/venv.html) which can be created using the below code:  
     ```python3 -m venv .virtual-environment-name```  
     This will create your virtual environment directory with the name/path given.
 
-..* To activate your virtual environment on Windows, run:  
+    * To activate your virtual environment on Windows, run:  
     `.virtual-environment-name\Scripts\activate.bat` or `.virtual-environment-name\Scripts\activate`
     On Unix or MacOS, use:
     ```source .virtual-environment-name/bin/activate```
@@ -421,9 +428,11 @@ These instructions will allow you to run this project on your local machine/envi
 The administration portal to add new instances of products, recipes or companies can be found by adding `\admin` to the home page address.
 
 ##### Notes:
-You may need to add `127.0.0.1` to allowed hosts list in your `settings.py` file.  
-Also, the use of `python`, `pip`, `python3` and `pip3` can vary between versions of python/IDE/your own machine so check to be sure.   
-The local version will be running off of the local SQlite3 database unless you provide a database url which we cover in the Remote section below.
+You may need to add `127.0.0.1` to allowed hosts list in your `settings.py` file.
+
+Also, the use of `python`, `pip`, `python3` and `pip3` can vary between versions of python/IDE/your own machine so check to be sure.
+
+The local version will be running off of the local SQlite3 database unless you provide a database url which we cover in the Heroku section below.
 
 ### Heroku
 
@@ -431,22 +440,22 @@ The local version will be running off of the local SQlite3 database unless you p
 For this website, you will require an AWS account and S3 bucket to store and load media and static files. The required settings and instructions are as follows:
 
 1. Travel to the [AWS website](https://aws.amazon.com/) and create and AWS account using whatever details are required, when you login in you will be a **Root User**.
-..* You will need add your billing details, there is a free usage limit so this depends on how much use your site receives.
+    * You will need add your billing details, there is a free usage limit so this depends on how much use your site receives.
 
 2. Once you have an account, locate the **S3** services by selecting the _"Services"_ dropdown in the top left and either searching for _"S3"_ or selecting it from the menu.
 
 3. Create a bucket with the _"Create Bucket"_ button.
-..* Your name should ideally match your project name/heroku app name.
-..* Select the region closest to you.
-..* Uncheck _"Block all public access"_.
-..* Tick the acknowledgement below.
+    * Your name should ideally match your project name/heroku app name.
+    * Select the region closest to you.
+    * Uncheck _"Block all public access"_.
+    * Tick the acknowledgement below.
 
 4. To set up the new bucket, select the bucket name and choose the _"Properties"_ Tab.
 
 5. Scroll down to _"Static Website Hosting"_ and select _"Edit_".
-..* In this new screen, make sure static website hosting is set to **Enable**.
-..* Enter `index.html` and `error.html` default values for the two document inputs as you will not be needing these.
-..* Then click the _"Save"_ button.
+    * In this new screen, make sure static website hosting is set to **Enable**.
+    * Enter `index.html` and `error.html` default values for the two document inputs as you will not be needing these.
+    * Then click the _"Save"_ button.
 
 6. Move to the _"Permissions"_ tab and scroll to the bottom for the CORS configuration. Click _"Edit"_, copy in this code and click _"Save"_:
     ```
@@ -466,43 +475,43 @@ For this website, you will require an AWS account and S3 bucket to store and loa
     ]
     ```
 7. On the same tab, scroll to the _"Bucket Policy"_ section and select _"Policy generator"_.
-..* In the new tab, the bucket type of policy will be **S3 Bucket Policy**.
-..* Enter an asterisk (*) in _"Principle"_ to allow all.
-..* Select the get object choice from the _"Actions"_ selector.
-..* The ARN value can be gotten from the browser tab already open (**Do not close this current tab**), above the empty _"Policy_" field and can be copied by clicking the left icon.
+    * In the new tab, the bucket type of policy will be **S3 Bucket Policy**.
+    * Enter an asterisk (*) in _"Principle"_ to allow all.
+    * Select the get object choice from the _"Actions"_ selector.
+    * The ARN value can be gotten from the browser tab already open (**Do not close this current tab**), above the empty _"Policy_" field and can be copied by clicking the left icon.
 
 8. Once copied into the input, click _"Add Statement"_ followed by _"Generate Policy"_. The output can then be copied in its entirety into the _"Policy"_ editor on the same tab you found the ARN value.
-..* Before saving, find the line of code you have pasted started with `Resource` and include `/*` at the end to allow all access to all resources and click save.
+    * Before saving, find the line of code you have pasted started with `Resource` and include `/*` at the end to allow all access to all resources and click save.
     ```"Resource": "arn:aws:s3:::Your-bucket-name/*"```
 
 9. Staying in the permissions tab, find the _"Access control list(ACL)"_ section and select _"Edit"_.
-..* Find _"Everyone (public access)"_ and under the _"Objects"_ header, tick **List**.
-..* Tick _"I understand the effects of these changes on my objects and buckets"_ followed by _"Save Changes"_.
+    * Find _"Everyone (public access)"_ and under the _"Objects"_ header, tick **List**.
+    * Tick _"I understand the effects of these changes on my objects and buckets"_ followed by _"Save Changes"_.
 
 10. In the services at top of the page, search or find the _"IAM"_ service to create user access to our bucket.
-..* In the side panel, make a new group with a recogniseable name to go with your project.
-..* Click _"Next step"_ until you can finally click _"Create group"_.
+    * In the side panel, make a new group with a recogniseable name to go with your project.
+    * Click _"Next step"_ until you can finally click _"Create group"_.
 
 11. Next, click _"Policies"_ on the left side pnael and then _"Create Policy"_.
-..* Select the _"JSON"_ tab and click **import managed policy** in top right to retrieve a pre-made policy.
-..* Filter by typing **S3** in the input and choose _"AmazonS3FullAccess"_, then click _"Import"_.
-..* As we do not want full access to everything, we will copy the ARN number from our bucket policy and paste it in `"Resource":"*"` as the following.
+    * Select the _"JSON"_ tab and click **import managed policy** in top right to retrieve a pre-made policy.
+    * Filter by typing **S3** in the input and choose _"AmazonS3FullAccess"_, then click _"Import"_.
+    * As we do not want full access to everything, we will copy the ARN number from our bucket policy and paste it in `"Resource":"*"` as the following.
     ```
     "Resource": [
         "arn:aws:s3:::your-bucket-name",
         "arn:aws:s3:::your-bucket-name/*",
     ]
     ```
-..* Click _"Review Policy"_, give it a name and description, then click _"Create Policy"_.
+    * Click _"Review Policy"_, give it a name and description, then click _"Create Policy"_.
 
 12. Return to the groups list, select your newly made group object.
-..* Click _"Attach Policy"_ and search for your new policy name.
-..* Select the new policy and hit _"Attach policy"_.
+    * Click _"Attach Policy"_ and search for your new policy name.
+    * Select the new policy and hit _"Attach policy"_.
 
 13. Finally, create a user for this group. Select the user option on the side panel.
-..* Create a user with a recogniseable name and give them **Programmatic access**.
-..* Tick the box on the new group you have made and then click next until you reach _"Create User"_.
-..* Use _"Download.csv"_ to collect your users access key and secret access key.
+    * Create a user with a recogniseable name and give them **Programmatic access**.
+    * Tick the box on the new group you have made and then click next until you reach _"Create User"_.
+    * Use _"Download.csv"_ to collect your users access key and secret access key.
 
 **Do not lose or delete the _"download.csv"_ file, you can only access it once and is required to access your S3 bucket.**
 
@@ -516,7 +525,7 @@ This process will allow you to publish and host a live version of this project o
 3. Choose a name and region best suited for you before pressing the create app button.
 
 4. Once in Heroku's app page, got to _"Resources"_ and search for _"Heroku Postgres"_ wihin the Add-ons section.
-..* Choose the _"Hobby Dev"_ free version and click _"Provision"_ button.
+    * Choose the _"Hobby Dev"_ free version and click _"Provision"_ button.
 
 5. Once provisioned, move to the _"Settings"_ header in your heroku and scroll to Config Var. Here you can click _"reveal Config Vars"_ to see and add configuration details.
 
@@ -555,10 +564,33 @@ This process will allow you to publish and host a live version of this project o
 
 14. Select the _"Deploy"_ and in the _"Deployment Method"_ section, choose the Github option and in the input below, search for the correct repository you wish to connect to Heroku.
 
-15. Once connected, scroll downwards to _"Automatic Deploys"_ and click _"Enable Automatic Deploys"_, followed by _"Deploy Branch"_. Now any time this repository receives a push request, heroku will update and re-launch the app. You can check on the status by going to the _"Activity"_ header.
+15. Once connected, scroll downwards to _"Automatic Deploys"_ 
+    * Click _"Enable Automatic Deploys"_, followed by _"Deploy Branch"_.
+    * Now any time this repository receives a push request, heroku will update and re-launch the app.
+    * You can check on the status by going to the _"Activity"_ header.
 
 16. Open your app with _"Open App"_ to view the completed website.
 
 17. Your S3 buckest should now contain a `static/` folder, you can now add the `media/` folder for images and documents.
 
 18. Your app is now deployed, as a super user you may add products, recipes and companies using the `heroku_url/admin/` panel or using any CRUD forms available on the site.
+
+## Credits
+### Content
+* All partner companies and apiaists are fictional and created by myself purely for this project.
+* 
+
+#### Media
+
+### Code reference
+* Django testing was aided significantly with help from [Pluralsight](https://app.pluralsight.com/), specifically their course on [Django testing, security and performance](https://app.pluralsight.com/library/courses/django-testing-security-and-performance), alongside the code institute introduction module for django.
+* [Django documents](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) was also referenced throughout testing.
+* The majority of coding examples and insights were taken from [python docs](https://docs.python.org/3/) and [Django Docs](https://www.djangoproject.com/) as they are the primary sources of information.
+* `Stripe_elements.js` and much of the code for the `create_subscription` view was copied and edited from [a stripe subscription tutorial](https://stripe.com/docs/billing/subscriptions/fixed-price) or inspired heavily by their official subscription documents. Their API references were also used extensively in the collection of data from webhooks and API calls.
+* Where these sources of information were not suitable or specific enough I have endeavoured to place comments in the code detailing the origin of the code snippet, or at least inspiration for the written code result.
+
+### Acknowledgements
+Special thanks to my mentor Brian Macharia for his help and advice in development this project. Extra thanks go to the testers composed of family and friends.
+
+### Disclaimer
+This project has been made for purely academic purposes.
