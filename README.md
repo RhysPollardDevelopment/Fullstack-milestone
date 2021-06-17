@@ -354,3 +354,211 @@ HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
 All testing can be found in [Testing.md]()
 
 ## Deployment
+
+#### Environmental Setup:
+1. It is worth setting up a virtual environment and any settings within Python before starting any project to ensure a clean stable working environment. This will contain any packages, linters and installations and prevents cross project errors and version issues.
+..* Python 3 has a built in virtual environment called [venv](https://docs.python.org/3/tutorial/venv.html) which can be created using the below code:  
+    ```python3 -m venv .virtual-environment-name```  
+    This will create your virtual environment directory with the name/path given.
+
+..* To activate your virtual environment on Windows, run:  
+    `.virtual-environment-name\Scripts\activate.bat` or `.virtual-environment-name\Scripts\activate`
+    On Unix or MacOS, use:
+    ```source .virtual-environment-name/bin/activate```
+
+### How to run locally:
+These instructions will allow you to run this project on your local machine/environment.
+
+1. Follow this link to the [full repository](https://github.com/RhysPollardDevelopment/Fullstack-milestone).
+
+2. On the upper right of repository page, select the green _"Code"_ button.
+
+3. The easiest solution for most instances is to look for the repository address under the _"Clone"_ heading and select the clipboard icon.
+
+4. In your local IDE, open the terminal and enter the following:  
+    ```git clone https:\\the-copied-url-in-your-clipboard-from-respository```
+
+5. Upon pressing enter your local clone will be ready.
+
+6. In your IDE, navigate to your cloned project if required.  
+``` cd/path/to/cloned/folder```
+
+7. Now to activate your virtual environment (see above if need help with this step), remembering the capital S in Scripts.
+    ```.virtual-environment-name\Scripts\activate```
+
+8. To ensure all required packages/dependencies are installed:
+    ```pip install -r requirements.txt```
+
+9. Next, you need to create an environmental variables file. This can be a `.env` or `env.py` file. 
+
+10. **Ensure your environmental variables file is added to .gitignore**. These are private keys and must not be shared publically.
+
+11. Assuming you are using a `env.py` file, add the following variables to your variables list:
+    ```python
+    os.environ.setdefault('SECRET_KEY', '<generated using a secret key generator>)
+    os.environ.setdefault('STRIPE_PRICE_ID', '<From the Stripe website>)
+    os.environ.setdefault('STRIPE_PUBLIC_KEY', '<From the Stripe website>)
+    os.environ.setdefault('STRIPE_SECRET_KEY', '<From the Stripe website>)
+    os.environ.setdefault('STRIPE_WEBHOOK_SECRET', '<From the Stripe website>)
+    os.environ.setdefault('DEVELOPMENT', True)
+    ```  
+
+    Assuming you are using a `.env``` file, the same keys should be used as above but in the format:  
+    ```VARIABLE_NAME=variable```  
+
+    The majority of these keys are created from [stripe](https://stripe.com/gb) as a registered user.
+
+12. Go to `settings.py` in your the main fullstack app and import these environmental variables.
+
+13. Now you're ready to run the website locally with:
+    ```python manage.py runserver```
+
+14. The website should be available on localhost:8000, usually defined as `http:\\127.0.0.1:8000` in your browser of choice.
+
+15. In the terminal, run the following lines `python manage.py makemigrations` and `python manage.py migrate` to migrate models to the local database.
+
+16. To add products locally, a super user account will be needed. This can be achieved by typing `python manage.py createsuperuser` in the terminal and following the prompts given.  
+The administration portal to add new instances of products, recipes or companies can be found by adding `\admin` to the home page address.
+
+##### Notes:
+You may need to add `127.0.0.1` to allowed hosts list in your `settings.py` file.  
+Also, the use of `python`, `pip`, `python3` and `pip3` can vary between versions of python/IDE/your own machine so check to be sure.   
+The local version will be running off of the local SQlite3 database unless you provide a database url which we cover in the Remote section below.
+
+### Heroku
+
+#### Amazon Web Services S3
+For this website, you will require an AWS account and S3 bucket to store and load media and static files. The required settings and instructions are as follows:
+
+1. Travel to the [AWS website](https://aws.amazon.com/) and create and AWS account using whatever details are required, when you login in you will be a **Root User**.
+..* You will need add your billing details, there is a free usage limit so this depends on how much use your site receives.
+
+2. Once you have an account, locate the **S3** services by selecting the _"Services"_ dropdown in the top left and either searching for _"S3"_ or selecting it from the menu.
+
+3. Create a bucket with the _"Create Bucket"_ button.
+..* Your name should ideally match your project name/heroku app name.
+..* Select the region closest to you.
+..* Uncheck _"Block all public access"_.
+..* Tick the acknowledgement below.
+
+4. To set up the new bucket, select the bucket name and choose the _"Properties"_ Tab.
+
+5. Scroll down to _"Static Website Hosting"_ and select _"Edit_".
+..* In this new screen, make sure static website hosting is set to **Enable**.
+..* Enter `index.html` and `error.html` default values for the two document inputs as you will not be needing these.
+..* Then click the _"Save"_ button.
+
+6. Move to the _"Permissions"_ tab and scroll to the bottom for the CORS configuration. Click _"Edit"_, copy in this code and click _"Save"_:
+    ```
+    [
+        {
+            "AllowedHeaders": [
+                "Authorization"
+            ],
+            "AllowedMethods": [
+                "GET"
+            ],
+            "AllowedOrigins": [
+                "*"
+            ],
+            "ExposeHeaders": []
+        }
+    ]
+    ```
+7. On the same tab, scroll to the _"Bucket Policy"_ section and select _"Policy generator"_.
+..* In the new tab, the bucket type of policy will be **S3 Bucket Policy**.
+..* Enter an asterisk (*) in _"Principle"_ to allow all.
+..* Select the get object choice from the _"Actions"_ selector.
+..* The ARN value can be gotten from the browser tab already open (**Do not close this current tab**), above the empty _"Policy_" field and can be copied by clicking the left icon.
+
+8. Once copied into the input, click _"Add Statement"_ followed by _"Generate Policy"_. The output can then be copied in its entirety into the _"Policy"_ editor on the same tab you found the ARN value.
+..* Before saving, find the line of code you have pasted started with `Resource` and include `/*` at the end to allow all access to all resources and click save.
+    ```"Resource": "arn:aws:s3:::Your-bucket-name/*"```
+
+9. Staying in the permissions tab, find the _"Access control list(ACL)"_ section and select _"Edit"_.
+..* Find _"Everyone (public access)"_ and under the _"Objects"_ header, tick **List**.
+..* Tick _"I understand the effects of these changes on my objects and buckets"_ followed by _"Save Changes"_.
+
+10. In the services at top of the page, search or find the _"IAM"_ service to create user access to our bucket.
+..* In the side panel, make a new group with a recogniseable name to go with your project.
+..* Click _"Next step"_ until you can finally click _"Create group"_.
+
+11. Next, click _"Policies"_ on the left side pnael and then _"Create Policy"_.
+..* Select the _"JSON"_ tab and click **import managed policy** in top right to retrieve a pre-made policy.
+..* Filter by typing **S3** in the input and choose _"AmazonS3FullAccess"_, then click _"Import"_.
+..* As we do not want full access to everything, we will copy the ARN number from our bucket policy and paste it in `"Resource":"*"` as the following.
+    ```
+    "Resource": [
+        "arn:aws:s3:::your-bucket-name",
+        "arn:aws:s3:::your-bucket-name/*",
+    ]
+    ```
+..* Click _"Review Policy"_, give it a name and description, then click _"Create Policy"_.
+
+12. Return to the groups list, select your newly made group object.
+..* Click _"Attach Policy"_ and search for your new policy name.
+..* Select the new policy and hit _"Attach policy"_.
+
+13. Finally, create a user for this group. Select the user option on the side panel.
+..* Create a user with a recogniseable name and give them **Programmatic access**.
+..* Tick the box on the new group you have made and then click next until you reach _"Create User"_.
+..* Use _"Download.csv"_ to collect your users access key and secret access key.
+
+**Do not lose or delete the _"download.csv"_ file, you can only access it once and is required to access your S3 bucket.**
+
+#### Deployment to Heroku
+This process will allow you to publish and host a live version of this project on the heroku app.
+
+1. Travel to the heroku website and create a user account as required.
+
+2. Once registered, click  _"New"_ in the top right and _"Create App"_ from the dropdown.
+
+3. Choose a name and region best suited for you before pressing the create app button.
+
+4. Once in Heroku's app page, got to _"Resources"_ and search for _"Heroku Postgres"_ wihin the Add-ons section.
+..* Choose the _"Hobby Dev"_ free version and click _"Provision"_ button.
+
+5. Once provisioned, move to the _"Settings"_ header in your heroku and scroll to Config Var. Here you can click _"reveal Config Vars"_ to see and add configuration details.
+
+6. To set up out Heroku Postgres, copy the `DATABASE_URL` variable from the configuration variables and add it to your `.env` or `env.py` file in the required format.
+
+7. Now that the correct database has been configured, migrate your models to the Postgres SQL database  
+    `python manage.py makemigrations` then `python manage.py migrate`
+
+8. Much like before, creating a super user is a good idea to allow admin access.
+    ```python manage.py createsuperuser```
+
+9. It is advisable to now remove the `DATABASE_URL` from your environment to prevent multiple sources editing the database. Also, in `settings.py`, add the url of your heroku app to the `ALLOWED_HOSTS` list.
+
+10. If you have added any other packages or software, ensure you freeze the dependencies into your `requirements.txt`
+    ```pip freeze --local > requirements.txt```
+
+11. Create a Procfile that tells Heroku what sort of app to make by typing the following (with the < > section being replaced entirely with your project name).
+    ```web:gunicorn <project_name>.wsgi:application```
+
+12. To prepare for our heroku deployment, `git add`, `git commit` with comment and then `git push` your changes to Github.
+
+13. Go to Heroku and in the _"Settings"_ header, select _"Reveal Config Vars"_ and add the following
+    |Key                    | Value                        |
+    |-----------------------|------------------------------|
+    |AWS_ACCESS_KEY_ID      |AWS_access_key                |
+    |AWS_SECRET_ACCESS_KEY  |AWS_secret_access_key         |
+    |DATABASE_URL           |generated_by_herokupostgres   |
+    |EMAIL_HOST_PASSWORD    |your_email_host_key           |
+    |EMAIL_HOST_USER        |your_email_host_user          |
+    |SECRET_KEY             |secret_key                    |
+    |STRIPE_PRICE_ID        |stripe_subscription_product_id|
+    |STRIPE_PUBLIC_KEY      |stripe_public_key             |
+    |STRIPE_SECRET_KEY      |stripe_secret_key             |
+    |STRIPE_WEBHOOK_SECRET  |stripe_secret_webhook_key     |
+    |USE_AWS                |True                          |
+
+14. Select the _"Deploy"_ and in the _"Deployment Method"_ section, choose the Github option and in the input below, search for the correct repository you wish to connect to Heroku.
+
+15. Once connected, scroll downwards to _"Automatic Deploys"_ and click _"Enable Automatic Deploys"_, followed by _"Deploy Branch"_. Now any time this repository receives a push request, heroku will update and re-launch the app. You can check on the status by going to the _"Activity"_ header.
+
+16. Open your app with _"Open App"_ to view the completed website.
+
+17. Your S3 buckest should now contain a `static/` folder, you can now add the `media/` folder for images and documents.
+
+18. Your app is now deployed, as a super user you may add products, recipes and companies using the `heroku_url/admin/` panel or using any CRUD forms available on the site.
