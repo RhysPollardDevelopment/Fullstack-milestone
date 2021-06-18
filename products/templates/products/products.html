@@ -53,21 +53,6 @@
                 </div>
 
             </article>
-            <!-- <article class="col-12 col-md-6 col-lg-4 py-5 pb-3">
-                <a href="{% url 'product_details' product.id %}"><img
-                        src="{{ product.image.url }}" alt=""
-                        height="200rem"></a>
-                <p>{{ product.name }}</p>
-                {% if request.user.is_superuser %}
-                <a href="{% url 'update_product' product.id %}"
-                    class="btn btn-info">Edit</a>
-                <button type="button" class="btn btn-danger delete"
-                    data-toggle="modal" data-target="#deleteConfirm"
-                    data-info="{% url 'delete_product' product.id %}">
-                    Delete
-                </button>
-                {% endif %}
-            </article> -->
             {% endfor %}
         </div>
     </div>
@@ -84,9 +69,6 @@
         </div>
     </section>
 </main>
-
-
-
 {% endblock %}
 
 {% block modal %}

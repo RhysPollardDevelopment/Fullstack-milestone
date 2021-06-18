@@ -118,7 +118,7 @@ class TestRecipeViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "recipes/recipes.html")
         # Test that view only retrieves recipes before todays date.
-        self.assertEqual(response.context["recipes"].count(), 2)
+        self.assertEqual(len(response.context["recipes"]), 2)
 
     def test_get_recipe_detail_page_no_restrictions(self):
         """

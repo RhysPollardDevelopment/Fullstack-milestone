@@ -1,0 +1,27 @@
+.recipe-header {
+    background-image: url('/media/michaela-baum-VnM6_liIRJ0-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 30rem;
+    background-position: center;
+    color: white;
+}
+
+.recipe-list {
+    border: 1px solid rgb(197, 197, 197);
+}
+
+.recipe-list img {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.recipe-list a {
+    color: black;
+}
+
+.other-recipe img {
+    height: 10rem;
+    max-width: 100%;
+}

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404, reverse
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required, user_passes_test
+import random
 
 from .models import Recipe
 from profiles.models import UserProfile
@@ -26,9 +27,20 @@ def all_recipes(request):
     now = datetime.now(tz=timezone.utc)
     # Retrieve all recipes with publish dates before today and order them
     # in descending order.
-    recipes = Recipe.objects.filter(publish_date__lte=now).order_by(
-        "-publish_date"
+    recipes = list(
+        Recipe.objects.filter(publish_date__lte=now).order_by("-publish_date")
     )
+
+    # Finds the date time 3 months prior to today
+    three_months = datetime.now(tz=timezone.utc) + relativedelta(months=-3)
+
+    # If recipe publish date is within last 3 months, is restricted to users
+    # without subscriptions.
+    for recipe in recipes:
+        if recipe.publish_date > three_months:
+            recipe.restricted = True
+        else:
+            recipe.restricted = False
 
     template = "recipes/recipes.html"
     context = {"recipes": recipes}
@@ -71,8 +83,14 @@ def recipe_detail(request, recipe_title):
     else:
         restricted = False
 
+    recipes = random.sample(list(Recipe.objects.exclude(id=recipe.id)), 4)
+
     template = "recipes/recipe_detail.html"
-    context = {"recipe": recipe, "restricted": restricted}
+    context = {
+        "recipe": recipe,
+        "restricted": restricted,
+        "recipes": recipes,
+    }
     return render(request, template, context)
 
 

@@ -1,37 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'recipes/css/recipes.css' %}">
+{% endblock %}
+
 {% block additional_title %}| {{ recipe.title }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <!-- Product loading section-->
-        {% if restricted %}
-        <h1>RESTRICTED</h1>
-        {% endif %}
-        <h2>{{ recipe.title }}</h2>
-        <p>{{ recipe.description }}</p>
-        <img src="{{ recipe.image.url }}" alt="" height="300rem">
-        <ul>
-            {% for ingredient in recipe.ingredients %}
-            <li>{{ ingredient }}</li>
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for instruction in recipe.instructions %}
-            <li>{{ instruction }}</li>
-            {% endfor %}
-        </ul>
-        <p>{{ recipe.featured_product }}</p>
-        <a href="{% url 'product_details' recipe.featured_product.id %}"><img
-                src="{{ recipe.featured_product.image.url }}" alt=""
-                height="150rem"></a>
-        <img src="{{ product.image.url }}" alt="" height="300rem">
-        <a href="{{ product.company.company_url }}"
-            target="_blank">{{ product.company.company_url }}</a>
-        <!--Comapny.logo won't load correctly, missing /media/ before it-->
-        <img src="{{ product.company.logo.url }}" alt="" height="300rem">
+<article class="container">
+    <div class="row pt-5">
+        <!-- Recipe section-->
+        <div class="col-12 col-md-6 pt-4">
+            <h1 class="mb-3">{{ recipe.title }}</h1>
+            <p>{{ recipe.description }}</p>
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                <li class="mb-1">{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-12 col-md-6">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}"
+                height="400rem">
+        </div>
     </div>
-</div>
+    <div class="row">
+        <h3>Instructions</h3>
+        <ol class="col-12">
+            {% for instruction in recipe.instructions %}
+            <li class="m-3">{{ instruction }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</article>
+
+<section>
+    <div class="row py-5">
+        <div class="col-5 text-center">
+            <a href="{% url 'product_details' recipe.featured_product.id %}">
+                <img src="{{ recipe.featured_product.image.url }}"
+                    alt="{{ recipe.featured_product.name }}" height="200rem">
+            </a>
+        </div>
+        <div class="col-7 text-center">
+            <h4>This recipe was made with the fantastic taste of:</h4>
+            <h2 class="my-3 py-4">{{ recipe.featured_product }}</h2>
+            <a href="{% url 'product_details' recipe.featured_product.id %}"
+                class="btn-lg btn-info mx-auto" role="button">Get
+                started</a>
+        </div>
+    </div>
+</section>
+
+<!-- Other recipes -->
+<aside class="container py-4 mb-5">
+    <h3 class="text-center pb-4">You May Also Enjoy</h3>
+    <div class="row">
+        {% for recipe in recipes %}
+        <article class="col-12 col-lg-3 other-recipe">
+            <a href="{% url 'recipe_detail' recipe.title %}"><img
+                    src="{{ recipe.image.url }}" alt="{{ recipe.title }}"></a>
+            <h4>{{ recipe.title }}</h4>
+        </article>
+        {% endfor %}
+    </div>
+</aside>
 {% endblock %}
