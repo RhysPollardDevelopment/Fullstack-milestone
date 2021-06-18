@@ -21,7 +21,42 @@
     color: black;
 }
 
+.recipe img {
+    height: 18rem;
+    width: 100%;
+    object-fit: cover;
+}
+
+.featured-product {
+    height: 10rem;
+    object-fit: cover;
+}
+
 .other-recipe img {
     height: 10rem;
-    max-width: 100%;
+    object-fit: cover;
+    width: 75%;
+}
+
+.blur {
+    filter: blur(6px);
+}
+
+.restricted {
+    position: absolute;
+    bottom: -45%;
+    padding: 1rem;
+}
+
+
+@media(min-width: 992px) {
+    .recipe img {
+        height: 25rem;
+    }
+
+    .restricted {
+        bottom: 10%;
+        left: 24%;
+        width: 50%;
+    }
 }
