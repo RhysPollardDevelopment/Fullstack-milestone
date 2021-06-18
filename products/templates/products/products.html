@@ -18,7 +18,42 @@
         <div class="row">
             <!-- Product loading section-->
             {% for product in products %}
-            <article class="col-12 col-md-6 col-lg-4 py-5 pb-3">
+            <article class="col-12 col-lg-4 mb-5 d-flex justify-content-center">
+                <div class="card text-center">
+                    <a href="{% url 'product_details' product.id %}">
+                        <img src="{{ product.image.url }}"
+                            alt="{{ product.title }}" height="200rem">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class=" card-text">
+                            {{ product.company.county }}
+                        </p>
+                    </div>
+                    <div class="card-body pt-1">
+                        <h6 class="card-title">Hints of:</h6>
+                        <p class="card-text">{{ product.flavour }}
+                        </p>
+                        <h6 class="card-title">Texture:</h6>
+                        <p class="card-text">{{ product.texture }}</p>
+                        <a href="{% url 'product_details' product.id %}"
+                            class="btn btn-info"> More Info</a>
+                    </div>
+                    {% if request.user.is_superuser %}
+                    <div>
+                        <a href="{% url 'update_product' product.id %}"
+                            class="btn btn-info">Edit</a>
+                        <button type="button" class="btn btn-danger delete"
+                            data-toggle="modal" data-target="#deleteConfirm"
+                            data-info="{% url 'delete_product' product.id %}">
+                            Delete
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </article>
+            <!-- <article class="col-12 col-md-6 col-lg-4 py-5 pb-3">
                 <a href="{% url 'product_details' product.id %}"><img
                         src="{{ product.image.url }}" alt=""
                         height="200rem"></a>
@@ -32,7 +67,7 @@
                     Delete
                 </button>
                 {% endif %}
-            </article>
+            </article> -->
             {% endfor %}
         </div>
     </div>

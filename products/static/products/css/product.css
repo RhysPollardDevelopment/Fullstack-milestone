@@ -7,6 +7,10 @@
     color: white;
 }
 
+.card {
+    width: fit-content;
+}
+
 .featured-recipe img {
     height: 15rem;
     max-width: 100%;
