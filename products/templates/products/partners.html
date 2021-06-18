@@ -1,35 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'products/css/product.css' %}">
+{% endblock %}
+
 {% block additional_title %}| Our Hive{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
+<section class="container">
+    <div class="text-center my-3">
+        <h1 class="p-4">Our Partners</h1>
+        <p>
+            We are honored to be partnered with a group of amazing apiaists and
+            farms on an ongoing basis, all working towards a more considerate,
+            natural view on beekeeping and producing honey. Through donations,
+            expertise and the unbeliable work of our community we can give back
+            to and support our country's wildlife.
+        </p>
+        <p>
+            So a big thanks to our partners for doing all they do to keep their
+            bees happy, countryside wild and beautiful and for promoting all the
+            values we hold in the name of keeping honey from becoming
+            bittersweet.
+        </p>
+    </div>
+</section>
+
+<!-- Current Partners-->
+<section class="container">
+    <div class="row px-4">
         <!-- Company info sections-->
         {% for company in companies %}
-        <div class="col-4">
-            <img src="{{ company.logo.url }}" alt="" height="50rem">
-            <h3>{{ company.name }}</h3>
-            <p>{{ company.description }}</p>
-            <a href="{{ company.company_url }}" class="btn btn-info"
-                target="_blank">Visit
-                Us</a>
-            {% if request.user.is_superuser %}
-            <a href="{% url 'update_company' company.id %}"
-                class="btn btn-info">Edit</a>
-            <button type="button" class="btn btn-danger delete"
-                data-toggle="modal" data-target="#deleteConfirm"
-                data-info="{% url 'delete_company' company.id %}">
-                Delete
-            </button>
-            {% endif %}
+        <div class="col-12 col-md-6 col-lg-4 d-flex mb-4">
+            <div class="company p-5 w-100 text-center">
+                <a href="{{ company.company_url }}" class="" target="_blank">
+                    <img src="{{ company.logo.url }}" alt="{{ company.name }}">
+                </a>
+                {% if request.user.is_superuser %}
+                <div class="company-admin">
+                    <a href="{% url 'update_company' company.id %}"
+                        class="btn btn-info edit"><i class="fas fa-edit"></i>
+                    </a>
+                    <button type="button"
+                        class="btn btn-danger delete text-right"
+                        data-toggle="modal" data-target="#deleteConfirm"
+                        data-info="{% url 'delete_company' company.id %}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                {% endif %}
+            </div>
         </div>
-
         {% endfor %}
     </div>
-</div>
+</section>
 
+<!-- Partner request -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-12 p-4">
+            <h2 class="text-center text-capitalize">Become part of the hive</h2>
+        </div>
+        <div class="col-12 col-md-6 py-4">
+            <h4>Already speaking our language?</h4>
+            <p>Do you already farm honey naturally? Are you a interested in
+                expanding your scope to a larger audience? Then contact us
+                regarding joining our team as a partner! We'd love to
+                welcome more members into our bee alliance and help make
+                things just that bit better.</p>
+        </div>
+        <div class="col-12 col-md-6 py-4">
+            <h4>Looking to change stripes?</h4>
+            <p>If you're interested in learning how to change your honey
+                collecting methods to a natural, bee friendly system then
+                we'd love to have you onboard!
+                Contact us and we can discuss the changes you'd need to make
+                and help you achieve them.</p>
+        </div>
+        <div class="col-12 text-center my-5">
+            <p>If you don't want to commit to a full change, but want advice on
+                how to improve your bees' welfare then we still would love to
+                hear
+                from you!</p>
+            <a href="{% url 'contact' %}" class="btn btn-warning">Give us a
+                buzz</a>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 {% block modal %}
