@@ -2,5 +2,127 @@
 {% load static %}
 
 {% block content %}
+<main>
+    <!-- Landing Image -->
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1 class="yellow pt-5">Hive Honey</h1>
+                <h5 class="col pt-2 px-0 white pb-5 my-3">
+                    Honey tastes that much sweeter when it's guilt free.
+                </h5>
+                {% if request.user.userprofile.has_active_subscription %}
+                <a href="{% url 'recipes' %}" class="btn-lg btn-warning">Try
+                    Something New</a>
+                {% else %}
+                <a href="{% url 'subscription_page' %}"
+                    class="btn-lg btn-warning">Subscribe Now</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- How it works -->
+    <section class="container">
+        <div class="row text-center p-5 my-lg-3 how-works">
+            <h3 class="col-12 mb-4"><span>How it works</span></h3>
+            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+                <i class="fas fa-file-invoice-dollar mb-4 yellow"></i>
+                <p>Sign up for our monthly subscription online and help support
+                    us.</p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+                <i class="fas fa-truck mb-4 yellow"></i>
+                <p>Beginning of every month we deliver your honey free of charge
+                    to your door.</p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+                <i class="fas fa-gifts mb-4 yellow"></i>
+                <p>You receive the best honey around, along with early access to
+                    our amazing related recipes!</p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+                <i class="fas fa-leaf mb-4 yellow"></i>
+                <p>Your subscription helps us encourage better beekeeping
+                    practices and support charities for our nation's bees.</p>
+            </div>
+            {% if not request.user.userprofile.has_active_subscription %}
+            <a href="{% url 'subscription_page' %}"
+                class="btn-lg btn-info mx-auto" role="button">Get
+                started</a>
+            {% endif %}
+        </div>
+    </section>
+    <!-- About Us section-->
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6 py-5 px-4 w-75">
+                <h3 class="px-4">UnBEEtable</h3>
+                <h2 class="px-4 mb-3">Our Honey will leave you wanting more</h2>
+                <p class="px-4">The unmissable honey tasting experience. Every
+                    month enjoy a new honey variety, either foraged from
+                    specific flowers or seasoned with new and exciting flavours.
+                </p>
+                <p class="px-4 mb-5">Enjoy the sweet life every month and help
+                    us to
+                    care for our
+                    wildlife.</p>
+                <a href="{% url 'about' %}" class="btn-lg btn-dark mx-4 my-5"
+                    role="button">
+                    About
+                    Us
+                </a>
+            </div>
+            <div class="col-12 col-md-6 py-5 px-4 text-sm-right">
+                <h3 class="px-4 pl-lg-5">This is all about</h3>
+                <h2 class="px-4 pl-lg-5 mb-3">Working Together</h2>
+                <p class="px-4 pl-lg-5">Just like bees, great honey doesn't
+                    happen over
+                    night and it
+                    certaintly doesn't happen on its own.
+                    We've teamed up with like minded farms, apiasts, beekeepers
+                    and whatever else they want to call themselves to bring you
+                    the best honey the right way.
+                </p>
+                <p class="px-4 pl-lg-5">
+                    No funny business.
+                </p>
+                <p class="px-4 pl-lg-5 mb-3">Only good bee-keeping.</p>
+                <a href="{% url 'partners' %}"
+                    class="btn-lg btn-warning mx-4 my-5" role="button">
+                    Our Partners
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Products featurette -->
+    <section class="container-fluid">
+        <div class="row align-self-center pt-lg-5">
+            <div class="col-12 col-md-6 text-center mt-5 pt-md-5">
+                <h3 class="">Our Products</h3>
+                <p class="">Take a look at some of our amazing honies</p>
+                <a href="{% url 'products' %}" class="btn btn-warning">Our
+                    Honey</a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Recipes featurette-->
+    <section class="container-fluid">
+        <div class="row justify-content-end align-items-center pt-lg-5">
+            <div class="col-12 col-md-6 text-center mt-5 pt-md-5">
+                <h3 class="">Feeling hungry yet?</h3>
+                <p class="">Check out our recipes for some mouth watering
+                    inspiration</p>
+                <a href="{% url 'recipes' %}" class="btn btn-warning">Our
+                    recipes</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-12"></div>
+        </div>
+    </section>
+</main>
 {% endblock %}
