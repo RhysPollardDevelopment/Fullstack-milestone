@@ -9,6 +9,8 @@ from PIL import Image
 from io import BytesIO
 from django.conf import settings
 import shutil
+
+from recipes.models import Recipe
 from django.contrib.auth.models import User
 
 # New images are created in a tempfolder for deletion.
@@ -39,6 +41,21 @@ class TestProductViews(TestCase):
             image=self.test_image,
         )
 
+        # Creates enough products to satisfy page requirements.
+        i = 0
+        while i < 4:
+            Product.objects.create(
+                name=f"new product{i}",
+                description=f"Product test description {i}",
+                image=self.test_image,
+            )
+            Recipe.objects.create(
+                title=f"New recipe {i}",
+                description=f"New recipe description {i}",
+                image=self.test_image,
+            )
+            i += 1
+
     def tearDown(self):
         """Clears temp folder after tests"""
         shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
@@ -56,10 +73,15 @@ class TestProductViews(TestCase):
         """
         Test to correctly retrieve a products details and display page.
         """
-
         response = self.client.get(f"/products/{self.product.id}/")
+
+        products = response.context["products"]
+        recipes = response.context["recipes"]
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "products/product_detail.html")
+        self.assertEqual(len(products), 4)
+        self.assertEqual(len(recipes), 2)
 
     def test_get_add_product_page(self):
 
@@ -85,7 +107,6 @@ class TestProductViews(TestCase):
         """
         Test that user can successfully validate and add new product.
         """
-
         self.client.login(username="superuser", password="superpassword")
 
         # which was not corrupt or invalid.
@@ -110,7 +131,7 @@ class TestProductViews(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/products/2/")
+        self.assertRedirects(response, "/products/6/")
 
     def test_get_update_product_page(self):
         """User can access the edit product page if superuser."""

@@ -1,22 +1,80 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'products/css/product.css' %}">
+{% endblock %}
+
 {% block additional_title %}| {{ product.name }} {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
     <div class="row">
         <!-- Product loading section-->
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.description }}</p>
-        <p>{{ product.texture }}</p>
-        <p>{{ product.flavour }}</p>
-        <img src="{{ product.image.url }}" alt="" height="300rem">
-        <a href="{{ product.company.company_url }}"
-            target="_blank">{{ product.company.company_url }}</a>
-        <!--Comapny.logo won't load correctly, missing /media/ before it-->
-        <img src="{{ product.company.logo.url }}" alt="" height="300rem">
+        <div class="col-12 col-md-6 pt-4">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <div class="d-flex mb-4"><img src="{{ product.company.logo.url }}"
+                    alt="" height="30rem">
+                <h5>{{ product.company.name }}</h5>
+            </div>
+            <a href="{{ product.company.company_url }}" target="_blank"
+                class="btn btn-info">Visit
+                {{ product.company.name }}</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <img src="{{ product.image.url }}" alt="" height="300rem">
+        </div>
+    </div>
 
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6 text-right pr-5">
+                <h3>Texture</h3>
+                <p>{{ product.texture }}</p>
+            </div>
+            <div class="col-6 pl-5">
+                <h3>Flavour Profile</h3>
+                <p>{{ product.flavour }}</p>
+            </div>
+        </div>
+        <div class="col-12 pt-3 text-center">
+            <a href="{% url 'subscription_page' %}"
+                class="btn-lg btn-warning">Subscribe Now</a>
+        </div>
+    </div>
+
+    <div class="container py-4 mb-5">
+        <div class="row">
+            {% for recipe in recipes %}
+            <div class="col-12 col-lg-4 featured-recipe">
+                <img src="{{ recipe.image.url }}" alt="">
+                <h4>{{ recipe.title }}</h4>
+            </div>
+            {% endfor %}
+            <div class="col-12 col-lg-4">
+                <h3 class="pt-2">Need some inspiration?</h3>
+                <p class="w-75">
+                    Come and see what honey is really good for, make
+                    something
+                    special and share some freebees with others.
+                </p>
+                <a href="{% url 'recipes' %}" class="btn btn-warning">Our
+                    recipes</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-4 mb-5">
+        <h2 class="text-center">Your might also like</h2>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-12 col-md-6 col-lg-3 other-product">
+                <img src="{{ product.image.url }}" alt="">
+                <h5>{{ product.name }}</h5>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

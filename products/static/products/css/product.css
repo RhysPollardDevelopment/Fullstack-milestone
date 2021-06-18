@@ -6,3 +6,13 @@
     height: 30rem;
     color: white;
 }
+
+.featured-recipe img {
+    height: 15rem;
+    max-width: 100%;
+}
+
+.other-product img {
+    height: 10rem;
+    max-width: 100%;
+}

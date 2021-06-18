@@ -4,6 +4,10 @@ from .models import Product, Company
 from .forms import ProductForm, CompanyForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from recipes.views import is_superuser
+from django.utils import timezone
+import random
+
+from recipes.models import Recipe
 
 
 def all_products(request):
@@ -23,8 +27,29 @@ def product_details(request, product_id):
     product, link to owner company page and suggested recipes.
     """
     product = get_object_or_404(Product, pk=product_id)
+
+    now = timezone.now()
+
+    # https://stackoverflow.com/questions/22816704/django-get-a-random-object
+    # Suggested answer used to create list of random recipes.
+
+    products = random.sample(list(Product.objects.exclude(id=product.id)), 4)
+
+    recipe_list = list(
+        Recipe.objects.filter(featured_product=product, publish_date__lte=now)
+    )
+
+    # If recipe does not have more than 2 recipes, choose 2 from all recipes.
+    if len(recipe_list) >= 2:
+        recipes = random.sample(recipe_list, 2)
+    else:
+        all_recipes = list(Recipe.objects.all())
+        recipes = random.sample(all_recipes, 2)
+
     context = {
         "product": product,
+        "recipes": recipes,
+        "products": products,
     }
 
     return render(request, "products/product_detail.html", context)
