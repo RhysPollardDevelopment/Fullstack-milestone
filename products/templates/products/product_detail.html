@@ -48,7 +48,9 @@
         <div class="row">
             {% for recipe in recipes %}
             <div class="col-12 col-lg-4 featured-recipe">
-                <img src="{{ recipe.image.url }}" alt="">
+                <a href="{% url 'recipe_detail' recipe.title %}"><img
+                        src="{{ recipe.image.url }}"
+                        alt="{{ recipe.title }}"></a>
                 <h4>{{ recipe.title }}</h4>
             </div>
             {% endfor %}
@@ -70,7 +72,8 @@
         <div class="row">
             {% for product in products %}
             <div class="col-12 col-md-6 col-lg-3 other-product">
-                <img src="{{ product.image.url }}" alt="">
+                <a href="{% url 'product_details' product.id %}"><img
+                        src="{{ product.image.url }}" alt=""></a>
                 <h5>{{ product.name }}</h5>
             </div>
             {% endfor %}
