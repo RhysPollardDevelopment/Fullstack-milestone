@@ -26,30 +26,15 @@
     </div>
 </div>
 
-<!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog"
-    aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete this
-                    product?
-                </h5>
-            </div>
 
-            <div class="modal-footer">
-                <button class="btn btn-info" id="cancel"> Cancel
-                </button>
-                <button class="btn btn-danger" id="confirm">
-                    Confirm
-                </button>
-            </div>
-        </div>
-    </div>
-    {% endblock %}
+{% endblock %}
 
-    {% block postloadjs %}
-    {{ block.super }}
-    <script src="{% static 'recipes/js/delete.js' %}" type="text/javascript">
-    </script>
-    {% endblock %}
+{% block modal %}
+{% include "modal.html" %}
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script src="{% static 'recipes/js/delete.js' %}" type="text/javascript">
+</script>
+{% endblock %}
