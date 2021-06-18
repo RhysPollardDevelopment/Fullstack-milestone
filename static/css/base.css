@@ -1,3 +1,12 @@
 .footer {
     background-color: rgb(230, 230, 230);
 }
+
+.featurette {
+    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: #ffffff;
+}

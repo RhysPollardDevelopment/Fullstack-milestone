@@ -1,0 +1,8 @@
+.product-header {
+    background-image: url('/media/honey-352205_1920_xizenlO.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 30rem;
+    color: white;
+}
