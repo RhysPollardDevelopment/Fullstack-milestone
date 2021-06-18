@@ -355,7 +355,7 @@ HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
 
 #### Databases:
 * [PostgresSQL](https://www.postgresql.org/): The relational database used for the deployed project.
-* [SQlite3]
+* [SQlite3](https://sqlite.org/index.html): Local database storage in python.
 
 ## Testing
 All testing can be found in [Testing.md](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/TESTING.md)

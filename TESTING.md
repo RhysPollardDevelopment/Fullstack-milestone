@@ -11,7 +11,7 @@
 
 Testing was performed through this project when any new feature was implemented or altered. This was performed as much as possible to Test Driven development (TDD) standards as best as possible, while trying to cover both integration and unit testing.
 
-For the back end code, branches were employed heavily to isolate code from the master branch and ensure stability before incorporating into the main code branch. Once ensured for stability, each branch's changes were pushed to the deployed website. This meant that any errors which occurred could only exist within one area of the code and could be identified much faster.
+To best imitate Git-flow, branches were employed to isolate code from the master branch and ensure stability while achieving required user stories, before incorporating into the main code branch. Once ensured for stability, each branch's changes were pushed to the deployed website. This meant that any errors which occurred could only exist within one area of the code and could be identified much faster.
 
 To ensure that this project works and maintains as expected, backend validation is performed by Django, model restrictions and form validation in views. On the front end this is self inserted validation alongside HTML validation which is most often asserted through model forms. Defensive programming also assists in maintaining site integrity by warning users of actions with permanent effects, such as confirmation models on instance deletion, along with formatting requirements for insertion of data.
 
@@ -24,6 +24,9 @@ Django code was testing primarily using in framework testing tools, spanning acr
 Below you can find one example of the django back end code coverage performed before front end tasks were undertaken:
 
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/coverage-report.png "Coverage report")
+
+## user stories:
+Any user stories not started, say deprioritized in own seection.
 
 ## Future testing
 * test webhooks in django, Due to high % across site and relative ease of most data, did not seem necessary to perform large volumes of testing.
