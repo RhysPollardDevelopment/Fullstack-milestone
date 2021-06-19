@@ -57,9 +57,20 @@ img {
     left: 50%;
 }
 
+/*------------Tablet-------------*/
+@media(min-width: 768px) {
+    .alt {
+        height: 28rem;
+    }
+}
+
 /*--------------Laptop----------*/
 @media(min-width: 992px) {
     .product-image img {
         height: 30rem;
+    }
+
+    .alt {
+        height: 36rem;
     }
 }

@@ -2,11 +2,45 @@
     background-color: rgb(230, 230, 230);
 }
 
-.featurette {
+.recipe-featurette {
     background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
     color: #ffffff;
+}
+
+.product-featurette {
+    background: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background_70626-4706.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 86%;
+    color: #ffffff;
+}
+
+.how-works i {
+    font-size: 3rem;
+    padding-top: 2rem;
+}
+
+/*----------- Tablet-------------*/
+@media(min-width:768px) {
+
+    .recipe-featurette,
+    .product-featurette {
+        height: 26rem;
+        background-position: bottom;
+    }
+}
+
+/*----------- Laptop-------------*/
+@media(min-width:992px) {
+
+    .recipe-featurette,
+    .product-featurette {
+        height: 35rem;
+        background-position: bottom;
+    }
 }
