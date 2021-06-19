@@ -26,6 +26,7 @@ img {
 
 .logo img {
     height: 2rem;
+    width: auto;
 }
 
 .featured-recipe img {

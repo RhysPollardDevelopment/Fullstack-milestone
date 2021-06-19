@@ -1,0 +1,71 @@
+.subscription {
+    width: 80%;
+}
+
+.cross-page {
+    width: 100%;
+    height: 25rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.one {
+    background-image: url('/media/annie-spratt-8_WZU5xKFKk-unsplash.jpg');
+}
+
+.two {
+    background-image: url('/media/boris-smokrovic-gr7ZkoZnHXU-unsplash.jpg');
+    background-position: right;
+}
+
+.three {
+    background-image: url('/media/bee-naturalles-fManUbiXzGI-unsplash.jpg');
+}
+
+.four {
+    background-image: url('/media/georg-eiermann-MW9LUlk9WVM-unsplash.jpg');
+    background-position: center;
+}
+
+.box-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    height: 25rem;
+}
+
+.border-black {
+    border: 1px solid black;
+}
+
+@media(min-width:992px) {
+    .cross-page {
+        height: 34rem;
+    }
+
+    .box-overlay {
+        height: 34rem;
+    }
+
+    .checkout-img {
+        background-image: url('/media/filipe-costa-lCQ_CWEnohk-unsplash.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 5%;
+    }
+
+    .checkout-box {
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.486));
+        border-radius: 5%;
+    }
+
+    .checkout-box form {
+        background: white;
+        border-top-right-radius: 5%;
+        border-bottom-right-radius: 5%;
+        overflow-y: auto;
+        height: 45rem;
+    }
+
+
+}

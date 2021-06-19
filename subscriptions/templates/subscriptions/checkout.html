@@ -1,40 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'subscriptions/css/subscription.css' %}">
+{% endblock %}
+
 {% block additional_title %}| Checkout{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h1 class="col-12">Payment</h1>
-        <form id="payment-form" class="col-12" method="POST">
-            <div class="m-3" id="card-element">
-                <!-- Elements will create input elements here-->
-            </div>
-            <!-- We'll put the error messages in this element -->
-            <div id="card-element-errors" role="alert">
-            </div>
-            {% csrf_token %}
-            {{sub_form|crispy}}
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value=""
-                    id="save-shipping" checked>
-                <label class="form-check-label" for="flexCheckDefault">
-                    Update my delivery details.
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value=""
-                    id="same-billing" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Billing is same as delivery address
-                </label>
-            </div>
-            <div id=billing-form class="d-none"> {{bill_form|crispy}}</div>
+    <div class="row checkout-box m-lg-4 mb-lg-5">
+        <div class="col-12 checkout-img">
+            <div class="row">
+                <form id="payment-form" class="col-12 col-lg-6 px-4 ml-auto"
+                    method="POST">
+                    <h1 class="text-center p-3">Payment</h1>
+                    <h3 class="pb-3">Delivery Details</h3>
+                    <div class="m-3" id="card-element">
+                        <!-- Elements will create input elements here-->
+                    </div>
+                    <!-- We'll put the error messages in this element -->
+                    <div id="card-element-errors" role="alert">
+                    </div>
+                    {% csrf_token %}
+                    {{sub_form|crispy}}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                            id="save-shipping" checked>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Update my delivery details.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                            id="same-billing" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            BIlling address same as delivery
+                        </label>
+                    </div>
+                    <div id=billing-form class="d-none pt-3">
+                        <h3 class="py-2">Billing Details</h3>
+                        {{bill_form|crispy}}
+                    </div>
 
-            <button id="submit-button" class="btn
-                btn-info">Subscribe</button>
-        </form>
+                    <button id="submit-button" class="btn btn-block
+                btn-info mt-3 mb-5">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
 <input type="hidden" id="customerId" value="{{ profile.stripe_customer_id }}"
