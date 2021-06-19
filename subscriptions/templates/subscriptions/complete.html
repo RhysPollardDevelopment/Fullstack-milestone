@@ -5,10 +5,35 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h1>Your subscription is active!</h1>
+    <div class="row py-4">
+        <div class="col-12 text-center">
+            <h1 class=" text-center py-4 my-lg-5 text-uppercase">Thank You
+            </h1>
+            <h5 class="pb-4 py-lg-4">
+                With your help we can make honey all the sweeter!
+            </h5>
+            <p>
+                We have sent a confirmation email to your inbox confirming your
+                subscription information.
+            </p>
+            <p>
+                Your first delivery should arrive in the first
+                week of the
+                month, but your access to our newest recipes
+                begins immediately!
+            </p>
+            <p>
+                If you have any problems with your delivery info, just update it
+                before the first of the month and it should be sent correctly.
+            </p>
+            <p> Otherwise, <a href="{% url 'contact' %}">Contact Us
+                </a>
+                and we will sort it out.</p>
+            <a href="{% url 'profiles' %}" class="btn btn-info btn-lg m-5">
+                Profile </a>
+        </div>
 
-        <a href="{% url 'profiles' %}" class="btn btn-info"> Profile </a>
+
     </div>
 </div>
 {% endblock %}
