@@ -1,34 +1,48 @@
-{% extends 'base.html' %}
+{% extends 'profiles/profile_base.html' %}
 {% load static %}
 
-{% block additional_title %}| Account Profile{% endblock %}
+{% block additional_title %}| Account Info{% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="row">
-        <h1>My Account</h1>
+{% block profilecontent %}
+<div class="row my-lg-5">
+    <h1 class="col-12 text-center">My Account</h1>
+    <div class="col-12 col-md-6 text-center p-3 py-md-5">
+        <img src="/media/android-chrome-512x512_SdtuzdM.png" alt="profile image"
+            class="profile-img">
+    </div>
+    <div class="col-12 col-md-6 text-center text-lg-left">
         {% if profile.has_active_subscription %}
-        <h3>Currently subscribed</h3>
+        <h4 class="col-12 pb-3 px-lg-0 pt-lg-4">
+            Subscribed since {{ subscription.start_date|date:"M, Y" }}
+        </h4>
+        {% if subscription.cancel_at_end %}
+        <p class="pb-3">
+            Your subscription is active until {{ subscription.end_date|date }}.
+        </p>
         {% else %}
-        <h3>No active subscription</h3>
+        <p class="pb-3">
+            Your next billing date is {{ subscription.end_date|date }}.
+        </p>
         {% endif %}
-        <a href="{% url 'update_address' %}" class="btn btn-info">Update
-            address</a>
+
+        {% else %}
+        <h4 class="col-12">Not Currently Subscribed</h4>
+        {% endif %}
+        <p class="pb-3">Email: {{ profile.user.email }}</p>
         <a href="{% url 'account_change_password' %}"
-            class="btn btn-info">Update
+            class="btn btn-info col-12 p-3">Update
             Password</a>
-        <!-- If no recipes, make if statement to prevent clicking -->
-        <a href="{% url 'my_recipes' %}" class="btn btn-info">Saved recipes</a>
-        <a href="{% url 'subscription_history' %}"
-            class="btn btn-info">subscription_history</a>
         {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
-        <a href="{% url 'reactivate' %}" class="btn btn-info">Renew</a>
+        <a href="{% url 'reactivate' %}"
+            class="btn btn-info col-12 mt-4 mb-5 p-2">Renew</a>
         {% else %}
-        <a href="{% url 'cancel_subscription' %}" class="btn btn-info">Cancel
+        <a href="{% url 'cancel_subscription' %}"
+            class="btn btn-info col-12 mt-4 mb-5 p-3">Cancel
             subscription</a>
         {% endif %}
         {% endif %}
     </div>
+
 </div>
 {% endblock %}

@@ -1,26 +1,27 @@
-{% extends 'base.html' %}
+{% extends 'profiles/profile_base.html' %}
 
 {% load static %}
 
-{% block additional_title %}| UpdateAddress{% endblock %} {% block content %}
-<div class="container">
-   <h1>Update address</h1>
-   <div class="row">
+{% block additional_title %}| UpdateAddress{% endblock %}
 
-      <form method="POST" action="{% url 'update_address' %}" class="col-6">
-         {% csrf_token %}
-         <div>
-            <h3>Delivery Address</h3>{{form|crispy}}
-         </div>
-         <button type="submit">Update</button>
-      </form>
-      <form method="POST" action="{% url 'update_billing' %}" class="col-6">
-         {% csrf_token %}
-         <div id="billing-form">
-            <h3>Billing Address</h3> {{bill_form|crispy}}
-         </div>
-         <button type="submit">Update</button>
-      </form>
-   </div>
+{% block profilecontent %}
+<div class="row mb-lg-5">
+   <h1 class="col-12 text-center py-3 pt-lg-4">Update Details</h1>
+   <form method="POST" action="{% url 'update_address' %}"
+      class="col-12 col-md-6 p-3">
+      {% csrf_token %}
+      <div>
+         <h3>Delivery Address</h3>{{form|crispy}}
+      </div>
+      <button type="submit">Update</button>
+   </form>
+   <form method="POST" action="{% url 'update_billing' %}"
+      class="col-12 col-md-6 p-3 pt-4 pb-5 mb-3 pt-md-3">
+      {% csrf_token %}
+      <div id="billing-form">
+         <h3>Billing Address</h3> {{bill_form|crispy}}
+      </div>
+      <button type="submit">Update</button>
+   </form>
 </div>
 {% endblock %}

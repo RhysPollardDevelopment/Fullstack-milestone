@@ -1,0 +1,7 @@
+.profile-img {
+    height: 10rem;
+    background: linear-gradient(45deg, #dd22ff, #09e4ff);
+    object-fit: cover;
+    padding: 1rem;
+    border-radius: 50%;
+}

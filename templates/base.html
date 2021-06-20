@@ -42,8 +42,6 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <!-- Stripe -->
-    <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
 
     {% block additional_js %}
@@ -68,16 +66,19 @@
                     {% if request.user.userprofile.has_active_subscription %}
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <!-- use of if request in this style to specify active 
+                        page found from
+                        https://github.com/irinatu17/Art-of-Tea-->
+                        <a class="nav-link {% if request.get_full_path == '/subscription/' %}active{% endif %}"
                             href="{% url 'subscription_page' %}">Subscribe</a>
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link {% if request.get_full_path == '/products/' %}active{% endif %}"
                             href="{% url 'products' %}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link {% if request.get_full_path == '/recipes/' %}active{% endif %}"
                             href="{% url 'recipes' %}">Recipes</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -96,12 +97,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link {% if request.get_full_path == '/contact/' %}active{% endif %}"
                             href="{% url 'contact' %}">Contact</a>
                     </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"
+                        <a class="nav-link  dropdown-toggle" href="#"
                             id="profileDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
@@ -109,7 +110,6 @@
                         </a>
                         <div class="dropdown-menu"
                             aria-labelledby="profileDropdown">
-
                             {% if request.user.is_superuser %}
                             <a class="dropdown-item"
                                 href="{% url 'add_product' %}">Add
@@ -130,12 +130,12 @@
                     {% endif %}
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link {% if request.get_full_path == '/accounts/logout/' %}active{% endif %}"
                             href="{% url 'account_logout' %}">Log out</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link {% if request.get_full_path == '/accounts/login/' %}active{% endif %}"
                             href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}

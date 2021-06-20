@@ -5,7 +5,7 @@ $(document).ready(function () {
 })
 
 function formSetup() {
-    let billingForm = document.getElementById("billing-form")
+    let billingForm = document.getElementById("billing-form");
     let inputs = billingForm.getElementsByTagName("input");
     for (i = 0; i < inputs.length; i++) {
         inputs[i].required = false;
@@ -14,7 +14,7 @@ function formSetup() {
 
 function bindBilling() {
     let billingCheck = document.getElementById("same-billing");
-    let billingForm = document.getElementById("billing-form")
+    let billingForm = document.getElementById("billing-form");
     let inputs = billingForm.getElementsByTagName("input");
 
     if (billingCheck) {
@@ -29,7 +29,7 @@ function bindBilling() {
                 for (i = 0; i < inputs.length; i++) {
                     inputs[i].required = true;
                 }
-            }
+            };
         })
     }
-}
+};

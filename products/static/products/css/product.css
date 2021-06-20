@@ -57,6 +57,16 @@ img {
     left: 50%;
 }
 
+/* Loaded in base.css and product.css so app is truly self-sufficient */
+.recipe-featurette {
+    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: #ffffff;
+}
+
 /*------------Tablet-------------*/
 @media(min-width: 768px) {
     .alt {
@@ -71,6 +81,6 @@ img {
     }
 
     .alt {
-        height: 36rem;
+        height: 38rem;
     }
 }
