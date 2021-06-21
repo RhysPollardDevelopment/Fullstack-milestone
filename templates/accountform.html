@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row py-lg-5 my-lg-5">
+        <div
+            class="col-12 px-md-5 py-4 col-lg-6 offset-lg-3 account-form my-lg-2">
+            {% block account-content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

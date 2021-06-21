@@ -35,7 +35,7 @@
         {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
         <a href="{% url 'reactivate' %}"
-            class="btn btn-info col-12 mt-4 mb-5 p-2">Renew</a>
+            class="btn btn-info col-12 mt-4 mb-5 p-3">Renew</a>
         {% else %}
         <a href="{% url 'cancel_subscription' %}"
             class="btn btn-info col-12 mt-4 mb-5 p-3">Cancel

@@ -4,35 +4,56 @@
 {% block additional_title %}| Subscription History{% endblock %}
 
 {% block profilecontent %}
-<h1>Subscription history</h1>
-<div class="row">
-    {% for invoice in invoices %}
-    <ul class="col-4">
-        <li>{{ invoice.invoice_number }}</li>
-        <li>Start: {{ invoice.current_start }}</li>
-        <li>End: {{ invoice.current_end }}</li>
-        <li>Delivered to:
-            <ul>
-                <li>{{ invoice.delivery_name }}</li>
-                <li>{{ invoice.address_1 }}</li>
-                <li>{{ invoice.address_2 }}</li>
-                <li>{{ invoice.town_or_city }}</li>
-                <li>{{ invoice.county }}</li>
-                <li>{{ invoice.postcode }}</li>
-            </ul>
-    </ul>
-    <div class="col-4">
-        <p>{{ invoice.recipe }}</p>
-        <img src="{{ invoice.recipe.image.url }}" alt="{{ invoice.recipe }}"
-            height="100">
-    </div>
-    <div class="col-4">
-        <p>{{ invoice.recipe.featured_product.name }}</p>
-        <img src="{{ invoice.recipe.featured_product.image.url  }}"
-            alt="{{ invoice.recipe.featured_product }}" height="100">
-    </div>
+<h1 class="text-center pt-4 pb-3">Subscription history</h1>
+{% for invoice in invoices %}
+<div class="row p-3">
+    <div class="col-12">
+        <div class="row invoice p-2">
+            <div class="col-12 col-md-4">
+                <h3 class="pt-3">{{ invoice.current_start|date:"M, Y" }}</h3>
+                <p class="mb-0 font-weight-bold d-md-none d-lg-block">Invoice
+                    Number:</p>
+                <p class="d-md-none d-lg-block mb-1">
+                    {{ invoice.invoice_number }}</p>
+                <p class="mb-1">Delivered to:</p>
+                <ul class="mb-3">
+                    <li>{{ invoice.delivery_name }}</li>
+                    <li>{{ invoice.address_1 }} {{ invoice.address_2 }}</li>
+                    <li>{{ invoice.town_or_city }}</li>
+                    <li>{{ invoice.county }}</li>
+                    <li>{{ invoice.postcode }}</li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 align-self-center pt-md-3">
+                <a href="{% url 'recipe_detail' invoice.recipe.title %}">
+                    <img src="{{ invoice.recipe.image.url }}"
+                        alt="{{ invoice.recipe }}">
+                    <p class="text-center text-capitalize mb-md-1">
+                        {{ invoice.recipe }}
+                    </p>
+                </a>
 
-    {% endfor %}
+            </div>
+            <div class="col-12 col-md-4 align-self-center pt-md-3">
+                <a
+                    href="{% url 'product_details' invoice.recipe.featured_product.id %}">
+                    <img src="{{ invoice.recipe.featured_product.image.url  }}"
+                        alt="{{ invoice.recipe.featured_product }}">
+                    <p class="text-center text-capitalize mb-md-1">
+                        {{ invoice.recipe.featured_product.name }}
+                    </p>
+                </a>
+
+            </div>
+            <p class="col-12 d-none d-md-block d-lg-none">
+                <span class="font-weight-bold">
+                    Invoice Number:
+                </span>
+                {{ invoice.invoice_number }}
+            </p>
+        </div>
+    </div>
 </div>
+{% endfor %}
 
 {% endblock %}

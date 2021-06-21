@@ -25,6 +25,64 @@
     padding-top: 2rem;
 }
 
+.absolute {
+    position: absolute;
+}
+
+/*---- General Administration/Accounts -----*/
+
+.account-form {
+    filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.384));
+    background-color: rgba(0, 0, 0, 0.466);
+    color: white;
+}
+
+.account-form h1,
+.account-form p {
+    text-align: center;
+}
+
+.account-form button,
+.account-form .btn {
+    width: 100%;
+}
+
+.account-form a {
+    color: yellow;
+}
+
+.account-form i {
+    font-size: 10rem;
+    text-align: center;
+    margin: auto;
+}
+
+.password_change a {
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+/*------Sign up + Login ----------*/
+.signup-img {
+    background-image: url('/media/pexels-artem-saranin-1187079.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.signup-form {
+    background-color: white;
+}
+
+/*--Toasts and messages---*/
+.message-container {
+    position: fixed;
+    top: 6%;
+    right: 0%;
+    z-index: 99999;
+    background-color: #ffffff;
+}
+
 /*----------- Tablet-------------*/
 @media(min-width:768px) {
 
@@ -42,5 +100,10 @@
     .product-featurette {
         height: 35rem;
         background-position: bottom;
+    }
+
+    .account-form button,
+    .account-form .btn {
+        width: 50%;
     }
 }

@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'subscriptions/css/subscription.css' %}">
+{% endblock %}
+
 {% block additional_title %}| Subscription Cancelled{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <h1>Your subscription has been cancelled</h1>
-        <h3>You have until {{ subscription.end_date }} to reactivate your
-            subscription, or you can start a new subscription after this date.
-        </h3>
-
-        <a href="{% url 'profiles' %}" class="btn btn-info"> Profile </a>
+<div class="container-fluid cancelled">
+    <div class="row pt-lg-5">
+        <div class="col-12 col-md-5 text p-5 mt-lg-4">
+            <h1 class="py-4 py-md-5 text-capitalize">It won't bee the same
+                without you.
+            </h1>
+            <p class="pt-lg-5">But you have until
+                {{ subscription.end_date|date }} to reactivate
+                your subscription if change your mind!</p>
+            <p>Or you can start a new
+                subscription in the future.</p>
+            </p>
+            <h3>We hope you give us a buzz soon.</h3>
+            <a href="{% url 'profiles' %}" class="btn btn-info btn-block my-4">
+                Profile
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -14,10 +14,10 @@
             <a class="nav-link {% if request.get_full_path == '/profiles/' %}active{% endif %}"
                 href="{% url 'profiles' %}">Info</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.get_full_path == '/acounts/email/' %}active{% endif %}"
+        <!-- <li class="nav-item">
+            <a class="nav-link {% if request.get_full_path == '/accounts/email/' %}active{% endif %}"
                 href="{% url 'account_email' %}">Email</a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link {% if request.get_full_path == '/profiles/update/address/' %}active{% endif %}"
                 href="{% url 'update_address' %}">Address</a>
