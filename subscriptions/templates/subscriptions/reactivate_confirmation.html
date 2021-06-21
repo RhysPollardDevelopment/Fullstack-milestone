@@ -1,16 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'accountform.html' %}
 {% load static %}
 
 {% block additional_title %}| Reactivation Successful{% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="row">
-        <h1>Your subscription has been reactivated</h1>
-        <h3>Your subscription will renew as normal on
-            {{ subscription.end_date }}
-        </h3>
-        <a href="{% url 'profiles' %}" class="btn btn-info"> Profile </a>
-    </div>
+{% block account-content %}
+<h1 class="text-capitalize">Your subscription has been reactivated</h1>
+<div class="text-center py-3">
+    <i class="fas fa-check-circle mx-auto"></i>
+</div>
+<h3 class="text-center">We're so glad you've decided to stay!</h3>
+<p>Your subscription will renew as normal on
+    {{ subscription.end_date|date }}.</p>
+<div class="text-center pb-2">
+    <a href="{% url 'profiles' %}" class="btn btn-warning"> Profile </a>
 </div>
 {% endblock %}

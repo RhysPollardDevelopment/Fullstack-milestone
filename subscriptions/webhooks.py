@@ -5,8 +5,9 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
+from django.http import HttpResponse
 
 from profiles.models import UserProfile
 from .models import StripeSubscription, Invoice
@@ -87,7 +88,7 @@ def webhook_received(request):
             active_subscription.save()
 
             # Create email for customer.
-            customer_email = active_subscription.user.email
+            customer_mail = active_subscription.user.email
             subject = render_to_string(
                 "subscriptions/email_templates/invoice_paid_subject.txt",
                 {
@@ -101,10 +102,16 @@ def webhook_received(request):
                     "contact_email": settings.DEFAULT_FROM_EMAIL,
                 },
             )
-
-            send_mail(
-                subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email]
-            )
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [customer_mail],
+                    fail_silently=False,
+                )
+            except BadHeaderError:
+                return HttpResponse("Invalid header found")
 
     if event_type == "invoice.payment_failed":
         # Use this webhook to notify your user that their payment has
@@ -129,8 +136,16 @@ def webhook_received(request):
                 "contact_email": settings.DEFAULT_FROM_EMAIL,
             },
         )
-
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [customer_email],
+                fail_silently=False,
+            )
+        except BadHeaderError:
+            return HttpResponse("Invalid header found")
 
     if event_type == "customer.subscription.deleted":
         # Use to send customer an email informing them and change subscription
@@ -168,8 +183,16 @@ def webhook_received(request):
                 "contact_email": settings.DEFAULT_FROM_EMAIL,
             },
         )
-
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [customer_email],
+                fail_silently=False,
+            )
+        except BadHeaderError:
+            return HttpResponse("Invalid header found")
 
     if event_type == "customer.subscription.created":
         """
@@ -233,8 +256,16 @@ def webhook_received(request):
                 "contact_email": settings.DEFAULT_FROM_EMAIL,
             },
         )
-
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [customer_email],
+                fail_silently=False,
+            )
+        except BadHeaderError:
+            return HttpResponse("Invalid header found")
 
     if event_type == "customer.subscription.updated":
         # set up email to tell customer they have a new subscription.
@@ -279,6 +310,14 @@ def webhook_received(request):
             )
 
         customer_email = freebees_customer.user.email
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [customer_email])
-
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [customer_email],
+                fail_silently=False,
+            )
+        except BadHeaderError:
+            return HttpResponse("Invalid header found")
     return JsonResponse({"status": "success"})

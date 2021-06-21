@@ -1,0 +1,16 @@
+{% extends 'accountform.html' %}
+{% load static %}
+
+{% block additional_title %}| Message Sent{% endblock %}
+
+{% block account-content %}
+<h1 class="text-capitalize">Thank you for the message</h1>
+<div class="text-center py-3">
+    <i class="fas fa-check-circle mx-auto"></i>
+</div>
+<p class="text-center">We have received your message and will try to contact you
+    within 2 working days if requested.</p>
+<div class="text-center pb-2">
+    <a href="{% url 'home' %}" class="btn btn-warning">Home</a>
+</div>
+{% endblock %}

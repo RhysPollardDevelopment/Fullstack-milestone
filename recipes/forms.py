@@ -39,10 +39,18 @@ class RecipeForm(forms.ModelForm):
                 attrs={"placeholder": "Recipe description"}
             ),
             "ingredients": Textarea(
-                attrs={"placeholder": "Enter your ingredients here."}
+                attrs={
+                    "placeholder": "Enter your ingredients here.",
+                    "rows": 4,
+                    "cols": 20,
+                }
             ),
             "instructions": Textarea(
-                attrs={"placeholder": "Enter your instructions here."}
+                attrs={
+                    "placeholder": "Enter your instructions here.",
+                    "rows": 6,
+                    "cols": 20,
+                }
             ),
             "publish_date": TextInput(attrs={"placeholder": "DD/MM/YYYY"}),
         }

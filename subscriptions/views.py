@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.utils import timezone
 
-
 # Forms and models imported.
 from .forms import SubscriptionForm, BillingAddressForm
 from profiles.models import UserProfile
