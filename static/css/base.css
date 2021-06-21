@@ -58,6 +58,15 @@
     width: 100%;
 }
 
+.account-form label {
+    display: none;
+}
+
+.account-form .textinput {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 .account-form i {
     font-size: 10rem;
     text-align: center;
