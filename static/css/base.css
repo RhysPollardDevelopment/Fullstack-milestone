@@ -1,3 +1,6 @@
+/*-----------General----------*/
+
+
 /*-----------Footer-----------*/
 .footer {
     background-color: rgb(230, 230, 230);
@@ -40,7 +43,7 @@
     position: absolute;
 }
 
-/*---- General Administration/Accounts -----*/
+/*---- All auth/Admin  -----*/
 
 .account-form {
     filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.384));
@@ -102,6 +105,11 @@
     padding: 3rem 2rem 4rem;
     border-top-right-radius: 3%;
     border-bottom-right-radius: 3%;
+    text-align: center;
+}
+
+.login-form .form-group {
+    text-align: left;
 }
 
 .login-form .textinput {
@@ -141,6 +149,12 @@
 /*----------- Tablet-------------*/
 @media(min-width:768px) {
 
+    /*------General---------*/
+    .drop-shadow-md {
+        filter: drop-shadow(2px 4px 6px black);
+    }
+
+    /*---------Index-------*/
     .recipe-featurette,
     .product-featurette {
         height: 26rem;
@@ -154,6 +168,10 @@
         padding-top: 4rem;
         padding-bottom: 5rem;
 
+    }
+
+    .login-form {
+        padding: 3rem 3rem 4rem;
     }
 
 }
@@ -208,7 +226,6 @@
     .login-form {
         background-color: #202020;
         color: white;
-        padding: 4rem 3rem;
         border-top-right-radius: 3%;
         border-bottom-right-radius: 3%;
     }

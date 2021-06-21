@@ -11,13 +11,16 @@
 <div class="container-fluid login">
   <div class="row mx-auto w-lg-60">
     <div class="col-12">
-      <div class="row">
+      <div class="row drop-shadow-md">
+        <!-- Side Image for login form-->
         <div class="d-none d-md-block col-md-3 login-img">
           <img src="/media/" alt="">
         </div>
+        <!-- Login form -->
         <form id="login-form" class="col-12 col-md-9 login-form" method="POST">
-          <h1 class="py-3">{% trans "Login" %}</h1>
+          <h1 class="pb-3 pt-2">{% trans "Login" %}</h1>
 
+          <!-- Loads social accounts if they exist -->
           {% get_providers as socialaccount_providers %}
 
           {% if socialaccount_providers %}
@@ -44,7 +47,7 @@
           <p>{% blocktrans %}Don't have an account? Then why not
             <a href="{{ signup_url }}">sign up</a> here.{% endblocktrans %}</p>
           {% endif %}
-
+          <!-- Sign in details -->
           <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             {{ form|crispy }}
@@ -56,13 +59,10 @@
               type="submit">{% trans "Sign In" %}</button>
             <a class="button"
               href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-
           </form>
         </form>
-
       </div>
     </div>
   </div>
 </div>
-
 {% endblock %}
