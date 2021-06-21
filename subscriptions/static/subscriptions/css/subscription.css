@@ -46,6 +46,11 @@
     height: 100%;
 }
 
+.text {
+    background-color: #0000008a;
+    color: white;
+}
+
 /*--------- Laptop ---------------*/
 @media(min-width:992px) {
     .cross-page {
@@ -77,9 +82,11 @@
         height: 45rem;
     }
 
-    .cancelled {
+    .cancelled,
+    .text {
         height: 48rem;
     }
+
 
 
 }

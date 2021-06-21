@@ -80,14 +80,33 @@
 }
 
 /*------Sign up + Login ----------*/
-.signup-img {
+.login {
+    background-color: #202020;
+}
+
+.login-img {
     background-image: url('/media/pexels-artem-saranin-1187079.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    border-top-left-radius: 4%;
+    border-bottom-left-radius: 4%;
 }
 
-.signup-form {
-    background-color: white;
+.requiredField {
+    display: none;
+}
+
+.login-form {
+    background-color: #202020;
+    color: white;
+    padding: 3rem 2rem 4rem;
+    border-top-right-radius: 3%;
+    border-bottom-right-radius: 3%;
+}
+
+.login-form .textinput {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 /*--Toasts and messages---*/
@@ -127,6 +146,16 @@
         height: 26rem;
         background-position: bottom;
     }
+
+    .login {
+        background-image: url('/media/background-1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+
+    }
+
 }
 
 /*----------- Laptop-------------*/
@@ -143,10 +172,49 @@
         width: 50%;
     }
 
+    .w-lg-60 {
+        width: 60% !important;
+    }
+
     .who img {
         height: 24rem;
         margin-top: 0;
         margin-bottom: 0;
         padding: 2rem;
+    }
+
+    .login {
+        background-image: url('/media/background-1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .login-img {
+        background-image: url('/media/pexels-artem-saranin-1187079.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-top-left-radius: 4%;
+        border-bottom-left-radius: 4%;
+    }
+
+    .requiredField {
+        display: none;
+    }
+
+    .login-form {
+        background-color: #202020;
+        color: white;
+        padding: 4rem 3rem;
+        border-top-right-radius: 3%;
+        border-bottom-right-radius: 3%;
+    }
+
+    .login-form .textinput {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
     }
 }
