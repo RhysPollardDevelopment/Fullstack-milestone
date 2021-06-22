@@ -1,25 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'recipes/form_base.html' %}
 {% load static %}
 
 {% block additional_title %}| Add Recipe{% endblock %}
 
-{% block content %}
-<div class="container">
-    <form action="{% url 'add_recipe' %}" method="POST" class="form mb-2"
-        enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in form %}
-        {% if field.name != 'image' %}
-        {{ field| as_crispy_field }}
-        {% else %}
-        {{ field }}
-        {% endif %}
-        {% endfor %}
-        <div class="text-right">
-            <a href="{% url 'recipes' %}" class="btn btn-danger"> Cancel</a>
-            <button class="btn btn-success" type="submit">Add
-                Recipe</button>
-        </div>
-    </form>
-</div>
-{% endblock %}
+<!-- Type of form responsibility -->
+{% block formtype %}Add Recipe{% endblock %}
+
+<!-- Action to take on form submission -->
+{% block formaction %}{% url 'add_recipe' %}{% endblock %}
+
+<!-- Text for submit button -->
+{% block submitevent %}Add Recipe{% endblock %}
