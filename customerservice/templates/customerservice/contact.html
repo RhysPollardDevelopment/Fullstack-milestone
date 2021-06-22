@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
+{% block additional_css %}
+<link rel="stylesheet"
+    href="{% static 'customerservice/css/customerservice.css' %}">
+{% endblock %}
 
-<div class="container">
-    <div class="row">
-        <h1 class="col-12 text-center py-4">Contact Us</h1>
+{% block content %}
+<div class="container page-push">
+    <div class="row pt-lg-4">
+        <h1 class="col-12 text-center pt-4 pb-3">
+            <span class="underline">Contact Us</span> </h1>
     </div>
-    <div class="row py-5 mb-3">
+    <div class="row pt-4 pb-2 mb-3">
         <div class="col-12 col-lg-6 text-center">
             <p class="text-capitalize mb-1">If you have any questions</p>
             <p class="text-capitalize">Please feel free to send us a message</p>
             <form method="POST" class="p-2 px-md-5">
                 {% csrf_token %}
                 {{ contact_form|crispy}}
-                <button type="submit" class="btn btn-warning btn-block">Send
+                <button type="submit" class="btn button-yellow btn-block">Send
                     Message</button>
             </form>
             <h4 class="mt-3 mt-lg-4">Connect with us</h4>

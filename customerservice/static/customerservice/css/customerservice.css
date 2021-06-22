@@ -45,6 +45,22 @@
     color: black;
 }
 
+.social-links i {
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    width: 3rem;
+    height: 3rem;
+    margin: auto;
+    padding: 0.5rem;
+    border-radius: 20%;
+}
+
+.social-links i:hover {
+    color: #e7c100;
+    border: 1px solid #ceab00;
+    transition: 0.25s;
+}
+
 /*---------About ---------*/
 
 .who img {

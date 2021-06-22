@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet"
+    href="{% static 'customerservice/css/customerservice.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container who">
+<div class="container who page-push">
     <!-- Page title-->
-    <div class="row">
-        <h1 class="col-12 py-4 text-center">About Us</h1>
+    <div class="row pt-lg-4">
+        <h1 class="col-12 py-4 text-center">
+            <span class="underline">About
+                Us</span>
+        </h1>
     </div>
     <div class="row">
         <div class="col-12 col-md-6 col-lg-5 align-self-lg-center">
@@ -24,6 +32,8 @@
             <img src="/media/pass-the-honey-vZGvVTO1pIg-unsplash.jpg"
                 alt="Four beekeepers.">
         </div>
+    </div>
+    <div class="row">
         <div class="d-none d-md-block col-md-6 col-lg-7 align-self-md-center">
             <img src="/media/pexels-anete-lusina-5247944.jpg"
                 alt="Beekeeper with smoke gun.">
