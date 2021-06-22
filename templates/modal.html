@@ -4,9 +4,54 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <!-- Recipe Modal title-->
+                {% if recipes %}
                 <h5 class="modal-title" id="deleteModalLabel">Delete this
-                    product?
+                    Recipe?
                 </h5>
+                <!-- Product Modal title-->
+                {% elif products %}
+                <h5 class="modal-title" id="deleteModalLabel">
+                    Delete this
+                    Product?
+                </h5>
+                <!-- Company Modal title-->
+                {% elif companies %}
+                <h5 class="modal-title" id="deleteModalLabel">
+                    Delete this Company?
+                </h5>
+                <!-- Subscription cancellation title-->
+                {% elif subscription %}
+                <h5 class="modal-title" id="deleteModalLabel">
+                    Are you sure?
+                </h5>
+                {% endif %}
+            </div>
+            <div class="modal-body">
+                <!-- Recipe Modal body-->
+                {% if recipes %}
+                <p>If you delete this recipe then it will be removed
+                    permanently.</p>
+                <p>Do you wish to continue?</p>
+                <!-- Product Modal body-->
+                {% elif products %}
+                <p>If you delete this product then it will be
+                    removed permanently.</p>
+                <p>Do you wish to continue?</p>
+                <!-- Company Modal body-->
+                {% elif companies %}
+                <p>If you delete this company then it will be
+                    removed permanently.</p>
+                <p>Do you wish to continue?</p>
+                <!-- Subscription cancellation body-->
+                {% elif subscription %}
+                <p>If you continue, your subscription will
+                    terminate at the end of this payment period.</p>
+                <p>You will still be able to browse our free recipes until
+                    {{ subscription.end_date| date }} and receive any honey
+                    during this time, but will lose these features
+                    afterwards.</p>
+                {% endif %}
             </div>
 
             <div class="modal-footer">

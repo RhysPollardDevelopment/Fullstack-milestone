@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.widgets import TextInput, Textarea
+from django.conf import settings
 from .models import Recipe
 
 
@@ -52,12 +53,14 @@ class RecipeForm(forms.ModelForm):
                     "cols": 20,
                 }
             ),
-            "publish_date": TextInput(attrs={"placeholder": "DD/MM/YYYY"}),
+            "publish_date": TextInput(
+                attrs={"placeholder": "MM/DD/YYYY"},
+            ),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for field in self.fields:
-            self.fields[field].widget.attrs["class"] = "border-black rounded-0"
+            self.fields[field].widget.attrs["class"] = "form-control"
             self.fields[field].label = False

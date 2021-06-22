@@ -146,6 +146,11 @@
     height: 16rem;
 }
 
+/*----------Modal-----------*/
+.modal {
+    top: 5rem;
+}
+
 /*----------- Tablet-------------*/
 @media(min-width:768px) {
 

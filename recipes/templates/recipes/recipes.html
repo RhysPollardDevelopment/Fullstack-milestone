@@ -33,7 +33,7 @@
                 {% if request.user.is_superuser %}
                 <a href="{% url 'update_recipe' recipe.title %}"
                     class="btn btn-info">Edit</a>
-                <button type="button" class="btn btn-danger delete"
+                <button type="button" class="btn btn-warning delete"
                     data-toggle="modal" data-target="#deleteConfirm"
                     data-info="{% url 'delete_recipe' recipe.title %}">
                     Delete
