@@ -54,11 +54,11 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     # Custom Apps
+    "customerservice",
     "profiles",
     "products",
     "recipes",
     "subscriptions",
-    "customerservice",
     # other/python packages
     "storages",
     "crispy_forms",

@@ -19,6 +19,18 @@ body {
     background-color: #161616;
 }
 
+.white {
+    color: white;
+}
+
+.black {
+    color: black;
+}
+
+.underline {
+    border-bottom: 2px solid white
+}
+
 /*------------Typography-----------*/
 h1,
 h2,
@@ -35,15 +47,38 @@ p {
     font-family: var(--montserrat);
 }
 
+/*-----------Buttons------------*/
+
+.button-yellow {
+    font-family: var(--bebas-neue);
+    background-color: var(--gold);
+    color: var(--jet);
+    border: 1px solid #bea940;
+    border-radius: 0;
+}
+
+.button-dark {
+    font-family: var(--bebas-neue);
+    background-color: var(--jet);
+    color: var(--gold);
+    border: 1px solid #0c0c0c;
+    border-radius: 0;
+}
+
 /*-----------Navigation--------*/
 
 .navigation li {
     margin-left: 1rem;
 }
 
-.nav-link {
+.navigation .nav-link {
     font-family: var(--bebas-neue);
     font-size: large;
+    color: rgba(224, 224, 224, 0.788);
+}
+
+.navigation .nav-link:hover {
+    color: white;
 }
 
 .navigation .dropdown-menu.show {
@@ -104,29 +139,6 @@ p {
 .social-links li {
     margin: 1rem;
     font-size: 2rem;
-}
-
-.recipe-featurette {
-    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
-    height: 35rem;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    color: #ffffff;
-}
-
-.product-featurette {
-    background: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background_70626-4706.jpg');
-    height: 35rem;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position-x: 86%;
-    color: #ffffff;
-}
-
-.how-works i {
-    font-size: 3rem;
-    padding-top: 2rem;
 }
 
 .absolute {
@@ -219,26 +231,6 @@ p {
     background-color: #ffffff;
 }
 
-/*---------About ---------*/
-
-.who img {
-    width: 100%;
-    object-fit: cover;
-    height: 14rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.who .text-muted {
-    font-size: 0.75rem;
-}
-
-/*-----Contact--------*/
-
-#map {
-    height: 16rem;
-}
-
 /*----------Modal-----------*/
 .modal {
     top: 5rem;
@@ -276,6 +268,11 @@ p {
 
 /*----------- Laptop-------------*/
 @media(min-width:992px) {
+
+    /* Pushes top of page to offset absolute navbar */
+    .page-push {
+        padding-top: 3rem
+    }
 
     .navigation {
         background-color: rgba(0, 0, 0, 0.5);

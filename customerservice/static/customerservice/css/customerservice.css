@@ -1,0 +1,123 @@
+/*--------------Variables-----------*/
+:root {
+    --gold: #d4c059;
+    --jet: #202020;
+
+    --bebas-neue: 'Bebas Neue', cursive;
+    --montserrat: 'Montserrat', sans-serif;
+}
+
+/*----------Index----------*/
+.landing {
+    background-image: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background-landscape.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 86%;
+}
+
+.recipe-featurette {
+    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: #ffffff;
+}
+
+.product-featurette {
+    background: url('/media/bermix-studio-tRA2_EGKhpA-unsplash.jpg');
+    height: 35rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 86%;
+    color: #ffffff;
+}
+
+.how-works i {
+    font-size: 3rem;
+    padding-top: 2rem;
+    color: var(--gold)
+}
+
+.alt-colour {
+    background-color: var(--gold);
+    color: black;
+}
+
+/*---------About ---------*/
+
+.who img {
+    width: 100%;
+    object-fit: cover;
+    height: 14rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.who .text-muted {
+    font-size: 0.75rem;
+}
+
+/*-----Contact--------*/
+
+#map {
+    height: 16rem;
+}
+
+/*----------- Tablet-------------*/
+@media(min-width:768px) {
+
+    /*------General---------*/
+    .drop-shadow-md {
+        filter: drop-shadow(2px 4px 6px black);
+    }
+
+    /*---------Index-------*/
+    .landing {
+        height: 30rem;
+        background-position-x: 70%;
+    }
+
+    .recipe-featurette,
+    .product-featurette {
+        height: 26rem;
+        background-position: bottom;
+    }
+
+    .login {
+        background-image: url('/media/background-1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+
+    }
+
+    .login-form {
+        padding: 3rem 3rem 4rem;
+    }
+
+}
+
+/*----------- Laptop-------------*/
+@media(min-width:992px) {
+
+    .landing {
+        height: 36rem;
+        background-position-y: 60%;
+    }
+
+    .recipe-featurette,
+    .product-featurette {
+        height: 35rem;
+        background-position: bottom;
+    }
+
+    .who img {
+        height: 24rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 2rem;
+    }
+}
