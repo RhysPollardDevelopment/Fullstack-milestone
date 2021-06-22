@@ -52,7 +52,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark navigation">
             <a class="navbar-brand" href="{% url 'home' %}">FreeBees</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
@@ -62,7 +62,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav ml-auto">
                     {% if request.user.userprofile.has_active_subscription %}
                     {% else %}
                     <li class="nav-item">
@@ -173,7 +173,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <a class="navbar-brand pt-5" href="#">Hive</a>
+                    <a class="navbar-brand pt-4"
+                        href="{% url 'home' %}">FreeBees</a>
                 </div>
                 <div class="col-12">
                     <button class="footer-toggler w-100 p-3" type="button"
@@ -249,7 +250,7 @@
                     <a href="">Privacy Policy</a>
                 </div>
                 <div class="col-12">
-                    <h5 class="my-3">&#169; 2021 Hive Honey</h5>
+                    <h5 class="my-3">&#169; 2021 FreeBees</h5>
                     <p class="mt-1">All rights are reserved. All other
                         trademarks, trade
                         names and production are properties of their

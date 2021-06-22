@@ -35,6 +35,26 @@ p {
     font-family: var(--montserrat);
 }
 
+/*-----------Navigation--------*/
+
+.navigation li {
+    margin-left: 1rem;
+}
+
+.nav-link {
+    font-family: var(--bebas-neue);
+    font-size: large;
+}
+
+.navigation .dropdown-menu.show {
+    background: #161616;
+}
+
+.dropdown-menu a {
+    font-family: var(--bebas-neue);
+    color: white;
+}
+
 /*-----------Footer-----------*/
 .footer {
     background-color: rgb(12, 12, 12);
@@ -256,6 +276,13 @@ p {
 
 /*----------- Laptop-------------*/
 @media(min-width:992px) {
+
+    .navigation {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        width: 100%;
+        z-index: 200;
+    }
 
     .recipe-featurette,
     .product-featurette {
