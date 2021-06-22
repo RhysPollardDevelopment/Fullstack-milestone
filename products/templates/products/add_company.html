@@ -1,25 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'products/form_base.html' %}
 {% load static %}
 
 {% block additional_title %}| Add Company{% endblock %}
 
-{% block content %}
-<div class="container">
-    <form action="{% url 'add_company' %}" method="POST" class="form mb-2"
-        enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in form %}
-        {% if field.name != 'logo' %}
-        {{ field| as_crispy_field }}
-        {% else %}
-        {{ field }}
-        {% endif %}
-        {% endfor %}
-        <div class="text-right">
-            <a href="{% url 'partners' %}" class="btn btn-danger"> Cancel</a>
-            <button class="btn btn-success" type="submit">Add
-                Company</button>
-        </div>
-    </form>
-</div>
-{% endblock %}
+<!-- Type of form responsibility -->
+{% block formtype %}Add Company{% endblock %}
+
+<!-- Action to take on form submission -->
+{% block formaction %}{% url 'add_company' %}{% endblock %}
+
+<!-- Text for submit button -->
+{% block submitevent %}Add Company{% endblock %}
+
+<!-- Return url for cancel button -->
+{% block returnurl %}{% url 'partners' %}{% endblock %}

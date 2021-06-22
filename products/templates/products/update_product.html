@@ -1,25 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'products/form_base.html' %}
 {% load static %}
 
-{% block additional_title %}| Editing {product.name}{% endblock %}
-
-{% block content %}
-<div class="container">
-    <form action="{% url 'update_product' product.id %}" method="POST"
-        class="form mb-2" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in form %}
-        {% if field.name != 'image' %}
-        {{ field| as_crispy_field }}
-        {% else %}
-        {{ field }}
-        {% endif %}
-        {% endfor %}
-        <div class="text-right">
-            <a href="{% url 'products' %}" class="btn btn-danger"> Cancel</a>
-            <button class="btn btn-success" type="submit">Edit
-                Product</button>
-        </div>
-    </form>
-</div>
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'products/css/product.css' %}">
 {% endblock %}
+
+{% block additional_title %}| Editing {{product.name}}{% endblock %}
+
+<!-- Type of form responsibility -->
+{% block formtype %}Editing:{% endblock %}
+
+<!-- Action to take on form submission -->
+{% block formaction %}{% url 'update_product' product.id %}{% endblock %}
+
+<!-- Text for submit button -->
+{% block submitevent %}Edit Product{% endblock %}
+
+<!-- Return url for cancel button -->
+{% block returnurl %}{% url 'products' %}{% endblock %}
