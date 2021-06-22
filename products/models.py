@@ -35,7 +35,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=600)
-    logo = models.ImageField(null=True, blank=True)
+    logo = models.ImageField(null=True)
     county = models.CharField(max_length=40, null=True, blank=True)
     company_url = models.URLField(max_length=250)
 
