@@ -1,9 +1,79 @@
-/*-----------General----------*/
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500&display=swap');
 
+/*--------------Variables-----------*/
+/* Variables discovered from https://github.com/irinatu17/Art-of-Tea but
+learnt from tutorial at mozilla.
+https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties*/
+
+:root {
+    --gold: #d4c059;
+    --jet: #202020;
+
+    --bebas-neue: 'Bebas Neue', cursive;
+    --montserrat: 'Montserrat', sans-serif;
+}
+
+
+/*-----------General----------*/
+body {
+    background-color: #161616;
+}
+
+/*------------Typography-----------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--gold);
+    font-family: var(--bebas-neue);
+}
+
+p {
+    color: white;
+    font-family: var(--montserrat);
+}
 
 /*-----------Footer-----------*/
 .footer {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(12, 12, 12);
+    bottom: 0%;
+    text-align: center;
+    color: white;
+}
+
+.footer-collapse {
+    align-items: center;
+    flex-grow: 1;
+}
+
+.footer-toggler {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+    font-family: var(--bebas-neue);
+}
+
+.footer-nav {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.footer-nav .nav-link {
+    border-bottom: 1px solid black;
+    font-family: var(--bebas-neue);
+}
+
+.footer a,
+.footer i {
+    color: var(--gold);
+}
+
+.footer a {
+    font-family: var(--bebas-neue);
 }
 
 .social-links {
@@ -44,6 +114,9 @@
 }
 
 /*---- All auth/Admin  -----*/
+.account-background {
+    background-image: url('/media/background-1.png');
+}
 
 .account-form {
     filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.384));
@@ -84,7 +157,7 @@
 
 /*------Sign up + Login ----------*/
 .login {
-    background-color: #202020;
+    background-color: var(--jet);
 }
 
 .login-img {
@@ -100,7 +173,7 @@
 }
 
 .login-form {
-    background-color: #202020;
+    background-color: var(--jet);
     color: white;
     padding: 3rem 2rem 4rem;
     border-top-right-radius: 3%;
@@ -229,7 +302,7 @@
     }
 
     .login-form {
-        background-color: #202020;
+        background-color: var(--jet);
         color: white;
         border-top-right-radius: 3%;
         border-bottom-right-radius: 3%;

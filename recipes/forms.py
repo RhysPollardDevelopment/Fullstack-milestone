@@ -1,6 +1,5 @@
 from django import forms
 from django.forms.widgets import TextInput, Textarea
-from django.conf import settings
 from .models import Recipe
 
 
