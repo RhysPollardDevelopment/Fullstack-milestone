@@ -1,13 +1,44 @@
-.profile-img {
-    height: 10rem;
+/*-----------Profile base------------*/
+.nav-tabs {
+    border-bottom: 1px solid #d4c059;
+    background: #161616;
+}
+
+.nav-link {
+    color: white;
+    font-family: var(--bebas-neue);
+    font-size: 1.25rem;
+}
+
+.nav-link.profile.active {
+    background-color: transparent;
+    border: none;
+    color: var(--gold);
+    text-decoration: underline 3px white;
+    text-underline-offset: 0.25rem;
+}
+
+/*--------User profile page---------*/
+.profile-img h2 {
+    height: 9rem;
+    width: 10rem;
+    font-size: 6rem;
     background: linear-gradient(45deg, #dd22ff, #09e4ff);
-    object-fit: cover;
     padding: 1rem;
     border-radius: 50%;
 }
 
+.profile-side img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 10%;
+}
+
+/*----------Subscription history -----------*/
+
 .invoice {
-    background-color: white;
+    background-color: #202020;
     filter: drop-shadow(1px 3px 4px rgba(0, 0, 0, 0.6));
 }
 
@@ -16,6 +47,7 @@
     object-fit: cover;
     width: 100%;
     border-radius: 5%;
+    border: 3px inset var(--gold);
 }
 
 .invoice a {

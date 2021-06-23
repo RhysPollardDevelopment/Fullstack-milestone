@@ -5,48 +5,70 @@
 
 {% block profilecontent %}
 <div class="row my-lg-5">
-    <h1 class="col-12 text-center">My Account</h1>
-    <div class="col-12 col-md-6 text-center p-3 py-md-5">
-        <img src="/media/android-chrome-512x512_SdtuzdM.png" alt="profile image"
-            class="profile-img">
+    <div class="d-none d-lg-block col-lg-6 py-4 px-lg-5 profile-side">
+        <img src="/media/pexels-harry-cooke-6194977.jpg"
+            alt="Bee drinking from cherry blossom.">
     </div>
-    <div class="col-12 col-md-6 text-center text-lg-left">
+    <!--- User profile details and buttons for updating account -->
+    <div class="col-12 col-lg-6 text-center text-lg-left">
+        <h1 class="col-12 text-center py-3">My Account</h1>
+        <div class="profile-img pb-4">
+            <h2 class="white text-center mx-auto">
+                {{ request.user.username| first}}</h2>
+        </div>
+        <!-- Joined as a authenticated user date-->
+        <h4 class="col-12 px-md-0 pt-lg-4">Joined Freebees on
+            {{ request.user.date_joined| date }}</h4>
+
+        <!-- If User has subscription, show join date-->
         {% if profile.has_active_subscription %}
-        <h4 class="col-12 pb-3 px-lg-0 pt-lg-4">
+        <h4 class="col-12 pb-3 px-md-0 pt-lg-3">
             Subscribed since {{ subscription.start_date|date:"M, Y" }}
         </h4>
+        <!-- No active subscription prompt -->
+        {% else %}
+        <h4 class="col-12 px-md-0 pb-3">No Active subscription</h4>
+        {% endif %}
+
+        <p class="pb-1">User: {{ profile.user.username }}</p>
+        <p class="pb-1">Email: {{ profile.user.email }}</p>
+
+        <!-- Inner query: If cancel_at_end is true, display end date. -->
+        {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
         <p class="pb-3">
-            Your subscription is active until {{ subscription.end_date|date }}.
+            Your subscription is active until
+            {{ subscription.end_date|date }}.
         </p>
+        <!-- else just show next billing date. -->
         {% else %}
         <p class="pb-3">
             Your next billing date is {{ subscription.end_date|date }}.
         </p>
         {% endif %}
-
-        {% else %}
-        <h4 class="col-12">Not Currently Subscribed</h4>
         {% endif %}
-        <p class="pb-3">Email: {{ profile.user.email }}</p>
+
         <a href="{% url 'account_change_password' %}"
-            class="btn btn-info col-12 p-3">Update
+            class="btn button-yellow col-12 p-2">Update
             Password</a>
+        <a class="btn button-yellow col-12 mt-4 p-2"
+            href="{% url 'account_email' %}">Email</a>
+        <!--if subscription is active, show cancel. If cancelled show renew-->
         {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
         <a href="{% url 'reactivate' %}"
-            class="btn btn-info col-12 mt-4 mb-5 p-3">Renew</a>
+            class="btn button-yellow col-12 mt-4 mb-5 p-2">Renew</a>
         {% else %}
-        <button class="btn btn-warning col-12 mt-4 mb-5 p-3 cancel"
+        <button class="btn button-yellow col-12 mt-4 mb-5 p-2 cancel"
             data-info="{% url 'cancel_subscription' %}">Cancel
             Subscription</button>
         {% endif %}
         {% endif %}
     </div>
-
 </div>
 {% endblock %}
 
+<!-- Warning modal for cancelling subscription-->
 {% if profile.has_active_subscription %}
 {% block modal %}
 {% include "includes/modal.html" %}

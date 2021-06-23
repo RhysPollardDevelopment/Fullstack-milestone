@@ -5,7 +5,8 @@
 {% block additional_title %}| UpdateAddress{% endblock %}
 
 {% block profilecontent %}
-<div class="row mb-lg-5">
+<section class="row mb-lg-5">
+   <!-- Update delivery details form-->
    <h1 class="col-12 text-center py-3 pt-lg-4">Update Details</h1>
    <form method="POST" action="{% url 'update_address' %}"
       class="col-12 col-md-6 p-3">
@@ -13,15 +14,18 @@
       <div>
          <h3>Delivery Address</h3>{{form|crispy}}
       </div>
-      <button type="submit">Update</button>
+      <button type="submit"
+         class="btn button-yellow btn-block p-2 mt-4">Update</button>
    </form>
+   <!-- Update billing details form-->
    <form method="POST" action="{% url 'update_billing' %}"
       class="col-12 col-md-6 p-3 pt-4 pb-5 mb-3 pt-md-3">
       {% csrf_token %}
       <div id="billing-form">
          <h3>Billing Address</h3> {{bill_form|crispy}}
       </div>
-      <button type="submit">Update</button>
+      <button type="submit"
+         class="btn button-yellow btn-block p-2 mt-4">Update</button>
    </form>
-</div>
+</section>
 {% endblock %}

@@ -14,15 +14,22 @@
 {% block additional_title %}| Checkout{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row checkout-box m-lg-4 mb-lg-5">
-        <div class="col-12 checkout-img">
-            <div class="row">
-                <form id="payment-form" class="col-12 col-lg-6 px-4 ml-auto"
+<div class="container-fluid page-push checkout-background">
+    <div class="row checkout-box mx-auto w-lg-60 mb-lg-5">
+        <div class="col-12">
+            <div class="row pt-lg-5">
+                <!-- Side Image for login form-->
+                <div class="d-none d-lg-block col-lg-3 checkout-img">
+                    <img src="/media/" alt="">
+                </div>
+                <form id="payment-form" class="col-12 col-lg-9 px-4 ml-auto"
                     method="POST">
                     <h1 class="text-center p-3">Payment</h1>
-                    <h3 class="pb-3">Delivery Details</h3>
-                    <div class="m-3" id="card-element">
+                    <h3 class="pb-3">
+                        <span class="underline">Delivery
+                            Details</span>
+                    </h3>
+                    <div class="my-3" id="card-element">
                         <!-- Elements will create input elements here-->
                     </div>
                     <!-- We'll put the error messages in this element -->
@@ -30,14 +37,14 @@
                     </div>
                     {% csrf_token %}
                     {{sub_form|crispy}}
-                    <div class="form-check">
+                    <div class="form-check white">
                         <input class="form-check-input" type="checkbox" value=""
                             id="save-shipping" checked>
                         <label class="form-check-label" for="flexCheckDefault">
                             Update my delivery details.
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check white">
                         <input class="form-check-input" type="checkbox" value=""
                             id="same-billing" checked>
                         <label class="form-check-label" for="flexCheckChecked">
@@ -45,12 +52,16 @@
                         </label>
                     </div>
                     <div id=billing-form class="d-none pt-3">
-                        <h3 class="py-2">Billing Details</h3>
+                        <h3 class="py-2">
+                            <span class="underline">Billing
+                                Details</span></h3>
                         {{bill_form|crispy}}
                     </div>
 
                     <button id="submit-button" class="btn btn-block
-                btn-info mt-3 mb-5">Subscribe</button>
+                        button-yellow mt-3 mb-5">
+                        Subscribe
+                    </button>
                 </form>
             </div>
         </div>

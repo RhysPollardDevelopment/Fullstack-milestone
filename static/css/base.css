@@ -30,8 +30,15 @@ body {
     border-bottom: 2px solid white
 }
 
-.underline-yellow {
-    border-bottom: 2px solid var(--gold)
+.drop-shadow {
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.background-1 {
+    background-image: url('/media/background-2.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /*------------Typography-----------*/
@@ -273,7 +280,7 @@ p {
 
 /*------Sign up + Login ----------*/
 .login {
-    background-color: var(--jet);
+    background-color: #161616;
 }
 
 .login-img {
@@ -289,9 +296,8 @@ p {
 }
 
 .login-form {
-    background-color: var(--jet);
     color: white;
-    padding: 3rem 2rem 4rem;
+    padding: 3rem 1rem 4rem;
     border-top-right-radius: 3%;
     border-bottom-right-radius: 3%;
     text-align: center;
@@ -332,7 +338,7 @@ p {
     top: 5rem;
 }
 
-/*----------- Tablet-------------*/
+/*----------- |Tablet |------------*/
 @media(min-width:768px) {
 
     /*------General---------*/
@@ -345,14 +351,19 @@ p {
         background-image: url('/media/background-1.png');
         background-size: cover;
         background-repeat: no-repeat;
-        padding-top: 8rem;
-        padding-bottom: 8rem;
+        background-position: center;
+        padding-top: 4rem;
+        padding-bottom: 5rem;
         padding-left: 4rem;
         padding-right: 4rem;
     }
 
     .login-form {
-        padding: 3rem 3rem 4rem;
+        padding-top: 3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-bottom: 4rem;
+        background-color: #161616;
     }
 
 }
@@ -401,8 +412,8 @@ p {
         background-image: url('/media/background-1.png');
         background-size: cover;
         background-repeat: no-repeat;
-        padding-top: 8rem;
-        padding-bottom: 8rem;
+        padding-top: 10rem;
+        padding-bottom: 10rem;
         padding-left: 1rem;
         padding-right: 1rem;
     }
@@ -420,7 +431,6 @@ p {
     }
 
     .login-form {
-        background-color: var(--jet);
         color: white;
         border-top-right-radius: 3%;
         border-bottom-right-radius: 3%;

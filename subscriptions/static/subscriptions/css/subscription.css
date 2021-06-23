@@ -1,5 +1,12 @@
+/*-------------Subscriptions page---------*/
 .subscription {
     width: 80%;
+}
+
+.how-works i {
+    font-size: 3rem;
+    padding-top: 2rem;
+    color: var(--gold)
 }
 
 .cross-page {
@@ -33,9 +40,33 @@
     height: 25rem;
 }
 
-.border-black {
-    border: 1px solid black;
+/*-----------Checkout----------------------*/
+.checkout-background {
+    background-color: #161616;
+    padding-bottom: 1rem;
 }
+
+.StripeElement {
+    background: #202020;
+    padding: 0.5rem;
+}
+
+/*----------Checkout-Complete--------------*/
+.thank-you {
+    background-image: url('/media/boris-smokrovic-gr7ZkoZnHXU-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.thank-text {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.thank-you {
+    background-position-x: 50%;
+}
+
+/*--------Cancellation Confirmation-------------*/
 
 .cancelled {
     background-image: url('/media/damien-tupinier-OFEvgVfr6iU-unsplash.jpg');
@@ -43,16 +74,34 @@
     background-size: cover;
     background-color: black;
     background-position-x: 6%;
-    height: 100%;
+    height: 36rem;
 }
 
 .text {
     background-color: #0000008a;
+    height: 36rem;
     color: white;
+}
+
+/*------------Tablet--------------*/
+@media(min-width: 768px) {
+
+    /*-----------checkout-complete-------*/
+    .thank-you h1 {
+        font-size: 4rem;
+    }
+
+    /*--------Cancellation Confirmation-------------*/
+    .cancelled h1 {
+        font-size: 4rem;
+    }
+
 }
 
 /*--------- Laptop ---------------*/
 @media(min-width:992px) {
+
+    /*----------Subscription page------*/
     .cross-page {
         height: 34rem;
     }
@@ -61,12 +110,20 @@
         height: 34rem;
     }
 
+    /*----------Checkout--------------*/
+    .checkout-background {
+        background-color: #202020;
+        background-image: url('/media/background-2.png');
+        padding-bottom: 1rem;
+    }
+
     .checkout-img {
-        background-image: url('/media/filipe-costa-lCQ_CWEnohk-unsplash.jpg');
+        background-image: url('/media/pexels-pille-kirsi-1116959.jpg');
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 5%;
+        background-position-x: 26%;
+        border-top-left-radius: 5%;
+        border-bottom-left-radius: 5%;
     }
 
     .checkout-box {
@@ -75,18 +132,54 @@
     }
 
     .checkout-box form {
-        background: white;
+        background: #161616;
         border-top-right-radius: 5%;
         border-bottom-right-radius: 5%;
         overflow-y: auto;
         height: 45rem;
     }
 
+    /*-----------Checkout-complete----------*/
+    .thank-you {
+        height: 55rem;
+        padding-top: 3.7rem;
+    }
+
+    .thank-you .text {
+        height: 51.5rem;
+    }
+
+    .thank-you .h1 {
+        font-size: 5rem;
+    }
+
+    .thank-you {
+        height: 48rem;
+    }
+
+    /*----------Cancellation--------*/
     .cancelled,
     .text {
         height: 48rem;
     }
 
+    .cancelled h1 {
+        font-size: 4rem;
+    }
 
 
+}
+
+/*--------------XL Screens---------------*/
+@media(min-width: 1200px) {
+
+    /*-----------Checkout-thanks----------*/
+    .thank-you .text {
+        padding-top: 5rem;
+        height: 60.5rem;
+    }
+
+    .thank-you {
+        height: 64rem;
+    }
 }

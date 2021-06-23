@@ -40,6 +40,10 @@
     color: var(--gold)
 }
 
+.how-works img {
+    height: 6rem;
+}
+
 .alt-colour {
     background-color: var(--gold);
     color: black;

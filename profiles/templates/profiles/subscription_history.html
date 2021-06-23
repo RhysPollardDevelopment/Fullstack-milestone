@@ -5,6 +5,8 @@
 
 {% block profilecontent %}
 <h1 class="text-center pt-4 pb-3">Subscription history</h1>
+<p class="text-center">Here is a list of all your previous months' recipes and
+    honies.</p>
 {% for invoice in invoices %}
 <div class="row p-3">
     <div class="col-12">
@@ -16,7 +18,7 @@
                 <p class="d-md-none d-lg-block mb-1">
                     {{ invoice.invoice_number }}</p>
                 <p class="mb-1">Delivered to:</p>
-                <ul class="mb-3">
+                <ul class="mb-3 white">
                     <li>{{ invoice.delivery_name }}</li>
                     <li>{{ invoice.address_1 }} {{ invoice.address_2 }}</li>
                     <li>{{ invoice.town_or_city }}</li>

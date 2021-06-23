@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block additional_css %}
+<link rel="stylesheet" href="{% static 'subscriptions/css/subscription.css' %}"
+    crossorigin="anonymous">
+{% endblock %}
+
 {% block additional_title %}| My Recipes{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row py-4">
-        <div class="col-12 text-center">
+<div class="container-fluid page-push thank-you">
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-4 text-center text">
             <h1 class=" text-center py-4 my-lg-5 text-uppercase">Thank You
             </h1>
             <h5 class="pb-4 py-lg-4">
