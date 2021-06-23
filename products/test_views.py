@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .models import Product, Company
-from .forms import CompanyForm
 from unittest.mock import patch
 from django.contrib.messages import get_messages
 import tempfile
@@ -312,9 +311,6 @@ class TestCompanyViews(TestCase):
             company_info,
         )
 
-        form = CompanyForm(company_info)
-
-        self.assertTrue(form.is_valid())
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, "/products/partners/")
 

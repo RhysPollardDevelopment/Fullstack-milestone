@@ -66,15 +66,18 @@ def update_address(request):
 
     billing = stripe.Customer.retrieve(profile.stripe_customer_id)
 
-    billing_info = {
-        "billing_full_name": billing["name"],
-        "billing_phone_number": billing["phone"],
-        "billing_address1": billing.address["line1"],
-        "billing_address2": billing.address["line2"],
-        "billing_town_or_city": billing.address["city"],
-        "billing_county": billing.address["state"],
-        "billing_postcode": billing.address["postal_code"],
-    }
+    if billing.address:
+        billing_info = {
+            "billing_full_name": billing["name"],
+            "billing_phone_number": billing["phone"],
+            "billing_address1": billing.address["line1"],
+            "billing_address2": billing.address["line2"],
+            "billing_town_or_city": billing.address["city"],
+            "billing_county": billing.address["state"],
+            "billing_postcode": billing.address["postal_code"],
+        }
+    else:
+        billing_info = {}
 
     if request.method == "POST":
         form = UserProfileForm(request.POST, instance=profile)
@@ -171,19 +174,6 @@ def update_billing(request):
 def password_change_done(request):
     template = "allauth/account/password_change_done.html"
     return render(request, template)
-
-
-@login_required
-def my_recipes(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    # Needs system to check if has recipes to show, if not then must be
-    # redirected back to user profile.
-
-    template = "profiles/my_recipes.html"
-    context = {
-        "profile": profile,
-    }
-    return render(request, template, context)
 
 
 @login_required

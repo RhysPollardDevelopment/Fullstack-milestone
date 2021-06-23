@@ -125,16 +125,6 @@ class TestProfileViews(TestCase):
             response, "allauth/account/password_change_done.html"
         )
 
-    def test_get_all_saved_recipes(self):
-        """
-        If user has recipes saved then they should be able to acce3ss a page
-        with all recipes saved shown.
-        """
-        self.client.login(username="testuser", password="12345")
-        response = self.client.get("/profiles/my_recipes/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "profiles/my_recipes.html")
-
     def test_get_subscription_history(self):
         """
         Shows user they're subscription history page, primarily invoices and

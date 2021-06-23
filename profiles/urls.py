@@ -11,7 +11,6 @@ urlpatterns = [
         views.password_change_done,
         name="password_change_done",
     ),
-    path("my_recipes/", views.my_recipes, name="my_recipes"),
     path(
         "subscription_history/",
         views.subscription_history,

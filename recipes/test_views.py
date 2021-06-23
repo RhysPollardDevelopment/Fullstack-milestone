@@ -104,6 +104,16 @@ class TestRecipeViews(TestCase):
             featured_product=self.product,
         )
 
+        # Ensures recipe views have enough to prevent errors
+        i = 0
+        while i < 4:
+            Recipe.objects.create(
+                title=f"Recipe {i}",
+                description=f"New recipe description {i}",
+                image=self.test_image,
+            )
+            i += 1
+
     def tearDown(self):
         """Clears temp folder after tests"""
         shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
@@ -202,7 +212,7 @@ class TestRecipeViews(TestCase):
         )
 
         recipe_info = {
-            "title": "Add recipe",
+            "title": "New recipe",
             "description": "Added recipe",
             "publish_date": datetime.now(tz=timezone.utc),
             "image": test_image,
@@ -217,7 +227,7 @@ class TestRecipeViews(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/recipes/recipe/Add%20recipe/")
+        self.assertRedirects(response, "/recipes/recipe/New%20recipe/")
 
     def test_get_update_recipe_page(self):
         """User can access the edit recipe page if superuser."""
