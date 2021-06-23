@@ -57,7 +57,7 @@ p {
     background-color: var(--gold);
     color: var(--jet);
     border: 1px solid #bea940;
-    border-radius: 0;
+    font-size: large;
 }
 
 .button-yellow:hover {
@@ -71,21 +71,44 @@ p {
     background-color: var(--jet);
     color: var(--gold);
     border: 1px solid #0c0c0c;
-    border-radius: 0;
+    font-size: large;
 }
 
-.navbar-toggler {
-    border: 1px solid gray;
+.button-dark:hover {
+    background-color: #0c0c0c;
+    color: var(--gold);
+    border: 1px solid #000000;
+    font-size: large;
 }
 
-.navbar-toggler:focus .toggler-icon {
+.button-delete {
+    font-family: var(--bebas-neue);
+    background-color: #d30000;
     color: white;
+    font-size: large;
+    border: 1px solid #b60101;
 }
 
-.toggler-icon {
-    color: rgba(224, 224, 224, 0.788);
-    font-size: 1.5rem;
+.button-delete:hover {
+    background-color: #970000;
+    border: 1px solid #690000;
+    color: white;
+    transition: 0.25s;
+}
 
+.button-add {
+    font-family: var(--bebas-neue);
+    font-size: large;
+    background-color: #3f6d2e;
+    color: white;
+    border: 1px solid #2d662d;
+}
+
+.button-add:hover {
+    background-color: #2e5221;
+    color: white;
+    border: 1px solid #234e23;
+    transition: 0.25s;
 }
 
 /*-----------Navigation--------*/
@@ -111,6 +134,20 @@ p {
 .dropdown-menu a {
     font-family: var(--bebas-neue);
     color: white;
+}
+
+.navbar-toggler {
+    border: 1px solid gray;
+}
+
+.navbar-toggler:focus .toggler-icon {
+    color: white;
+}
+
+.toggler-icon {
+    color: rgba(224, 224, 224, 0.788);
+    font-size: 1.5rem;
+
 }
 
 /*-----------Footer-----------*/
@@ -189,8 +226,8 @@ p {
 }
 
 .account-form {
-    filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.384));
-    background-color: rgba(0, 0, 0, 0.466);
+    filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.8));
+    background-color: #161616;
     color: white;
 }
 
@@ -217,6 +254,15 @@ p {
     font-size: 10rem;
     text-align: center;
     margin: auto;
+}
+
+.account-form .ctrlHolder label {
+    display: inline-block !important;
+    margin-bottom: 0.5rem;
+}
+
+.add_email input {
+    width: 100%;
 }
 
 .password_change a {
@@ -263,7 +309,7 @@ p {
 /*--Toasts and messages---*/
 .message-container {
     position: fixed;
-    top: 7%;
+    top: 6%;
     right: 2%;
     z-index: 99999;
     background-color: #0000007e;
@@ -294,20 +340,15 @@ p {
         filter: drop-shadow(2px 4px 6px black);
     }
 
-    /*---------Index-------*/
-    .recipe-featurette,
-    .product-featurette {
-        height: 26rem;
-        background-position: bottom;
-    }
-
+    /*------------Account forms----------*/
     .login {
         background-image: url('/media/background-1.png');
         background-size: cover;
         background-repeat: no-repeat;
-        padding-top: 4rem;
-        padding-bottom: 5rem;
-
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
     }
 
     .login-form {
@@ -319,11 +360,13 @@ p {
 /*----------- Laptop-------------*/
 @media(min-width:992px) {
 
+    /*------------------General-----------------*/
     /* Pushes top of page to offset absolute navbar */
     .page-push {
         padding-top: 3rem
     }
 
+    /*-------------Navigation------------*/
     .navigation {
         background-color: rgba(0, 0, 0, 0.5);
         position: absolute;
@@ -334,12 +377,6 @@ p {
     .navigation .dropdown-menu.show {
         background-color: rgba(0, 0, 0, 0.5);
         filter: drop-shadow(3px 4px 6px black)
-    }
-
-    .recipe-featurette,
-    .product-featurette {
-        height: 35rem;
-        background-position: bottom;
     }
 
     .account-form button,
@@ -358,12 +395,14 @@ p {
         padding: 2rem;
     }
 
+    /*----------Allauth forms--------------*/
+
     .login {
         background-image: url('/media/background-1.png');
         background-size: cover;
         background-repeat: no-repeat;
-        padding-top: 4rem;
-        padding-bottom: 5rem;
+        padding-top: 8rem;
+        padding-bottom: 8rem;
         padding-left: 1rem;
         padding-right: 1rem;
     }
@@ -390,5 +429,9 @@ p {
     .login-form .textinput {
         margin-top: 1rem;
         margin-bottom: 2rem;
+    }
+
+    .buttonHolder {
+        display: flex
     }
 }

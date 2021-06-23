@@ -8,7 +8,7 @@
 {% block additional_title %}| Confirm E-mail Address{% endblock %}
 
 {% block account-content %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+<h1 class="pb-3">{% trans "Confirm E-mail Address" %}</h1>
 
 {% if confirmation %}
 
@@ -19,9 +19,10 @@
     user {{ user_display }}.{% endblocktrans %}</p>
 
 <form method="post" action="{% url 'account_confirm_email' confirmation.key %}"
-    class="py-5 text-center">
+    class="py-3 text-center">
     {% csrf_token %}
-    <button type="submit" class="btn btn-info">{% trans 'Confirm' %}</button>
+    <button type="submit"
+        class="btn button-yellow">{% trans 'Confirm' %}</button>
 </form>
 
 {% else %}

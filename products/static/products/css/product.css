@@ -1,9 +1,18 @@
+/*--------------Variables-----------*/
+:root {
+    --gold: #d4c059;
+    --jet: #202020;
+
+    --bebas-neue: 'Bebas Neue', cursive;
+    --montserrat: 'Montserrat', sans-serif;
+}
+
 /*---------------Product main page------------*/
 .product-header {
-    background-image: url('/media/honey-352205_1920_xizenlO.jpg');
+    background-image: url('/media/pexels-polina-kovaleva-5645127.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-attachment: fixed;
+    background-position: right;
     height: 30rem;
     color: white;
 }
@@ -15,16 +24,90 @@ img {
 
 .card {
     width: fit-content;
+    border: 1px solid #d4bf5973;
 }
 
 .card img {
     height: 15rem;
 }
 
-/*----------------Product details pahe------------*/
+.card-body {
+    background-color: var(--gold);
+}
+
+.body-dark {
+    background-color: var(--jet);
+}
+
+.admin-section {
+    background-color: var(--gold);
+}
+
+.button-edit {
+    font-family: var(--bebas-neue);
+    background-color: #1060d0;
+    color: white;
+    font-size: large;
+    border: 1px solid #084ba8;
+}
+
+.button-edit:hover {
+    background-color: #074294;
+    border: 1px solid #012353;
+    color: white;
+    transition: 0.25s;
+}
+
+.button-delete {
+    font-family: var(--bebas-neue);
+    background-color: #d30000;
+    color: white;
+    font-size: large;
+    border: 1px solid #b60101;
+}
+
+.button-delete:hover {
+    background-color: #970000;
+    border: 1px solid #690000;
+    color: white;
+    transition: 0.25s;
+}
+
+.button-add {
+    font-family: var(--bebas-neue);
+    font-size: large;
+    background-color: #3f6d2e;
+    color: white;
+    border: 1px solid #2d662d;
+}
+
+.button-add:hover {
+    background-color: #2e5221;
+    color: white;
+    border: 1px solid #234e23;
+    transition: 0.25s;
+}
+
+/*----------------Product details page------------*/
+
+.product-detail {
+    background-image: url('/media/product-background-mobile.png');
+    /* https: //stackoverflow.com/questions/11223585/how-to-stretch
+    -the-background-image-to-fill-a-div -Solution for size 100% 100%
+    to make mobile background fit its space */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 33rem;
+}
+
+.product-detail p {
+    background-color: #16161677;
+}
 
 .product-image img {
     height: 15rem;
+    object-fit: contain;
 }
 
 .logo img {
@@ -81,15 +164,49 @@ input[type="file"] {
     .alt {
         height: 28rem;
     }
+
+    .product-detail {
+        background-image: url('/media/test-background1.png');
+        height: 27rem;
+    }
+
+    .product-image img {
+        height: 23rem;
+    }
 }
 
 /*--------------Laptop----------*/
 @media(min-width: 992px) {
+
+    /*-----------Product details---------*/
+    .product-detail {
+        height: 36rem;
+        background-position: center;
+        padding-top: 2rem;
+    }
+
     .product-image img {
-        height: 30rem;
+        height: 28rem;
     }
 
     .alt {
         height: 38rem;
+    }
+}
+
+/*-------------XL screens---------------*/
+@media(min-width: 1200px) {
+    .product-detail {
+        height: 44rem;
+        background-position: center;
+        padding-top: 4rem;
+    }
+
+    .product-image img {
+        height: 32rem;
+    }
+
+    .mw-xl {
+        max-width: 1200px;
     }
 }

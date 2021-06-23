@@ -8,67 +8,67 @@
 {% block additional_title %}| Our Honies{% endblock %}
 
 {% block content %}
-<main>
-    <div class="container-fluid product-header text-center">
-        <h1 class="pt-5">Our Honey Freebies</h1>
-        <p>Browse the best examples of our raw honey from our range of partners.
-            Receive these and more every month with your subscription.</p>
-    </div>
-    <div class="container py-5">
-        <div class="row">
-            <!-- Product loading section-->
-            {% for product in products %}
-            <article class="col-12 col-lg-4 mb-5 d-flex justify-content-center">
-                <div class="card text-center">
-                    <a href="{% url 'product_details' product.id %}">
-                        <img src="{{ product.image.url }}"
-                            alt="{{ product.title }}">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class=" card-text">
-                            {{ product.company.county }}
-                        </p>
-                    </div>
-                    <div class="card-body pt-1">
-                        <h6 class="card-title">Hints of:</h6>
-                        <p class="card-text">{{ product.flavour }}
-                        </p>
-                        <h6 class="card-title">Texture:</h6>
-                        <p class="card-text">{{ product.texture }}</p>
-                        <a href="{% url 'product_details' product.id %}"
-                            class="btn btn-info"> More Info</a>
-                    </div>
-                    {% if request.user.is_superuser %}
-                    <div>
-                        <a href="{% url 'update_product' product.id %}"
-                            class="btn btn-info">Edit</a>
-                        <button type="button" class="btn btn-danger delete"
-                            data-toggle="modal" data-target="#deleteConfirm"
-                            data-info="{% url 'delete_product' product.id %}">
-                            Delete
-                        </button>
-                    </div>
-                    {% endif %}
+<div class="container-fluid product-header text-center page-push">
+    <h1 class="pt-5">Our Honey Freebies</h1>
+    <p>Browse the best examples of our raw honey from our range of partners.
+        Receive these and more every month with your subscription.</p>
+</div>
+<div class="container py-5">
+    <div class="row">
+        <!-- Product loading section-->
+        {% for product in products %}
+        <article
+            class="col-12 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
+            <div class="card custom text-center">
+                <a href="{% url 'product_details' product.id %}">
+                    <img src="{{ product.image.url }}"
+                        alt="{{ product.title }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title black">{{ product.name }}</h5>
+                    <p class=" card-text black">
+                        {{ product.company.county }}
+                    </p>
                 </div>
+                <div class="card-body pt-1 body-dark">
+                    <h6 class="card-title pt-2">Hints of:</h6>
+                    <p class="card-text">{{ product.flavour }}
+                    </p>
+                    <h6 class="card-title">Texture:</h6>
+                    <p class="card-text">{{ product.texture }}</p>
+                    <a href="{% url 'product_details' product.id %}"
+                        class="btn button-yellow"> More Info</a>
+                </div>
+                {% if request.user.is_superuser %}
+                <div class="admin-section p-3">
+                    <a href="{% url 'update_product' product.id %}"
+                        class="btn button-edit btn-block">Edit</a>
+                    <button type="button"
+                        class="btn button-delete btn-block delete"
+                        data-toggle="modal" data-target="#deleteConfirm"
+                        data-info="{% url 'delete_product' product.id %}">
+                        Delete
+                    </button>
+                </div>
+                {% endif %}
+            </div>
 
-            </article>
-            {% endfor %}
+        </article>
+        {% endfor %}
+    </div>
+</div>
+<!-- Recipes featurette-->
+<section class="container-fluid recipe-featurette alt">
+    <div class="row align-items-center pt-lg-5">
+        <div class="col-12 col-lg-6 text-center mt-5 pt-md-5">
+            <h3 class="pt-3 pb-2">Feeling hungry yet?</h3>
+            <p class="pb-3">Check out our recipes for some mouth watering
+                inspiration</p>
+            <a href="{% url 'recipes' %}" class="btn btn-warning">Our
+                recipes</a>
         </div>
     </div>
-    <!-- Recipes featurette-->
-    <section class="container-fluid recipe-featurette alt">
-        <div class="row align-items-center pt-lg-5">
-            <div class="col-12 col-lg-6 text-center mt-5 pt-md-5">
-                <h3 class="pt-3 pb-2">Feeling hungry yet?</h3>
-                <p class="pb-3">Check out our recipes for some mouth watering
-                    inspiration</p>
-                <a href="{% url 'recipes' %}" class="btn btn-warning">Our
-                    recipes</a>
-            </div>
-        </div>
-    </section>
-</main>
+</section>
 {% endblock %}
 
 {% block modal %}

@@ -7,23 +7,25 @@
 
 <!-- Form template to accommodate product and company models-->
 {% block content %}
-<div class="container">
+<div class="container page-push white">
     <div class="row px-2 pt-3 pt-lg-1 pb-4">
         <div class="col-12">
             <div class="row p-lg-5 mx-lg-2 mb-lg-4">
                 <!--Template header: Can be given an action such as add
                 or edit, if object is in context then name is supplied-->
                 <h1 class="col-12 text-center mt-4 pb-3">
-                    {% block formtype %}{% endblock%}
-                    {% if product %}
-                    {{product.name}}
-                    {% elif company %}
-                    {{company.name}}
-                    {% else %}
-                    {% endif %}</h1>
-
+                    <span class="underline">
+                        {% block formtype %}{% endblock%}
+                        {% if product %}
+                        {{product.name}}
+                        {% elif company %}
+                        {{company.name}}
+                        {% else %}
+                        {% endif %}
+                    </span>
+                </h1>
                 <form action="{% block formaction %}{% endblock %}"
-                    method="POST" class="form col-12 px-lg-4"
+                    method="POST" class="form col-12 px-lg-4 pt-2"
                     enctype="multipart/form-data">
                     <!-- Will load all fields as crispy unless image or logo
                     as no crispy widget for these.-->
@@ -40,7 +42,7 @@
                             <!-- User inputs text for submit button dependent 
                             on form type.-->
                             <button
-                                class="btn btn-success btn-block mb-3 mx-auto"
+                                class="btn button-add btn-block mb-3 mx-auto"
                                 type="submit">{% block submitevent %}{% endblock %}
                             </button>
                         </div>
@@ -48,7 +50,7 @@
                         extended html.-->
                         <div class="col-12 col-md-6 px-md-2">
                             <a href="{% block returnurl %}{% endblock %}"
-                                class="btn btn-danger btn-block mb-3 mx-auto">
+                                class="btn button-delete btn-block mb-3 mx-auto">
                                 Cancel</a>
                         </div>
                     </div>
