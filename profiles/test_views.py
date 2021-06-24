@@ -181,4 +181,4 @@ class TestProfileViews(TestCase):
         # recipe.
         invoices = response.context["invoices"][0]
         self.assertEqual(len(response.context["invoices"]), 1)
-        self.assertEqual(recipe.title, invoices.recipe.title)
+        self.assertEqual(recipe.title, invoices.related_recipe.title)

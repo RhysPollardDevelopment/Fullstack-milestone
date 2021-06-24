@@ -1,19 +1,10 @@
-/*--------------Variables-----------*/
-:root {
-    --gold: #d4c059;
-    --jet: #202020;
-
-    --bebas-neue: 'Bebas Neue', cursive;
-    --montserrat: 'Montserrat', sans-serif;
-}
-
 /*----------------Admin---------------------*/
 .admin-section {
-    background-color: var(--gold);
+    background-color: #d4c059;
 }
 
 .button-edit {
-    font-family: var(--bebas-neue);
+    font-family: 'Bebas Neue', cursive;
     background-color: #1060d0;
     color: white;
     font-size: large;
@@ -53,11 +44,11 @@ img {
 }
 
 .card-body {
-    background-color: var(--gold);
+    background-color: #d4c059;
 }
 
 .body-dark {
-    background-color: var(--jet);
+    background-color: #202020;
 }
 
 /*----------------Product details page------------*/
@@ -95,7 +86,7 @@ img {
 }
 
 .divider {
-    border-top: 1px solid var(--gold);
+    border-top: 1px solid #d4c059;
 }
 
 .featured-recipe img {

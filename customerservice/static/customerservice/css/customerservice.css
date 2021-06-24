@@ -1,12 +1,3 @@
-/*--------------Variables-----------*/
-:root {
-    --gold: #d4c059;
-    --jet: #202020;
-
-    --bebas-neue: 'Bebas Neue', cursive;
-    --montserrat: 'Montserrat', sans-serif;
-}
-
 /*----------Index----------*/
 .landing {
     background-image: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background-landscape.jpg');
@@ -37,7 +28,7 @@
 .how-works i {
     font-size: 3rem;
     padding-top: 2rem;
-    color: var(--gold)
+    color: #d4c059
 }
 
 .how-works img {
@@ -45,7 +36,7 @@
 }
 
 .alt-colour {
-    background-color: var(--gold);
+    background-color: #d4c059;
     color: black;
 }
 

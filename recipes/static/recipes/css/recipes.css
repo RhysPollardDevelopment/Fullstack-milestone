@@ -1,15 +1,6 @@
-/*--------------Variables-----------*/
-:root {
-    --gold: #d4c059;
-    --jet: #202020;
-
-    --bebas-neue: 'Bebas Neue', cursive;
-    --montserrat: 'Montserrat', sans-serif;
-}
-
 /*------------Admin--------------------*/
 .admin-section {
-    background-color: var(--gold);
+    background-color: #d4c059;
     width: 100%;
 }
 
@@ -19,7 +10,7 @@
 }
 
 .button-edit {
-    font-family: var(--bebas-neue);
+    font-family: 'Bebas Neue', cursive;
     background-color: #1060d0;
     color: white;
     font-size: large;
@@ -79,7 +70,7 @@
 }
 
 .featured-product {
-    background: var(--gold);
+    background: #d4c059;
 }
 
 
@@ -109,7 +100,7 @@
 }
 
 .divider {
-    border-top: 1px solid var(--gold);
+    border-top: 1px solid #d4c059;
     width: 80%;
 }
 
@@ -170,7 +161,7 @@ input[type="file"] {
         bottom: 40%;
         z-index: -1;
         width: 100%;
-        border: 1px solid var(--gold);
+        border: 1px solid #d4c059;
     }
 
     .details {

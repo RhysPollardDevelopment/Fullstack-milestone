@@ -1,8 +1,7 @@
 $(document).ready(function () {
     bindBilling();
     formSetup();
-
-})
+});
 
 function formSetup() {
     let billingForm = document.getElementById("billing-form");
@@ -29,7 +28,7 @@ function bindBilling() {
                 for (i = 0; i < inputs.length; i++) {
                     inputs[i].required = true;
                 }
-            };
-        })
+            }
+        });
     }
-};
+}

@@ -79,11 +79,14 @@ class TestRecipeViews(TestCase):
             instructions="Pseudo instructions for testing purposes.",
             featured_product=self.product,
         )
+
+        # Mock date for now, required to meet pep8
+        now = datetime.now(tz=timezone.utc) + relativedelta(months=+2)
+
         Recipe.objects.create(
             title="too new",
             description="Should not load as date is not before now.",
-            publish_date=datetime.now(tz=timezone.utc)
-            + relativedelta(months=+2),
+            publish_date=now,
             image=self.test_image,
             ingredients="Test for the text file.",
             instructions="Pseudo instructions for testing purposes.",
@@ -310,11 +313,13 @@ class TestRecipeViews(TestCase):
 
         self.client.login(username="superuser", password="superpassword")
 
+        # Mock date for now, required to meet pep8
+        now = datetime.now(tz=timezone.utc) + relativedelta(months=+2)
+
         delete = Recipe.objects.create(
             title="Deleted",
             description="REcipe to delete",
-            publish_date=datetime.now(tz=timezone.utc)
-            + relativedelta(months=+2),
+            publish_date=now,
             image=self.test_image,
             ingredients="Test for the text file.",
             instructions="Pseudo instructions for testing purposes.",

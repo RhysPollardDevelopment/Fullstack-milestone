@@ -6,7 +6,7 @@
 
 .nav-link {
     color: rgba(214, 214, 214, 0.74);
-    font-family: var(--bebas-neue);
+    font-family: 'Bebas Neue', cursive;
     font-size: 1.25rem;
 }
 
@@ -18,9 +18,8 @@
 .nav-link.profile.active {
     background-color: transparent;
     border: none;
-    color: var(--gold);
-    text-decoration: underline 3px white;
-    text-underline-offset: 0.25rem;
+    color: #d4c059;
+    text-decoration: underline solid white;
 }
 
 /*--------User profile page---------*/
@@ -52,7 +51,7 @@
     object-fit: cover;
     width: 100%;
     border-radius: 5%;
-    border: 3px inset var(--gold);
+    border: 3px inset #d4c059;
 }
 
 .invoice a {

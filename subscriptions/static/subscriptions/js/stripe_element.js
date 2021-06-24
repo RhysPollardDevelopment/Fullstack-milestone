@@ -38,10 +38,10 @@ function displayError(event) {
         // Added in second check to also allow errors lacking same structure.
         if (event.error.message) {
             displayError.textContent = event.error.message;
-            return
+            return;
         } else {
             displayError.textContent = event.error;
-            return
+            return;
         }
     } else {
         displayError.textContent = '';
@@ -58,8 +58,8 @@ subscriptionForm.addEventListener('submit', function (ev) {
     });
     document.getElementById("submit-button").disabled = true;
     $("#loading-overlay").fadeToggle(100);
-    createPayment(card)
-})
+    createPayment(card);
+});
 
 // Collects information before calling stripe.createPaymentMethod for payment.
 function createPayment(card) {
@@ -83,12 +83,12 @@ function createPayment(card) {
     if (sameBilling) {
         details = {
             name: $.trim(subscriptionForm.full_name.value),
-        }
+        };
     } else {
         details = {
             name: $.trim(subscriptionForm.billing_full_name.value),
-        }
-    };
+        };
+    }
     stripe
         .createPaymentMethod({
             type: 'card',
@@ -125,11 +125,11 @@ function createSubscription({
     //https://stackoverflow.com/questions/10489332/append-json-strings/10489510
     // Used as reference for passing variable to object in JS.
     // Key data is added to data variable so it can be passed together.
-    data['priceId'] = priceId;
-    data['customerId'] = customerId;
-    data['paymentMethodId'] = paymentMethodId;
-    data['saveShipping'] = saveShipping;
-    data['sameBilling'] = sameBilling;
+    data.priceId = priceId;
+    data.customerId = customerId;
+    data.paymentMethodId = paymentMethodId;
+    data.saveShipping = saveShipping;
+    data.sameBilling = sameBilling;
     formData = JSON.stringify(data);
     // Fetch request to ceate-subscription method, returns a HTTPresponse.
     return (
@@ -225,7 +225,7 @@ function handlePaymentThatRequiresCustomerAction({
                     if (result.paymentIntent.status === 'succeeded') {
                         // Change status to active as no other accessible
                         // way offered to check for success after this point.
-                        subscription.status = 'active'
+                        subscription.status = 'active';
                         // Show a success message to your customer.
                         return {
                             priceId: priceId,
@@ -235,7 +235,7 @@ function handlePaymentThatRequiresCustomerAction({
                         };
                     }
                 }
-            })
+            });
     } else {
         // No customer action needed.
         return {
