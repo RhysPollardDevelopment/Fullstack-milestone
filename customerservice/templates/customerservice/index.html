@@ -13,7 +13,8 @@
         <div class="col-12 col-md-8 pt-md-5 drop-shadow">
             <h1 class="mt-lg-3 pt-5">FreeBees</h1>
             <h5 class="col pt-2 px-0 white pb-5 my-3">
-                Honey tastes that much sweeter when it's guilt free.
+                The first honey subscription site promoted to encouraging
+                ethical beekeeping.
             </h5>
             {% if request.user.userprofile.has_active_subscription %}
             <a href="{% url 'recipes' %}" class="btn-lg button-yellow">Try
@@ -22,6 +23,21 @@
             <a href="{% url 'subscription_page' %}"
                 class="btn-lg button-yellow">Subscribe Now</a>
             {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-12 text-center">
+            <h2 class="py-3">Welcome to Freebees!</h2>
+            <p>The first honey subscription service where we promote free bees
+                and freebies, you know as in our name...</p>
+            <p>This isn't some new age, must eat some diet sort of site. This is
+                a group of people wanting to encourage better care for our bees
+                so you can enjoy our honey and do some good at the same
+                time.</p>
+            <p>Every animal deserves to live well, and we find honey tastes that
+                much sweeter when it's guilt free.</p>
         </div>
     </div>
 </div>
