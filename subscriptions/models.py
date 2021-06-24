@@ -1,5 +1,6 @@
 from django.db import models
 from profiles.models import UserProfile
+from recipes.models import Recipe
 
 
 class StripeSubscription(models.Model):
@@ -59,6 +60,14 @@ class Invoice(models.Model):
     town_or_city = models.CharField(max_length=255)
     county = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
+
+    @property
+    def related_recipe(self):
+        recipes = Recipe.objects.all()
+        for recipe in recipes:
+            d = recipe.publish_date
+            if self.current_start < d and self.current_end > d:
+                return recipe
 
     def __str__(self):
         return self.invoice_number

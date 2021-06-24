@@ -8,135 +8,132 @@
 {% block additional_title %}| My Recipes{% endblock %}
 
 {% block content %}
-<main>
-    <!-- How it works -->
-    <section class="container page-push">
-        <h1 class="text-center col-12 pt-4">Subscribe</h1>
-        <div class="row text-center p-5 my-lg-3 how-works">
-            <h3 class="col-12 mb-4"><span class="underline">How it
-                    works</span>
-            </h3>
-            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
-                <i class="fas fa-file-invoice-dollar mb-4 yellow"></i>
-                <p>Sign up for our monthly subscription online and help
-                    support
-                    us.</p>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
-                <i class="fas fa-truck mb-4 yellow"></i>
-                <p>Beginning of every month we deliver your honey free
-                    of charge
-                    to your door.</p>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
-                <i class="fas fa-gifts mb-4 yellow"></i>
-                <p>You receive the best honey around, along with early
-                    access to
-                    our amazing related recipes!</p>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
-                <i class="fas fa-leaf mb-4 yellow"></i>
-                <p>Your subscription helps us encourage better
-                    beekeeping
-                    practices and support charities for our nation's
-                    bees.</p>
-            </div>
-            {% if not request.user.userprofile.has_active_subscription %}
-            <a href="{% url 'checkout' %}"
-                class="btn btn-lg button-yellow mx-auto mb-2" role="button">Get
-                started</a>
-            {% endif %}
+<section class="container-fluid subscriptions">
+    <h1 class="text-center col-12 pt-4 drop-shadow white">Subscribe</h1>
+</section>
+<!-- How it works -->
+<section class="container">
+    <div class="row text-center p-5 my-lg-3 how-works">
+        <h3 class="col-12 mb-4"><span class="underline">How it
+                works</span>
+        </h3>
+        <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+            <i class="fas fa-file-invoice-dollar mb-4 yellow"></i>
+            <p>Sign up for our monthly subscription online and help
+                support
+                us.</p>
         </div>
-    </section>
-    <!--- Reasons to subscribe -->
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-lg-3 cross-page one">
-                <div class="row">
-                    <div
-                        class="col-12 col-md-5 col-lg-12 box-overlay ml-auto pt-4 p-3">
-                        <h3 class="text-capitalize p-2 pt-3">No strings
-                            attached</h3>
-                        <p class="p-lg-3">Our honey subscription never
-                            clips your wings,
-                            you're welcome
-                            to leave and reactivate your plan at any
-                            time.</p>
-                        <p class="px-lg-3">So long as
-                            you're enjoying your honey, you're
-                            helping us protect the
-                            insects that make it.</p>
-                    </div>
+        <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+            <i class="fas fa-truck mb-4 yellow"></i>
+            <p>Beginning of every month we deliver your honey free
+                of charge
+                to your door.</p>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+            <i class="fas fa-gifts mb-4 yellow"></i>
+            <p>You receive the best honey around, along with early
+                access to
+                our amazing related recipes!</p>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 my-2 p-2">
+            <i class="fas fa-leaf mb-4 yellow"></i>
+            <p>Your subscription helps us encourage better
+                beekeeping
+                practices and support charities for our nation's
+                bees.</p>
+        </div>
+        {% if not request.user.userprofile.has_active_subscription %}
+        <a href="{% url 'checkout' %}"
+            class="btn btn-lg button-yellow mx-auto mb-2" role="button">Get
+            started</a>
+        {% endif %}
+    </div>
+</section>
+<!--- Reasons to subscribe -->
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-3 cross-page one">
+            <div class="row">
+                <div
+                    class="col-12 col-md-5 col-lg-12 box-overlay ml-auto pt-4 p-3">
+                    <h3 class="text-capitalize p-2 pt-3">No strings
+                        attached</h3>
+                    <p class="p-lg-3">Our honey subscription never
+                        clips your wings,
+                        you're welcome
+                        to leave and reactivate your plan at any
+                        time.</p>
+                    <p class="px-lg-3">So long as
+                        you're enjoying your honey, you're
+                        helping us protect the
+                        insects that make it.</p>
                 </div>
             </div>
-            <div class="col-12 col-lg-3 cross-page two">
-                <div class="row">
-                    <div class="col-12 col-md-5 col-lg-12 box-overlay pt-4 p-3">
-                        <h3 class="text-capitalize p-3 pt-3">Try Something
-                            New</h3>
-                        <p class="p-lg-3">
-                            Bake a cake, grill honey ribs, mix in your tea or
-                            just
-                            spread on
-                            toast.
-                        </p>
-                        <p class="px-lg-3"> Sometimes the best things are the
-                            simple ones, just
-                            like
-                            your subscription plan.</p>
-                    </div>
+        </div>
+        <div class="col-12 col-lg-3 cross-page two">
+            <div class="row">
+                <div class="col-12 col-md-5 col-lg-12 box-overlay pt-4 p-3">
+                    <h3 class="text-capitalize p-3 pt-3">Try Something
+                        New</h3>
+                    <p class="p-lg-3">
+                        Bake a cake, grill honey ribs, mix in your tea or
+                        just
+                        spread on
+                        toast.
+                    </p>
+                    <p class="px-lg-3"> Sometimes the best things are the
+                        simple ones, just
+                        like
+                        your subscription plan.</p>
                 </div>
             </div>
-            <div class="col-12 col-lg-3 cross-page three">
-                <div class="row">
-                    <div class="col-12 col-md-5 col-lg-12 box-overlay ml-auto
+        </div>
+        <div class="col-12 col-lg-3 cross-page three">
+            <div class="row">
+                <div class="col-12 col-md-5 col-lg-12 box-overlay ml-auto
                         pt-4 p-3">
-                        <h3 class="text-capitalize p-2 pt-3">Best Freebies about
-                        </h3>
-                        <p class="p-lg-3">
-                            We think the honey we found is some of the best out
-                            there,
-                            and who doesn't enjoy
-                            something nice when its this good and guilt free!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3 cross-page four">
-                <div class="row">
-                    <div class="col-12 col-md-5 col-lg-12 box-overlay pt-4 p-3">
-                        <h3 class="text-capitalize p-2 pt-3">Do something great
-                        </h3>
-                        <p class="p-lg-3">
-                            In the end our whole purpose is to support ethical
-                            beekeepers and donate to the groups caring for our
-                            wildlife.
-                        </p>
-                        <p class="px-lg-3">
-                            With your subscription you can know you're doing
-                            something
-                            good while enjoying something great.
-                        </p>
-                    </div>
+                    <h3 class="text-capitalize p-2 pt-3">Best Freebies about
+                    </h3>
+                    <p class="p-lg-3">
+                        We think the honey we found is some of the best out
+                        there,
+                        and who doesn't enjoy
+                        something nice when its this good and guilt free!
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
-    <!--- Sign Up statement-->
-    <section class="container-fluid background-1">
-        <div class="row">
-            <div class="col-12 text-center p-5">
-                <h3 class="text-capitalize pt-5 pb-2">Enough droning on from us
-                </h3>
-                <p>Sign up now and see what the buzz is about!</p>
-                <a href="{% url 'checkout' %}"
-                    class="btn button-yellow mt-3 mb-5">
-                    Subscribe Now
-                </a>
+        <div class="col-12 col-lg-3 cross-page four">
+            <div class="row">
+                <div class="col-12 col-md-5 col-lg-12 box-overlay pt-4 p-3">
+                    <h3 class="text-capitalize p-2 pt-3">Do something great
+                    </h3>
+                    <p class="p-lg-3">
+                        In the end our whole purpose is to support ethical
+                        beekeepers and donate to the groups caring for our
+                        wildlife.
+                    </p>
+                    <p class="px-lg-3">
+                        With your subscription you can know you're doing
+                        something
+                        good while enjoying something great.
+                    </p>
+                </div>
             </div>
         </div>
-
-    </section>
-</main>
-
+    </div>
+</section>
+<!--- Sign Up statement-->
+<section class="container-fluid background-1">
+    <div class="row">
+        <div class="col-12 text-center p-5">
+            <h3 class="text-capitalize pt-5 pb-2">Enough droning on from us
+            </h3>
+            <p>Sign up now and see what the buzz is about!</p>
+            <a href="{% url 'checkout' %}" class="btn button-yellow mt-3 mb-5">
+                Subscribe Now
+            </a>
+        </div>
+    </div>
+</section>
 {% endblock %}

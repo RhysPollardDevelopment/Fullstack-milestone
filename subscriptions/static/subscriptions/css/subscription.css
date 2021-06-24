@@ -1,6 +1,10 @@
 /*-------------Subscriptions page---------*/
-.subscription {
-    width: 80%;
+.subscriptions {
+    background-image: url('/media/pexels-pixabay-56876.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 20rem;
+    padding-top: 3rem;
 }
 
 .how-works i {
@@ -102,6 +106,15 @@
 @media(min-width:992px) {
 
     /*----------Subscription page------*/
+    .subscriptions {
+        height: 34rem;
+        padding-top: 9rem;
+    }
+
+    .subscriptions h1 {
+        font-size: 4rem;
+    }
+
     .cross-page {
         height: 34rem;
     }

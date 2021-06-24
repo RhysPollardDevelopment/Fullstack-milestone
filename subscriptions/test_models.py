@@ -5,6 +5,8 @@ from .models import Invoice, StripeSubscription
 from django.utils import timezone
 from unittest import mock
 
+from recipes.models import Recipe
+
 
 class TestSubscriptionModel(TestCase):
     @mock.patch("stripe.Customer.create")
@@ -52,3 +54,53 @@ class TestSubscriptionModel(TestCase):
             str(test_invoice),
             test_invoice.invoice_number,
         )
+
+    def test_invoice_related_recipe_method(self):
+        """Test if invoice can associate related recipe"""
+        # Invoice should find a recipe as publish date between start and end.
+        with_recipe = Invoice.objects.create(
+            stripe_subscription=self.stripe_subscription,
+            invoice_number="testinvoice",
+            delivery_name=self.user.username,
+            current_start=datetime(
+                2020, 6, 6, 12, 30, 30, 0, tzinfo=timezone.utc
+            ),
+            current_end=datetime(
+                2020, 7, 6, 12, 30, 30, 0, tzinfo=timezone.utc
+            ),
+            address_1="1234",
+            address_2="test lane",
+            town_or_city="testington",
+            county="greater testington",
+            postcode="T35T",
+        )
+        # Invoice should not have a recipe as too late.
+        without_recipe = Invoice.objects.create(
+            stripe_subscription=self.stripe_subscription,
+            invoice_number="testinvoice",
+            current_start=datetime(
+                2020, 8, 8, 12, 30, 30, 0, tzinfo=timezone.utc
+            ),
+            current_end=datetime(
+                2020, 9, 9, 12, 30, 30, 0, tzinfo=timezone.utc
+            ),
+            delivery_name=self.user.username,
+            address_1="1234",
+            address_2="test lane",
+            town_or_city="testington",
+            county="greater testington",
+            postcode="T35T",
+        )
+
+        recipe = Recipe.objects.create(
+            title="too new",
+            description="Should not load as date is not before now.",
+            publish_date=datetime(
+                2020, 6, 28, 12, 30, 30, 0, tzinfo=timezone.utc
+            ),
+            ingredients="Test for the text file.",
+            instructions="Pseudo instructions for testing purposes.",
+        )
+
+        self.assertEqual(with_recipe.related_recipe, recipe)
+        self.assertEqual(without_recipe.related_recipe, None)

@@ -31,17 +31,6 @@ def all_recipes(request):
         Recipe.objects.filter(publish_date__lte=now).order_by("-publish_date")
     )
 
-    # Finds the date time 3 months prior to today
-    three_months = datetime.now(tz=timezone.utc) + relativedelta(months=-3)
-
-    # If recipe publish date is within last 3 months, is restricted to users
-    # without subscriptions.
-    for recipe in recipes:
-        if recipe.publish_date > three_months:
-            recipe.restricted = True
-        else:
-            recipe.restricted = False
-
     template = "recipes/recipes.html"
     context = {"recipes": recipes}
     return render(request, template, context)

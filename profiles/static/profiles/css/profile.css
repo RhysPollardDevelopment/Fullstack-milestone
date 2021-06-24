@@ -61,6 +61,10 @@
     .invoice img {
         height: 11rem;
     }
+
+    .invoice h2 {
+        font-size: 4rem;
+    }
 }
 
 /*---------------Laptop-------------*/

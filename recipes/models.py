@@ -1,5 +1,7 @@
 from products.models import Product
 from django.db import models
+from datetime import datetime, timezone
+from dateutil.relativedelta import relativedelta
 
 
 class Recipe(models.Model):
@@ -23,6 +25,16 @@ class Recipe(models.Model):
     featured_product = models.ForeignKey(
         Product, null=True, on_delete=models.SET_NULL
     )
+
+    @property
+    def is_restricted(self):
+        three_months_ago = datetime.now(tz=timezone.utc) + relativedelta(
+            months=-3
+        )
+
+        # If recipe publish date is within last 3 months, is restricted to
+        # users without subscriptions.
+        return self.publish_date > three_months_ago
 
     def __str__(self):
         return self.title

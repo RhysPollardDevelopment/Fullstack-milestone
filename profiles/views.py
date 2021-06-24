@@ -183,26 +183,13 @@ def subscription_history(request):
     # Collects list of all profiles subscription models.
     stripe_sub = list(profile.stripesubscription_set.all())
 
-    recipes_list = Recipe.objects.all()
-
     invoices = []
 
     # For each subscription in the list, it checks runs through every invoice.
     for sub in stripe_sub:
-        sub_invoices = list(sub.invoice_set.all())
-
-        # Each invoice checks if a recipe publish date falls between the
-        # start and end of the invoice period.
+        sub_invoices = sub.invoice_set.all()
+        # Each invoice per sub is added to the invoices list.
         for sub_invoice in sub_invoices:
-            for recipe in recipes_list:
-                d = recipe.publish_date
-                # If so then this is what customer received access to and is
-                # added as part of the invoice list.
-                if (
-                    sub_invoice.current_start < d
-                    and sub_invoice.current_end > d
-                ):
-                    sub_invoice.recipe = recipe
             invoices.append(sub_invoice)
 
     # https://www.w3schools.com/python/ref_list_sort.asp - ref for reverse.

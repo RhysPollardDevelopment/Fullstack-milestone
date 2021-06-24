@@ -28,7 +28,7 @@
                 </a>
                 <p class="pt-2">{{ recipe.description }}</p>
                 <p>{{ recipe.publish_date|date }}</p>
-                {% if recipe.restricted %}
+                {% if recipe.is_restricted %}
                 <div><i class="fas fa-certificate">Subscribe</i></div>
                 {% endif %}
                 {% if request.user.is_superuser %}

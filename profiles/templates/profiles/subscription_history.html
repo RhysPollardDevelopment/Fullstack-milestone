@@ -7,10 +7,12 @@
 <h1 class="text-center pt-4 pb-3">Subscription history</h1>
 <p class="text-center">Here is a list of all your previous months' recipes and
     honies.</p>
+<!-- Create Invoice list -->
 {% for invoice in invoices %}
 <div class="row p-3">
     <div class="col-12">
         <div class="row invoice p-2">
+            <!-- Assigns start date and key details for each invoice-->
             <div class="col-12 col-md-4">
                 <h3 class="pt-3">{{ invoice.current_start|date:"M, Y" }}</h3>
                 <p class="mb-0 font-weight-bold d-md-none d-lg-block">Invoice
@@ -26,27 +28,39 @@
                     <li>{{ invoice.postcode }}</li>
                 </ul>
             </div>
+            <!-- Checks if invoice has a related recipe -->
+            {% if invoice.related_recipe  %}
             <div class="col-12 col-md-4 align-self-center pt-md-3">
-                <a href="{% url 'recipe_detail' invoice.recipe.title %}">
-                    <img src="{{ invoice.recipe.image.url }}"
-                        alt="{{ invoice.recipe }}">
+                <a
+                    href="{% url 'recipe_detail' invoice.related_recipe.title %}">
+                    <img src="{{ invoice.related_recipe.image.url }}"
+                        alt="{{ invoice.related_recipe }}">
                     <p class="text-center text-capitalize mb-md-1">
-                        {{ invoice.recipe }}
+                        {{ invoice.related_recipe }}
                     </p>
                 </a>
 
             </div>
             <div class="col-12 col-md-4 align-self-center pt-md-3">
                 <a
-                    href="{% url 'product_details' invoice.recipe.featured_product.id %}">
-                    <img src="{{ invoice.recipe.featured_product.image.url  }}"
-                        alt="{{ invoice.recipe.featured_product }}">
+                    href="{% url 'product_details' invoice.related_recipe.featured_product.id %}">
+                    <img src="{{ invoice.related_recipe.featured_product.image.url  }}"
+                        alt="{{ invoice.related_recipe.featured_product }}">
                     <p class="text-center text-capitalize mb-md-1">
-                        {{ invoice.recipe.featured_product.name }}
+                        {{ invoice.related_recipe.featured_product.name }}
                     </p>
                 </a>
-
             </div>
+            <!-- If recipe does not exist then given notice to prevent error as
+            should not be possible, but prevents problems later-->
+            {% else %}
+            <div class="col-12 col-md-8 d-flex">
+                <h2 class="py-3 mx-auto align-self-center">
+                    <span class="underline">Coming Soon</span>
+                </h2>
+            </div>
+            {% endif %}
+            <!-- Invoice Number for md and above screens for better flow-->
             <p class="col-12 d-none d-md-block d-lg-none">
                 <span class="font-weight-bold">
                     Invoice Number:
