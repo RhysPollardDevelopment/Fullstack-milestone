@@ -8,43 +8,54 @@
 {% block additional_title %}| Our Honies{% endblock %}
 
 {% block content %}
-<main>
-    <div class="container-fluid recipe-header text-center">
-        <h1 class="pt-5 drop-shadow">Scrumptious Recipes</h1>
-        <p class="drop-shadow">Finally the best stuff about honey, the eating!
-        </p>
-    </div>
-    <div class="container py-5">
-        {% for recipe in recipes %}
-        <div class="row recipe-list my-3">
-            <div class="col-12 col-md-4 p-0">
-                <a href="{% url 'recipe_detail' recipe.title %}">
-                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-                </a>
+<!--- Recipes Header image and title-->
+<div class="container-fluid recipe-header text-center">
+    <h1 class="pt-5 drop-shadow">Scrumptious Recipes</h1>
+    <p class="drop-shadow">Finally the best stuff about honey, the eating!
+    </p>
+</div>
+<!-- recipes list-->
+<div class="container py-5">
+    {% for recipe in recipes %}
+    <article class="row recipe-list my-4">
+        <div class="col-12 col-md-4 p-0">
+            <!-- Adds a restricted badge to recipe if within last 3 months-->
+            {% if recipe.is_restricted %}
+            <div class="restricted-badge">
+                <img src="/media/pngkey.com-star-burst-png-4385724.png"
+                    alt="Subscription required badge">
             </div>
-            <div class="col-12 col-md-8 py-4 px-5">
-                <a href="{% url 'recipe_detail' recipe.title %}">
-                    <h3 class="pt-2">{{ recipe.title }}</h3>
-                </a>
-                <p class="pt-2">{{ recipe.description }}</p>
-                <p>{{ recipe.publish_date|date }}</p>
-                {% if recipe.is_restricted %}
-                <div><i class="fas fa-certificate">Subscribe</i></div>
-                {% endif %}
-                {% if request.user.is_superuser %}
-                <a href="{% url 'update_recipe' recipe.title %}"
-                    class="btn btn-info">Edit</a>
-                <button type="button" class="btn btn-warning delete"
-                    data-toggle="modal" data-target="#deleteConfirm"
-                    data-info="{% url 'delete_recipe' recipe.title %}">
-                    Delete
-                </button>
-                {% endif %}
-            </div>
+            {% endif %}
+            <!-- Recipe Image-->
+            <a href="{% url 'recipe_detail' recipe.title %}" class="main-image">
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+            </a>
         </div>
-        {% endfor %}
-    </div>
-</main>
+        <!-- Recipe details and box-->
+        <div class="col-12 col-md-8 py-3 px-4 pr-lg-5">
+            <a href="{% url 'recipe_detail' recipe.title %}">
+                <h3 class="pt-2">{{ recipe.title }}</h3>
+            </a>
+            <p class="pt-2">{{ recipe.description }}</p>
+            <p>{{ recipe.publish_date|date }}</p>
+            <a href="{% url 'recipe_detail' recipe.title %}"
+                class="btn button-yellow mx-auto text-center">More Info</a>
+        </div>
+        {% if request.user.is_superuser %}
+        <div class="admin-section col-12 p-3">
+            <a href="{% url 'update_recipe' recipe.title %}"
+                class="btn button-edit mb-2 mx-auto">Edit</a>
+            <button type="button"
+                class="btn button-delete mb-md-2 delete mx-auto"
+                data-toggle="modal" data-target="#deleteConfirm"
+                data-info="{% url 'delete_recipe' recipe.title %}">
+                Delete
+            </button>
+        </div>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block modal %}

@@ -10,12 +10,12 @@
 {% block content %}
 {% if not restricted or request.user.userprofile.has_active_subscription %}
 <article class="container page-push">
-    <div class="row pt-2 pt-lg-5 recipe">
+    <div class="row pt-2 pt-lg-4 recipe">
         <!-- Recipe section-->
-        <div class="col-12 col-lg-6 pt-4">
+        <div class="col-12 col-lg-5 pt-4 p-lg-4 details">
             <h1 class="mb-3 text-center text-md-left">{{ recipe.title }}</h1>
             <p class="d-none d-lg-block">{{ recipe.description }}</p>
-            <h3 class="p-2 d-none d-lg-block">Ingredients</h3>
+            <h3 class="p-2 d-none d-lg-block mb-lg-0 pb-lg-1">Ingredients</h3>
             <!-- Ingredients section for laptop and above-->
             <ul class="d-none d-lg-block white">
                 {% for ingredient in recipe.ingredients %}
@@ -23,7 +23,8 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-12 col-lg-6">
+        <!-- Recipe Image-->
+        <div class="col-12 d-flex justify-content-center">
             <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
         </div>
         <!-- Ingredients section for Mobile and tablet-->
@@ -37,8 +38,9 @@
             </ul>
         </div>
     </div>
-    <div class="row">
-        <h3 class="text-center col-12 pt-4">Instructions</h3>
+    <div class="row divider mx-auto my-3 d-lg-none"></div>
+    <div class="row pb-3 px-3 pb-md-5 pt-lg-4">
+        <h3 class="text-center col-12 pt-4 my-2">Instructions</h3>
         <ol class="col-12 white">
             {% for instruction in recipe.instructions %}
             <li class="m-3">{{ instruction }}</li>
@@ -46,22 +48,24 @@
         </ol>
     </div>
 </article>
-
 <!-- Featured Product-->
 <section class="container">
-    <div class="row">
-        <div class="col-12 col-md-5 text-center py-3 mt-3">
+    <div class="row mb-3 py-lg-2 featured-product">
+        <div class="col-12 col-md-5 text-center py-3 mt-3 mt-md-2 mt-lg-0">
             <a href="{% url 'product_details' recipe.featured_product.id %}">
                 <img src="{{ recipe.featured_product.image.url }}"
-                    alt="{{ recipe.featured_product.name }}"
-                    class="featured-product">
+                    alt="{{ recipe.featured_product.name }}">
             </a>
         </div>
         <div class="col-12 col-md-7 text-center mb-5">
-            <h4>This recipe was made with the fantastic taste of:</h4>
-            <h2 class="py-4 mb-3 text-center">{{ recipe.featured_product }}</h2>
+            <h4 class="black pt-md-3 pt-lg-5">This recipe was made with the
+                fantastic
+                taste of:
+            </h4>
+            <h2 class="py-4 mb-3 text-center black">
+                {{ recipe.featured_product }}</h2>
             <a href="{% url 'product_details' recipe.featured_product.id %}"
-                class="btn-lg button-yellow mx-auto" role="button">
+                class="btn-lg button-dark mx-auto" role="button">
                 More Info
             </a>
         </div>
@@ -84,34 +88,38 @@
 {% else %}
 <!-- Restricted Filler content-->
 <article class="container page-push">
-    <div class="row pt-2 pt-lg-5 recipe">
+    <div class="row pt-2 pt-lg-4 recipe">
         <!-- Recipe section-->
-        <div class="col-12 col-lg-6 pt-4">
+        <div class="col-12 col-lg-5 pt-4 p-lg-4 details">
             <h1 class="mb-3 text-center text-md-left">{{ recipe.title }}</h1>
             <p class="d-none d-lg-block">{{ recipe.description }}</p>
-            <h3 class="p-2 d-none d-lg-block">Ingredients</h3>
-            <ul class="d-none d-lg-block">
+            <h3 class="p-2 d-none d-lg-block mb-lg-0 pb-lg-1">Ingredients</h3>
+            <!-- Ingredients section for laptop and above-->
+            <ul class="d-none d-lg-block white">
                 {% for ingredient in recipe.ingredients %}
                 <li class="mb-1">{{ ingredient }}</li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-12 col-lg-6">
+        <!-- Recipe Image-->
+        <div class="col-12 d-flex justify-content-center">
             <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
         </div>
+        <!-- Ingredients section for Mobile and tablet-->
         <div class="col-12 col-lg-6 pt-4 d-lg-none">
             <p>{{ recipe.description }}</p>
             <h3 class="text-center p-2">Ingredients</h3>
-            <ul>
+            <ul class="white">
                 {% for ingredient in recipe.ingredients %}
                 <li class="mb-1">{{ ingredient }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-    <div class="row blur">
+    <div class="row divider mx-auto my-3 d-lg-none"></div>
+    <div class="row blur py-lg-5">
         <h3 class="text-center col-12 pt-4">Instructions</h3>
-        <ol class="col-12">
+        <ol class="col-12 white">
             <li class="m-3">This content is restricted and cannot be accessed by
                 unsubscribed users. To access this content please subscribe to
                 FreeBees or wait until this becomes available at a later date.
@@ -131,19 +139,18 @@
         </ol>
     </div>
 </article>
-
 <!--- Fake featured product --->
-<section class="container blur mb-3">
-    <div class="row py-5">
-        <div class="col-12 col-md-5 text-center py-3 mt-3">
+<section class="container blur mb-5 pb-3">
+    <div class="row mb-3 py-lg-2 featured-product">
+        <div class="col-12 col-md-5 text-center py-3 mt-3 mt-md-2 mt-lg-0">
             <a href="{% url 'subscription_page' %}">
-                <img src="/media/Sketch004.jpg" alt="Fake restriction Image"
-                    class="featured-product">
+                <img src="/media/Sketch004.jpg" alt="Fake restriction Image">
             </a>
         </div>
         <div class="col-12 col-md-7 text-center mb-5">
-            <h4>This recipe was made with the fantastic taste of:</h4>
-            <h2 class="py-4 mb-3 text-center">Restriction filters!</h2>
+            <h4 class="black pt-md-3 pt-lg-5"></h4>>This recipe was made with
+            the fantastic taste of:</h4>
+            <h2 class="py-4 mb-3 text-center black">Restriction filters!</h2>
             <a href="{% url 'subscription_page' %}"
                 class="btn-lg button-yellow mx-auto" role="button">Sign Up</a>
         </div>

@@ -1,6 +1,6 @@
 /*-------------Subscriptions page---------*/
 .subscriptions {
-    background-image: url('/media/pexels-pixabay-56876.jpg');
+    background-image: url('/media/bianca-ackermann-IGTlDjRN3kc-unsplash.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 20rem;
@@ -185,6 +185,12 @@
 
 /*--------------XL Screens---------------*/
 @media(min-width: 1200px) {
+
+    /*------------Subscriptions----------*/
+    .subscriptions {
+        height: 39rem;
+        background-position: center;
+    }
 
     /*-----------Checkout-thanks----------*/
     .thank-you .text {

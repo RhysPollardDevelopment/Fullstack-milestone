@@ -23,7 +23,7 @@
     <div class="row px-4">
         <!-- Company info sections-->
         {% for company in companies %}
-        <div class="col-12 col-lg-4 mx-auto mb-4">
+        <div class="col-12 col-lg-4 mx-auto mb-4 pt-3">
             <div class="company p-5 mx-auto text-center">
                 <a href="{{ company.company_url }}" target="_blank">
                     <img src="{{ company.logo.url }}" alt="{{ company.name }}">
@@ -42,11 +42,13 @@
                 </div>
                 {% endif %}
             </div>
+            <!-- Company url section-->
             <div class="details mx-auto pt-2">
                 <h3>{{ company.name }}</h3>
                 <p>{{ company.description }}</p>
                 <a href="{{ company.company_url }}"
-                    target="_blank">{{ company.company_url }}</a>
+                    class="btn button-yellow btn-block"
+                    target="_blank">Visit</a>
             </div>
         </div>
         {% endfor %}

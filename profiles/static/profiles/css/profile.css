@@ -5,9 +5,14 @@
 }
 
 .nav-link {
-    color: white;
+    color: rgba(214, 214, 214, 0.74);
     font-family: var(--bebas-neue);
     font-size: 1.25rem;
+}
+
+.nav-tabs .nav-link.profile:hover {
+    color: white;
+    border: none;
 }
 
 .nav-link.profile.active {

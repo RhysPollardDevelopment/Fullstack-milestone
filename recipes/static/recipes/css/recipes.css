@@ -1,3 +1,38 @@
+/*--------------Variables-----------*/
+:root {
+    --gold: #d4c059;
+    --jet: #202020;
+
+    --bebas-neue: 'Bebas Neue', cursive;
+    --montserrat: 'Montserrat', sans-serif;
+}
+
+/*------------Admin--------------------*/
+.admin-section {
+    background-color: var(--gold);
+    width: 100%;
+}
+
+.admin-section .btn {
+    display: block;
+    width: 100%;
+}
+
+.button-edit {
+    font-family: var(--bebas-neue);
+    background-color: #1060d0;
+    color: white;
+    font-size: large;
+    border: 1px solid #084ba8;
+}
+
+.button-edit:hover {
+    background-color: #074294;
+    border: 1px solid #012353;
+    color: white;
+    transition: 0.25s;
+}
+
 /*------------Recipes page----------------*/
 .recipe-header {
     background-image: url('/media/pexels-dana-tentis-1152276.jpg');
@@ -9,30 +44,52 @@
 }
 
 .recipe-list {
-    border: 1px solid rgb(197, 197, 197);
+    border: 1px solid rgb(218, 192, 49, 0.5);
+    background-color: #2d2d2d;
 }
 
 .recipe-list img {
     width: 100%;
-    height: 15rem;
+    height: 100%;
     object-fit: cover;
 }
 
-.recipe-list a {
-    color: black;
+.recipe-list img:hover {
+    opacity: 0.7;
 }
 
+.recipe-list .button-yellow {
+    display: block;
+}
+
+.restricted-badge img {
+    position: absolute;
+    height: 6rem;
+    width: 30%;
+    left: 67%;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 3px black);
+}
+
+/*-----------Recipe-detail---------------*/
 .recipe img {
     height: 18rem;
     width: 100%;
     object-fit: cover;
 }
 
-/*-----------Recipe-detail---------------*/
-
 .featured-product {
+    background: var(--gold);
+}
+
+
+.featured-product img {
     height: 10rem;
     object-fit: cover;
+}
+
+.featured-product img:hover {
+    opacity: 0.7;
 }
 
 .other-recipe img {
@@ -51,27 +108,93 @@
     padding: 1rem;
 }
 
+.divider {
+    border-top: 1px solid var(--gold);
+    width: 80%;
+}
+
 /*--------Recipe forms----------*/
 input[type="file"] {
     margin-bottom: 1rem;
 }
 
+/*------------------Tablets---------------------*/
+@media(min-width: 768px) {
 
+    /*------------Admin-----------*/
+    .admin-section {
+        display: flex;
+    }
+
+    .admin-section .btn {
+        display: block;
+        width: 49%;
+    }
+
+    /*---------Recipe-detail-------*/
+    .recipe img {
+        height: 22rem;
+    }
+
+    .featured-product img {
+        height: 13rem;
+    }
+}
+
+/*------------------Laptops---------------------*/
 @media(min-width: 992px) {
+
+    /*------------Admin-----------*/
+    .admin-section .btn {
+        display: block;
+        width: 30%;
+    }
 
     /*---------------Recipes-Page-----------------*/
     .recipe-header {
         padding-top: 10rem;
     }
 
+    .restricted-badge img {
+        height: 7rem;
+    }
+
+    .recipe-list .button-yellow {
+        width: 50%;
+    }
+
     /*---------------Recipe-detail---------------*/
     .recipe img {
-        height: 25rem;
+        height: 36rem;
+        position: absolute;
+        bottom: 40%;
+        z-index: -1;
+        width: 100%;
+        border: 1px solid var(--gold);
+    }
+
+    .details {
+        background-color: rgba(0, 0, 0, 0.6);
+        height: 36rem;
+    }
+
+    .featured-product img {
+        height: 15rem;
+        object-fit: cover;
     }
 
     .restricted {
-        bottom: 10%;
-        left: 24%;
+        bottom: -26%;
+        left: 25%;
         width: 50%;
+    }
+}
+
+/*--------------XL screens------------------*/
+@media(min-width:1200px) {
+    .restricted {
+        position: absolute;
+        bottom: 12%;
+        padding: 1rem;
     }
 }

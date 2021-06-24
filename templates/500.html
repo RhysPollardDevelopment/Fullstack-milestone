@@ -1,0 +1,18 @@
+{% extends 'accountform.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block additional_title %}| 500 - Internal server Error{% endblock %}
+
+{% block account-content %}
+<h1 class="text-capitalize py-4">Internal Server error</h1>
+<div class="text-center">
+    <i class="fas fa-exclamation-triangle"></i>
+</div>
+<p class="py-5">
+    It seems something went wrong and we can't process your request right now,
+    please head <a href="{% url 'home' %}">back home for now</a> and we will try
+    to fix this error.
+</p>
+{% endblock %}

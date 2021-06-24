@@ -60,8 +60,9 @@
 }
 
 .social-links i:hover {
-    color: #e7c100;
-    border: 1px solid #ceab00;
+    color: var(--jet);
+    background: var(--gold);
+    border: 1px solid #aa921d;
     transition: 0.25s;
 }
 

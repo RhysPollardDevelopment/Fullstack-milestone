@@ -62,15 +62,9 @@ p {
 .button-yellow {
     font-family: var(--bebas-neue);
     background-color: var(--gold);
-    color: var(--jet);
-    border: 1px solid #bea940;
+    color: #161616;
+    border: 1px solid rgb(155, 155, 36);
     font-size: large;
-}
-
-.button-yellow:hover {
-    background-color: #948120;
-    border: 1px solid #6e6017;
-    transition: 0.5s;
 }
 
 .button-dark {
@@ -83,9 +77,11 @@ p {
 
 .button-dark:hover {
     background-color: #0c0c0c;
-    color: var(--gold);
+    color: white;
     border: 1px solid #000000;
     font-size: large;
+    text-decoration: none;
+    transition: 0.25s;
 }
 
 .button-delete {
@@ -100,6 +96,7 @@ p {
     background-color: #970000;
     border: 1px solid #690000;
     color: white;
+    text-decoration: none;
     transition: 0.25s;
 }
 
@@ -114,6 +111,7 @@ p {
 .button-add:hover {
     background-color: #2e5221;
     color: white;
+    text-decoration: none;
     border: 1px solid #234e23;
     transition: 0.25s;
 }
@@ -391,6 +389,22 @@ p {
         padding-top: 3rem
     }
 
+    .button-yellow {
+        font-family: var(--bebas-neue);
+        background-color: #161616;
+        color: var(--gold);
+        border: 1px solid var(--gold);
+        font-size: large;
+    }
+
+    .button-yellow:hover {
+        background-color: var(--gold);
+        border: 1px solid #6e6017;
+        color: #161616;
+        transition: 0.25s;
+        text-decoration: none;
+    }
+
     /*-------------Navigation------------*/
     .navigation {
         background-color: rgba(0, 0, 0, 0.5);
@@ -402,6 +416,12 @@ p {
     .navigation .dropdown-menu.show {
         background-color: rgba(0, 0, 0, 0.5);
         filter: drop-shadow(3px 4px 6px black)
+    }
+
+    .navigation .nav-link {
+        font-family: var(--bebas-neue);
+        font-size: larger;
+        color: rgba(224, 224, 224, 0.788);
     }
 
     .account-form button,
@@ -457,5 +477,13 @@ p {
 
     .buttonHolder {
         display: flex
+    }
+}
+
+/*-----------XL screens and above----------*/
+@media(min-width:1200px) {
+    .navigation .nav-link {
+        font-family: var(--bebas-neue);
+        color: rgba(224, 224, 224, 0.788);
     }
 }

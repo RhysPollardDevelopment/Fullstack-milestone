@@ -7,6 +7,26 @@
     --montserrat: 'Montserrat', sans-serif;
 }
 
+/*----------------Admin---------------------*/
+.admin-section {
+    background-color: var(--gold);
+}
+
+.button-edit {
+    font-family: var(--bebas-neue);
+    background-color: #1060d0;
+    color: white;
+    font-size: large;
+    border: 1px solid #084ba8;
+}
+
+.button-edit:hover {
+    background-color: #074294;
+    border: 1px solid #012353;
+    color: white;
+    transition: 0.25s;
+}
+
 /*---------------Product main page------------*/
 .product-header {
     background-image: url('/media/pexels-polina-kovaleva-5645127.jpg');
@@ -38,55 +58,6 @@ img {
 
 .body-dark {
     background-color: var(--jet);
-}
-
-.admin-section {
-    background-color: var(--gold);
-}
-
-.button-edit {
-    font-family: var(--bebas-neue);
-    background-color: #1060d0;
-    color: white;
-    font-size: large;
-    border: 1px solid #084ba8;
-}
-
-.button-edit:hover {
-    background-color: #074294;
-    border: 1px solid #012353;
-    color: white;
-    transition: 0.25s;
-}
-
-.button-delete {
-    font-family: var(--bebas-neue);
-    background-color: #d30000;
-    color: white;
-    font-size: large;
-    border: 1px solid #b60101;
-}
-
-.button-delete:hover {
-    background-color: #970000;
-    border: 1px solid #690000;
-    color: white;
-    transition: 0.25s;
-}
-
-.button-add {
-    font-family: var(--bebas-neue);
-    font-size: large;
-    background-color: #3f6d2e;
-    color: white;
-    border: 1px solid #2d662d;
-}
-
-.button-add:hover {
-    background-color: #2e5221;
-    color: white;
-    border: 1px solid #234e23;
-    transition: 0.25s;
 }
 
 /*----------------Product details page------------*/
@@ -146,6 +117,12 @@ img {
 .company img {
     height: 100%;
     object-fit: contain;
+}
+
+.company img:hover {
+    height: 115%;
+    padding-bottom: 0.5rem;
+    transition: ease-in-out 0.25s;
 }
 
 .company-admin .edit {
