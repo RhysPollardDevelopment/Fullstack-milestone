@@ -6,7 +6,7 @@ let stripe = Stripe(stripePublicKey);
 let elements = stripe.elements();
 var style = {
     base: {
-        color: '#000',
+        color: '#fff',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
@@ -33,7 +33,6 @@ card.on('change', function (event) {
 // Main code altered from stripe fixed price-tutorial.
 /// https://stripe.com/docs/billing/subscriptions/fixed-price
 function displayError(event) {
-    changeLoadingState(false);
     let displayError = document.getElementById('card-element-errors');
     if (event.error) {
         // Added in second check to also allow errors lacking same structure.
@@ -51,17 +50,16 @@ function displayError(event) {
 
 // Defines subscription form and puts card into disabled state.
 let subscriptionForm = document.getElementById('payment-form');
-if (subscriptionForm) {
-    subscriptionForm.addEventListener('submit', function (ev) {
-        ev.preventDefault();
-        card.update({
-            'disabled': true
-        });
-        changeLoadingState(true)
-
-        createPayment(card)
-    })
-}
+subscriptionForm.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    // Disables card input, button and then toggles loading overlay.
+    card.update({
+        'disabled': true
+    });
+    document.getElementById("submit-button").disabled = true;
+    $("#loading-overlay").fadeToggle(100);
+    createPayment(card)
+})
 
 // Collects information before calling stripe.createPaymentMethod for payment.
 function createPayment(card) {
@@ -179,9 +177,13 @@ function createSubscription({
             // An error has happened. Display the failure to the user here.
             // Catches any errors thrown during this progression and stops
             // process. Displayed in card error element suggested by Stripe.
+            document.getElementById("submit-button").disabled = false;
+            $("#loading-overlay").fadeToggle(100);
+            card.update({
+                "disabled": false
+            });
             displayError(error);
-        })
-    );
+        }));
 }
 
 // First in sequence after fetch response. Deals with customer authentication
@@ -296,16 +298,3 @@ function onSubscriptionComplete(result) {
         window.location.href = '/subscription/checkout/complete';
     }
 }
-
-// Changes state of submit button and card functionality depending on given
-// True or false value.
-var changeLoadingState = function (isLoading) {
-    if (isLoading) {
-        document.getElementById("submit-button").disabled = true;
-    } else {
-        document.getElementById("submit-button").disabled = false;
-        card.update({
-            "disabled": false
-        });
-    }
-};

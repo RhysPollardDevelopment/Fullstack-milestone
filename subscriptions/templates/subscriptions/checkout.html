@@ -29,7 +29,7 @@
                         <span class="underline">Delivery
                             Details</span>
                     </h3>
-                    <div class="my-3" id="card-element">
+                    <div id="card-element">
                         <!-- Elements will create input elements here-->
                     </div>
                     <!-- We'll put the error messages in this element -->
@@ -70,7 +70,18 @@
 <input type="hidden" id="customerId" value="{{ profile.stripe_customer_id }}"
     name="customerId">
 <input type="hidden" id="username" value="{{ user.username }}" name="username">
+<!-- Loading overlay-->
+<!-- This code was used from the boutique ado project from code institue-->
+<div id="loading-overlay">
+    <h1 class="text-light logo-font loading-spinner">
+        <span class="icon">
+            <i class="fas fa-3x fa-spinner fa-spin"></i>
+        </span>
+    </h1>
+</div>
 {% endblock %}
+
+
 
 
 {% block postloadjs %}

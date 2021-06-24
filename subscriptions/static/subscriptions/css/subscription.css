@@ -53,6 +53,12 @@
 .StripeElement {
     background: #202020;
     padding: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+#card-element-errors {
+    color: red;
+    padding-bottom: 0.25rem;
 }
 
 /*----------Checkout-Complete--------------*/
@@ -85,6 +91,28 @@
     background-color: #0000008a;
     height: 36rem;
     color: white;
+}
+
+/*-------------Loading overlay------------------*/
+/* This section of code was used primarily from code institute boutique ado
+project work */
+#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(48, 48, 48, 0.85);
+    z-index: 9999;
+}
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
 }
 
 /*------------Tablet--------------*/
@@ -148,8 +176,6 @@
         background: #161616;
         border-top-right-radius: 5%;
         border-bottom-right-radius: 5%;
-        overflow-y: auto;
-        height: 45rem;
     }
 
     /*-----------Checkout-complete----------*/

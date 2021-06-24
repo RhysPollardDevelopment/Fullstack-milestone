@@ -10,6 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Rhys Pollard">
+    <meta name="description"
+        content="This is an e-commerce website offering a monthly honey subscription.">
     {% endblock %}
 
     {% block additional_meta %}
@@ -24,6 +27,8 @@
         href="https://fonts.googleapis.com/css?family=Lato&display=swap"
         crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Add favicon -->
+    <link rel="icon" href="{{ MEDIA_URL}}favicon.png">
     {% endblock %}
 
     {% block additional_css %}
@@ -54,7 +59,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navigation">
-            <a class="navbar-brand" href="{% url 'home' %}">FreeBees</a>
+            <a class="navbar-brand white" href="{% url 'home' %}"><img
+                    src="/media/freebees-logo.png" alt="Freebees"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -193,27 +199,53 @@
                             <li class="nav-item active">
                                 <a class="nav-link p-3"
                                     href="{% url 'home' %}">Home
-                                    <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link p-3 px-3" href="#">Our
-                                    Honey</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link p-3 px-3" href="#">About
-                                    Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link p-3 px-3" href="#">Hive
-                                    Partners</a>
+                                    <span class="sr-only">
+                                        {% if request.get_full_path == '' %}(current){% endif %}
+                                    </span>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link p-3 px-3"
-                                    href="#">Recipes</a>
+                                    href="{% url 'products' %}">Our
+                                    Honey
+                                    <span class="sr-only">
+                                        {% if request.get_full_path == '/products/' %}(current){% endif %}
+                                    </span>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link p-3 px-3" href="#">Contact
-                                    Us</a>
+                                <a class="nav-link p-3 px-3"
+                                    href="{% url 'about' %}">About
+                                    Us <span class="sr-only">
+                                        {% if request.get_full_path == '/about/' %}(current){% endif %}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-3 px-3"
+                                    href="{% url 'partners' %}">
+                                    Partners
+                                    <span class="sr-only">
+                                        {% if request.get_full_path == '/products/partners/' %}(current){% endif %}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-3 px-3"
+                                    href="{% url 'recipes' %}">Recipes
+                                    <span class="sr-only">
+                                        {% if request.get_full_path == '/recipes/' %}(current){% endif %}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-3 px-3"
+                                    href="{% url 'contact' %}">Contact
+                                    Us
+                                    <span class="sr-only">
+                                        {% if request.get_full_path == '/contact/' %}(current){% endif %}
+                                    </span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -245,12 +277,6 @@
                             <span class="sr-only">instagram</span>
                         </li>
                     </ul>
-                </div>
-                <div class="col-6 p-1">
-                    <a href="">Terms Of Use</a>
-                </div>
-                <div class="col-6 p-1">
-                    <a href="">Privacy Policy</a>
                 </div>
                 <div class="col-12">
                     <h5 class="my-3">&#169; 2021 FreeBees</h5>

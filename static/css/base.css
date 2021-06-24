@@ -122,6 +122,10 @@ p {
     margin-left: 1rem;
 }
 
+.navigation img {
+    height: 2rem;
+}
+
 .navigation .nav-link {
     font-family: var(--bebas-neue);
     font-size: large;
