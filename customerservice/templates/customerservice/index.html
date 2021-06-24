@@ -17,11 +17,14 @@
                 ethical beekeeping.
             </h5>
             {% if request.user.userprofile.has_active_subscription %}
-            <a href="{% url 'recipes' %}" class="btn-lg button-yellow">Try
+            <a href="{% url 'recipes' %}" class="btn-lg button-yellow"
+                aria-label="List of Freebees recipes." role="button">Try
                 Something New</a>
             {% else %}
-            <a href="{% url 'subscription_page' %}"
-                class="btn-lg button-yellow">Subscribe Now</a>
+            <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow"
+                aria-label="See why you should subscribe to Freebees."
+                role="button">Subscribe
+                Now</a>
             {% endif %}
         </div>
     </div>
@@ -88,7 +91,7 @@
                 care for our
                 wildlife.</p>
             <a href="{% url 'about' %}" class="btn-lg button-dark mx-4 my-5"
-                role="button">
+                role="button" aria-label="Read more about who we are.">
                 About
                 Us
             </a>
@@ -109,6 +112,7 @@
             </p>
             <p class="px-4 pl-lg-5 mb-3">Only good bee-keeping.</p>
             <a href="{% url 'partners' %}"
+                aria-label="Find out about the companies we work with."
                 class="btn-lg button-yellow mx-4 my-5" role="button">
                 Our Partners
             </a>
@@ -125,8 +129,9 @@
                     <p class="pb-3">Take a look at some of our amazing
                         honies
                     </p>
-                    <a href="{% url 'products' %}"
-                        class="btn btn-lg button-yellow">Our
+                    <a href="{% url 'products' %}" role="button"
+                        class="btn btn-lg button-yellow"
+                        aria-label="Our range of products.">Our
                         Honey</a>
                 </div>
             </div>
@@ -139,8 +144,8 @@
                     <p class="pb-3">Check out our recipes for some mouth
                         watering
                         inspiration</p>
-                    <a href="{% url 'recipes' %}"
-                        class="btn btn-lg button-yellow">Our
+                    <a href="{% url 'recipes' %}" aria-label="See our recipes."
+                        role="button" class="btn btn-lg button-yellow">Our
                         recipes</a>
                 </div>
             </div>

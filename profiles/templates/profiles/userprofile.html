@@ -52,7 +52,7 @@
             class="btn button-yellow col-12 p-2">Update
             Password</a>
         <a class="btn button-yellow col-12 mt-4 p-2"
-            href="{% url 'account_email' %}">Email</a>
+            href="{% url 'account_email' %}">Change Email</a>
         <!--if subscription is active, show cancel. If cancelled show renew-->
         {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
