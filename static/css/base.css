@@ -338,6 +338,20 @@ p {
     top: 5rem;
 }
 
+.modal-header {
+    background: #161616;
+    border-bottom: 1px solid var(--gold);
+}
+
+.modal-body {
+    background: var(--jet);
+}
+
+.modal-footer {
+    background: #161616;
+    border-top: 1px solid var(--gold);
+}
+
 /*----------- |Tablet |------------*/
 @media(min-width:768px) {
 

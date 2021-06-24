@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 function bindEvents() {
-    $(".btn-danger.delete").on('click', function () {
+    $("..delete").on('click', function () {
         confirm_delete($(this).attr('data-info'));
     });
 }

@@ -15,6 +15,7 @@
     background-position: right;
     height: 30rem;
     color: white;
+    padding-top: 5rem;
 }
 
 img {
@@ -110,9 +111,20 @@ img {
     object-fit: contain;
 }
 
+.logo {
+    justify-content: center;
+}
+
 .logo img {
-    height: 2rem;
+    height: 3rem;
     width: auto;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.divider {
+    border-top: 1px solid var(--gold);
 }
 
 .featured-recipe img {
@@ -171,7 +183,7 @@ input[type="file"] {
 
     /*--------Product-detail--------*/
     .product-detail {
-        background-image: url('/media/test-background1.png');
+        background-image: url('/media/background-3.png');
         height: 27rem;
     }
 
@@ -208,9 +220,17 @@ input[type="file"] {
         height: 28rem;
     }
 
+    .product-detail .details {
+        padding-top: 3rem
+    }
+
     /*------------Products----------*/
     .alt {
         height: 38rem;
+    }
+
+    .product-header {
+        padding-top: 10rem;
     }
 
     /*-------------Partners--------------*/

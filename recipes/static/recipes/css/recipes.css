@@ -1,5 +1,6 @@
+/*------------Recipes page----------------*/
 .recipe-header {
-    background-image: url('/media/michaela-baum-VnM6_liIRJ0-unsplash.jpg');
+    background-image: url('/media/pexels-dana-tentis-1152276.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 30rem;
@@ -26,6 +27,8 @@
     width: 100%;
     object-fit: cover;
 }
+
+/*-----------Recipe-detail---------------*/
 
 .featured-product {
     height: 10rem;
@@ -55,6 +58,13 @@ input[type="file"] {
 
 
 @media(min-width: 992px) {
+
+    /*---------------Recipes-Page-----------------*/
+    .recipe-header {
+        padding-top: 10rem;
+    }
+
+    /*---------------Recipe-detail---------------*/
     .recipe img {
         height: 25rem;
     }

@@ -9,14 +9,15 @@
 
 {% block content %}
 {% if not restricted or request.user.userprofile.has_active_subscription %}
-<article class="container">
+<article class="container page-push">
     <div class="row pt-2 pt-lg-5 recipe">
         <!-- Recipe section-->
         <div class="col-12 col-lg-6 pt-4">
             <h1 class="mb-3 text-center text-md-left">{{ recipe.title }}</h1>
             <p class="d-none d-lg-block">{{ recipe.description }}</p>
             <h3 class="p-2 d-none d-lg-block">Ingredients</h3>
-            <ul class="d-none d-lg-block">
+            <!-- Ingredients section for laptop and above-->
+            <ul class="d-none d-lg-block white">
                 {% for ingredient in recipe.ingredients %}
                 <li class="mb-1">{{ ingredient }}</li>
                 {% endfor %}
@@ -25,10 +26,11 @@
         <div class="col-12 col-lg-6">
             <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
         </div>
+        <!-- Ingredients section for Mobile and tablet-->
         <div class="col-12 col-lg-6 pt-4 d-lg-none">
             <p>{{ recipe.description }}</p>
             <h3 class="text-center p-2">Ingredients</h3>
-            <ul>
+            <ul class="white">
                 {% for ingredient in recipe.ingredients %}
                 <li class="mb-1">{{ ingredient }}</li>
                 {% endfor %}
@@ -37,7 +39,7 @@
     </div>
     <div class="row">
         <h3 class="text-center col-12 pt-4">Instructions</h3>
-        <ol class="col-12">
+        <ol class="col-12 white">
             {% for instruction in recipe.instructions %}
             <li class="m-3">{{ instruction }}</li>
             {% endfor %}
@@ -59,7 +61,7 @@
             <h4>This recipe was made with the fantastic taste of:</h4>
             <h2 class="py-4 mb-3 text-center">{{ recipe.featured_product }}</h2>
             <a href="{% url 'product_details' recipe.featured_product.id %}"
-                class="btn-lg btn-info mx-auto" role="button">
+                class="btn-lg button-yellow mx-auto" role="button">
                 More Info
             </a>
         </div>
@@ -81,7 +83,7 @@
 </aside>
 {% else %}
 <!-- Restricted Filler content-->
-<article class="container">
+<article class="container page-push">
     <div class="row pt-2 pt-lg-5 recipe">
         <!-- Recipe section-->
         <div class="col-12 col-lg-6 pt-4">
@@ -143,7 +145,7 @@
             <h4>This recipe was made with the fantastic taste of:</h4>
             <h2 class="py-4 mb-3 text-center">Restriction filters!</h2>
             <a href="{% url 'subscription_page' %}"
-                class="btn-lg btn-info mx-auto" role="button">Sign Up</a>
+                class="btn-lg button-yellow mx-auto" role="button">Sign Up</a>
         </div>
     </div>
 </section>
@@ -153,7 +155,7 @@
         If you're interested in reading the tastiest new recipes as soon as they
         are published, why not subscribe and help us look after our bees
     </p>
-    <a href="{% url 'subscription_page' %}" class="btn-lg btn-info mx-auto"
+    <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow mx-auto"
         role="button">Subscribe</a>
 </div>
 {% endif %}
