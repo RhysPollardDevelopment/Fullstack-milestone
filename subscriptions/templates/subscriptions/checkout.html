@@ -20,7 +20,6 @@
             <div class="row pt-lg-5">
                 <!-- Side Image for login form-->
                 <div class="d-none d-lg-block col-lg-3 checkout-img">
-                    <img src="/media/" alt="">
                 </div>
                 <form id="payment-form" class="col-12 col-lg-9 px-4 ml-auto"
                     method="POST">
@@ -35,6 +34,7 @@
                     <!-- We'll put the error messages in this element -->
                     <div id="card-element-errors" role="alert">
                     </div>
+                    <!-- Delivery information -->
                     {% csrf_token %}
                     {{sub_form|crispy}}
                     <div class="form-check white">
@@ -51,13 +51,13 @@
                             BIlling address same as delivery
                         </label>
                     </div>
+                    <!-- Billing form -->
                     <div id=billing-form class="d-none pt-3">
                         <h3 class="py-2">
                             <span class="underline">Billing
                                 Details</span></h3>
                         {{bill_form|crispy}}
                     </div>
-
                     <button id="submit-button" class="btn btn-block
                         button-yellow mt-3 mb-4">
                         Subscribe

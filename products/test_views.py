@@ -83,6 +83,7 @@ class TestProductViews(TestCase):
         self.assertEqual(len(recipes), 2)
 
     def test_get_add_product_page(self):
+        """Can successfully ass a product using product form"""
 
         self.client.login(username="superuser", password="superpassword")
 

@@ -20,7 +20,8 @@
         <article
             class="col-12 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
             <div class="card custom text-center">
-                <a href="{% url 'product_details' product.id %}">
+                <a href="{% url 'product_details' product.id %}" role="link"
+                    aria-label="See {{product.name}}'s details.">
                     <img src="{{ product.image.url }}"
                         alt="{{ product.title }}">
                 </a>
@@ -42,7 +43,8 @@
                 {% if request.user.is_superuser %}
                 <div class="admin-section p-3">
                     <a href="{% url 'update_product' product.id %}"
-                        class="btn button-edit btn-block">Edit</a>
+                        class="btn button-edit btn-block" role="link'"
+                        aria-label="Update {{product.name}} here.">Edit</a>
                     <button type="button"
                         class="btn button-delete btn-block delete"
                         data-toggle="modal" data-target="#deleteConfirm"
@@ -64,7 +66,8 @@
             <h3 class="pt-3 pb-2">Feeling hungry yet?</h3>
             <p class="pb-3">Check out our recipes for some mouth watering
                 inspiration</p>
-            <a href="{% url 'recipes' %}" class="btn button-yellow">Our
+            <a href="{% url 'recipes' %}" class="btn button-yellow" role="link"
+                aria-label="Browse our recipes.">Our
                 recipes</a>
         </div>
     </div>

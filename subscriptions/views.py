@@ -241,17 +241,14 @@ def create_subscription(request):
         return HttpResponse("Request method not allowed")
 
 
-# @user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
-# @login_required
+@user_passes_test(not_subscribed, login_url="/", redirect_field_name=None)
+@login_required
 def complete(request):
     """
     Page sent to on successful subscription creation/payment. Also updates user
     information if save_shipping variable is true.
     """
     profile = get_object_or_404(UserProfile, user=request.user)
-
-    print("delete this")
-    request.session["save_shipping"] = False
 
     save_shipping = request.session["save_shipping"]
     # Checks the state of save_shipping in the session.

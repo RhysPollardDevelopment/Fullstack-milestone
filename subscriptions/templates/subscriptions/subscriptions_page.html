@@ -44,6 +44,7 @@
         </div>
         {% if not request.user.userprofile.has_active_subscription %}
         <a href="{% url 'checkout' %}"
+            aria-label="Enter your details to subscribe."
             class="btn btn-lg button-yellow mx-auto mb-2" role="button">Get
             started</a>
         {% endif %}
@@ -130,7 +131,8 @@
             <h3 class="text-capitalize pt-5 pb-2">Enough droning on from us
             </h3>
             <p>Sign up now and see what the buzz is about!</p>
-            <a href="{% url 'checkout' %}" class="btn button-yellow mt-3 mb-5">
+            <a href="{% url 'checkout' %}" class="btn button-yellow mt-3 mb-5"
+                aria-label="Enter your details to subscribe.">
                 Subscribe Now
             </a>
         </div>

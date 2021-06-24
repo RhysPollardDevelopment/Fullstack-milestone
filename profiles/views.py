@@ -10,7 +10,6 @@ import stripe
 
 
 from .models import UserProfile
-from recipes.models import Recipe
 from subscriptions.forms import BillingAddressForm
 
 from allauth.account.views import PasswordChangeView

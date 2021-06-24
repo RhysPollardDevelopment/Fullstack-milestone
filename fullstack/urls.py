@@ -28,7 +28,6 @@ urlpatterns = [
         name="account_password_change",
     ),
     path("accounts/", include("allauth.urls")),
-    #
     path(
         "accounts/password/change/done/",
         views.password_change_done,

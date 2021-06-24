@@ -27,23 +27,27 @@
             </div>
             {% endif %}
             <!-- Recipe Image-->
-            <a href="{% url 'recipe_detail' recipe.title %}" class="main-image">
+            <a href="{% url 'recipe_detail' recipe.title %}" class="main-image"
+                aria-label="See details for {{recipe.title}}">
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
             </a>
         </div>
         <!-- Recipe details and box-->
         <div class="col-12 col-md-8 py-3 px-4 pr-lg-5">
-            <a href="{% url 'recipe_detail' recipe.title %}">
+            <a href="{% url 'recipe_detail' recipe.title %}"
+                aria-label="See details for {{recipe.title}}">
                 <h3 class="pt-2">{{ recipe.title }}</h3>
             </a>
             <p class="pt-2">{{ recipe.description }}</p>
             <p>{{ recipe.publish_date|date }}</p>
             <a href="{% url 'recipe_detail' recipe.title %}"
+                aria-label="See details for {{recipe.title}}"
                 class="btn button-yellow mx-auto text-center">More Info</a>
         </div>
         {% if request.user.is_superuser %}
         <div class="admin-section col-12 p-3">
             <a href="{% url 'update_recipe' recipe.title %}"
+                aria-label="Updated details for {{recipe.title}}"
                 class="btn button-edit mb-2 mx-auto">Edit</a>
             <button type="button"
                 class="btn button-delete mb-md-2 delete mx-auto"

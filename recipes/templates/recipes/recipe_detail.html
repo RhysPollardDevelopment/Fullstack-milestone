@@ -52,7 +52,8 @@
 <section class="container">
     <div class="row mb-3 py-lg-2 featured-product">
         <div class="col-12 col-md-5 text-center py-3 mt-3 mt-md-2 mt-lg-0">
-            <a href="{% url 'product_details' recipe.featured_product.id %}">
+            <a href="{% url 'product_details' recipe.featured_product.id %}"
+                aria-label="See details for {{product.name}}">
                 <img src="{{ recipe.featured_product.image.url }}"
                     alt="{{ recipe.featured_product.name }}">
             </a>
@@ -65,6 +66,7 @@
             <h2 class="py-4 mb-3 text-center black">
                 {{ recipe.featured_product }}</h2>
             <a href="{% url 'product_details' recipe.featured_product.id %}"
+                aria-label="See details for {{product.name}}"
                 class="btn-lg button-dark mx-auto" role="button">
                 More Info
             </a>
@@ -73,18 +75,19 @@
 </section>
 
 <!-- Other recipes -->
-<aside class="container py-4 mb-5">
+<section class="container py-4 mb-5">
     <h3 class="text-center pb-4">You May Also Enjoy</h3>
     <div class="row">
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-3 other-recipe text-center">
-            <a href="{% url 'recipe_detail' recipe.title %}"><img
+            <a href="{% url 'recipe_detail' recipe.title %}"
+                aria-label="See details for {{recipe.title}}"><img
                     src="{{ recipe.image.url }}" alt="{{ recipe.title }}"></a>
             <h4 class="p-1 mb-3">{{ recipe.title }}</h4>
         </article>
         {% endfor %}
     </div>
-</aside>
+</section>
 {% else %}
 <!-- Restricted Filler content-->
 <article class="container page-push">
