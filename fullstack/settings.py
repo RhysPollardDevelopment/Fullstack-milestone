@@ -35,6 +35,7 @@ DEBUG = "DEVELOPMENT" in os.environ
 # Access for local host and heroku app.
 ALLOWED_HOSTS = [
     "freebees-fullstack-milestone.herokuapp.com",
+    "freebees-fullstack-milestone.herokuapp.com.sw.amazonaws.com",
     "127.0.0.1",
     "localhost",
 ]
