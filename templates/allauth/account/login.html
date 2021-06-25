@@ -16,7 +16,8 @@
         <div class="d-none d-md-block col-md-3 login-img">
         </div>
         <!-- Login form -->
-        <form id="login-form" class="col-12 col-md-9 login-form" method="POST">
+        <form id="login-form" class="col-12 col-md-9 login-form" method="POST"
+          action="{% url 'account_login' %}">
           <h1 class="pb-3 pt-2">{% trans "Login" %}</h1>
 
           <!-- Loads social accounts if they exist -->
@@ -47,18 +48,16 @@
             <a href="{{ signup_url }}">sign up</a> here.{% endblocktrans %}</p>
           {% endif %}
           <!-- Sign in details -->
-          <form class="login" method="POST" action="{% url 'account_login' %}">
-            {% csrf_token %}
-            {{ form|crispy }}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}"
-              value="{{ redirect_field_value }}" />
-            {% endif %}
-            <button class="btn button-yellow btn-block my-3"
-              type="submit">{% trans "Sign In" %}</button>
-            <a class="button"
-              href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-          </form>
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}"
+            value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class="btn button-yellow btn-block my-3"
+            type="submit">{% trans "Sign In" %}</button>
+          <a class="button"
+            href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
         </form>
       </div>
     </div>

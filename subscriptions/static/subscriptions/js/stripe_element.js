@@ -145,7 +145,6 @@ function createSubscription({
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': 'true',
             },
-            credentials: 'same-origin',
             body: formData,
         })
         .then((response) => {

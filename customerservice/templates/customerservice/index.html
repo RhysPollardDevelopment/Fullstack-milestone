@@ -18,7 +18,7 @@
             </h5>
             {% if request.user.userprofile.has_active_subscription %}
             <a href="{% url 'recipes' %}" class="btn-lg button-yellow"
-                aria-label="List of Freebees recipes." role="lnk">Try
+                aria-label="List of Freebees recipes.">Try
                 Something New</a>
             {% else %}
             <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow"

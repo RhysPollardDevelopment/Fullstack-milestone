@@ -6,15 +6,15 @@
 {% block additional_title %}| Page Not Found{% endblock %}
 
 {% block account-content %}
-<h1 class="text-capitalize py-4">Page not found - 404/h1>
-    <div class="text-center">
-        <i class="fas fa-times"></i>
-    </div>
-    <h4 class="py-3">
-        Oh no, it seems like this page has buzzed off somewhere else!
-    </h4>
-    <p>It seems something has wrong and the page you're after isn't here. We
-        would happily get you <a href="{% url 'home' %}">back home</a> in the
-        mean time.
-    </p>
-    {% endblock %}
+<h1 class="text-capitalize py-4">Page not found - 404</h1>
+<div class="text-center">
+    <i class="fas fa-times"></i>
+</div>
+<h4 class="py-3 text-center">
+    Oh no, it seems like this page has buzzed off somewhere else!
+</h4>
+<p>It seems something has wrong and the page you're after isn't here. We
+    would happily get you <a href="{% url 'home' %}">back home</a> in the
+    mean time.
+</p>
+{% endblock %}

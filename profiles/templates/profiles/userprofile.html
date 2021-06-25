@@ -57,7 +57,7 @@
         {% if profile.has_active_subscription %}
         {% if subscription.cancel_at_end %}
         <a href="{% url 'reactivate' %}"
-            class="btn button-yellow col-12 mt-4 mb-5 p-2">Renew</a>
+            class="btn button-yellow col-12 mt-4 mb-5 p-2">Reactivate</a>
         {% else %}
         <button class="btn button-yellow col-12 mt-4 mb-5 p-2 cancel"
             data-info="{% url 'cancel_subscription' %}">Cancel
@@ -69,14 +69,12 @@
 {% endblock %}
 
 <!-- Warning modal for cancelling subscription-->
-{% if profile.has_active_subscription %}
 {% block modal %}
 {% include "includes/modal.html" %}
 {% endblock %}
 
 {% block postloadjs %}
 {{ block.super }}
-<script src="{% static 'profiles/js/delete.js' %}" type="text/javascript">
+<script src="{% static 'profiles/js/delete.js' %}">
 </script>
 {% endblock %}
-{% endif %}
