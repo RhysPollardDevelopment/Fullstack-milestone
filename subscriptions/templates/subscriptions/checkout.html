@@ -38,16 +38,16 @@
                     {% csrf_token %}
                     {{sub_form|crispy}}
                     <div class="form-check white">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="save-shipping" checked>
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox"
+                            name="save-shipping" id="save-shipping" checked>
+                        <label class="form-check-label" for="save-shipping">
                             Update my delivery details.
                         </label>
                     </div>
                     <div class="form-check white">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="same-billing" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
+                        <input class="form-check-input" type="checkbox"
+                            name="same-billing" id="same-billing" checked>
+                        <label class="form-check-label" for="same-billing">
                             BIlling address same as delivery
                         </label>
                     </div>

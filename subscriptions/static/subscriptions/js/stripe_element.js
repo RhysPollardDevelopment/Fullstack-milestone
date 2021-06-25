@@ -80,6 +80,7 @@ function createPayment(card) {
 
     // If sameBilling is true, name for billing is equal to the 
     // subscriptionForm details. Otherwise they use billing name.
+    let details;
     if (sameBilling) {
         details = {
             name: $.trim(subscriptionForm.full_name.value),
@@ -97,10 +98,12 @@ function createPayment(card) {
         })
         .then((result) => {
             if (result.error) {
-                displayError(result);
+                $("#loading-overlay").fadeToggle(100);
                 card.update({
                     'disabled': false
                 });
+                document.getElementById("submit-button").disabled = false;
+                displayError(result);
             } else {
                 createSubscription({
                     data: data,
@@ -130,7 +133,7 @@ function createSubscription({
     data.paymentMethodId = paymentMethodId;
     data.saveShipping = saveShipping;
     data.sameBilling = sameBilling;
-    formData = JSON.stringify(data);
+    let formData = JSON.stringify(data);
     // Fetch request to ceate-subscription method, returns a HTTPresponse.
     return (
         fetch('create-subscription', {
@@ -139,6 +142,8 @@ function createSubscription({
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': data.csrfmiddlewaretoken,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true',
             },
             credentials: 'same-origin',
             body: formData,

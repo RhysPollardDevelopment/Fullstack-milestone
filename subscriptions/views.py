@@ -153,7 +153,7 @@ def create_subscription(request):
             # If same billing is true, load billing form.
             if data["sameBilling"]:
                 billing_form = None
-
+                name = data["full_name"]
                 phone = data["phone_number"]
                 address = {
                     "city": data["town_or_city"],
@@ -167,7 +167,7 @@ def create_subscription(request):
                 billing_form = BillingAddressForm(data)
                 # If form is valid then data is equal to billing information.
                 if billing_form.is_valid():
-
+                    name = data["billing_full_name"]
                     phone = data["billing_phone_number"]
                     address = {
                         "city": data["billing_town_or_city"],
@@ -187,6 +187,7 @@ def create_subscription(request):
             try:
                 stripe.Customer.modify(
                     customer_id,
+                    name=name,
                     address=address,
                     phone=phone,
                     shipping={

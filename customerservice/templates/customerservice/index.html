@@ -22,8 +22,7 @@
                 Something New</a>
             {% else %}
             <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow"
-                aria-label="See why you should subscribe to Freebees."
-                role="link">Subscribe
+                aria-label="See why you should subscribe to Freebees.">Subscribe
                 Now</a>
             {% endif %}
         </div>
@@ -70,7 +69,7 @@
         </div>
         {% if not request.user.userprofile.has_active_subscription %}
         <a href="{% url 'subscription_page' %}"
-            class="btn-lg button-yellow mx-auto" role="link">Get
+            class="btn-lg button-yellow mx-auto">Get
             started</a>
         {% endif %}
     </div>
@@ -91,7 +90,7 @@
                 care for our
                 wildlife.</p>
             <a href="{% url 'about' %}" class="btn-lg button-dark mx-4 my-5"
-                role="link" aria-label="Read more about who we are.">
+                aria-label="Read more about who we are.">
                 About
                 Us
             </a>
@@ -113,7 +112,7 @@
             <p class="px-4 pl-lg-5 mb-3">Only good bee-keeping.</p>
             <a href="{% url 'partners' %}"
                 aria-label="Find out about the companies we work with."
-                class="btn-lg button-yellow mx-4 my-5" role="link">
+                class="btn-lg button-yellow mx-4 my-5">
                 Our Partners
             </a>
         </div>
@@ -129,7 +128,7 @@
                     <p class="pb-3">Take a look at some of our amazing
                         honies
                     </p>
-                    <a href="{% url 'products' %}" role="link"
+                    <a href="{% url 'products' %}"
                         class="btn btn-lg button-yellow"
                         aria-label="Our range of products.">Our
                         Honey</a>
@@ -145,7 +144,7 @@
                         watering
                         inspiration</p>
                     <a href="{% url 'recipes' %}" aria-label="See our recipes."
-                        role="link" class="btn btn-lg button-yellow">Our
+                        class="btn btn-lg button-yellow">Our
                         recipes</a>
                 </div>
             </div>
