@@ -22,7 +22,7 @@
             <!-- Adds a restricted badge to recipe if within last 3 months-->
             {% if recipe.is_restricted %}
             <div class="restricted-badge">
-                <img src="/media/pngkey.com-star-burst-png-4385724.png"
+                <img src="{{ MEDIA_URL }}pngkey.com-star-burst-png-4385724.png"
                     alt="Subscription required badge">
             </div>
             {% endif %}

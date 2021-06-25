@@ -60,7 +60,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navigation">
             <a class="navbar-brand white" href="{% url 'home' %}">
-                <img src="/media/freebees-logo.png" alt="Freebees Logo">
+                <img src="{{ MEDIA_URL }}freebees-logo.png" alt="Freebees Logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
@@ -183,8 +183,8 @@
             <div class="row">
                 <div class="col-12">
                     <a class="footer-brand" href="{% url 'home' %}">
-                        <img src="/media/freebees-logo.png" alt="Freebees Logo"
-                            class="mt-3">
+                        <img src="{{ MEDIA_URL }}freebees-logo.png"
+                            alt="Freebees Logo" class="mt-3">
                     </a>
                 </div>
                 <div class="col-12">

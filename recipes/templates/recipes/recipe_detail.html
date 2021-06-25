@@ -147,7 +147,8 @@
     <div class="row mb-3 py-lg-2 featured-product">
         <div class="col-12 col-md-5 text-center py-3 mt-3 mt-md-2 mt-lg-0">
             <a href="{% url 'subscription_page' %}">
-                <img src="/media/Sketch004.jpg" alt="Fake restriction Image">
+                <img src="{{ MEDIA_URL }}Sketch004.jpg"
+                    alt="Fake restriction Image">
             </a>
         </div>
         <div class="col-12 col-md-7 text-center mb-5">
