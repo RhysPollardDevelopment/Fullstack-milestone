@@ -80,11 +80,15 @@ img {
 }
 
 .logo img {
-    height: 3rem;
+    height: 4rem;
     width: auto;
     background: white;
     padding: 0.5rem;
     border-radius: 50%;
+}
+
+.logo .btn {
+    height: 2.5rem;
 }
 
 .divider {

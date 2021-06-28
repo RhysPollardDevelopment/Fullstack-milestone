@@ -15,13 +15,13 @@
             <h1 class="p-3 pt-md-5 pb-md-0 text-center">{{ product.name }}
             </h1>
             <p>{{ product.description }}</p>
-            <div class="d-flex mb-4 logo">
+            <div class="d-flex mb-4 logo my-auto">
                 <img src="{{ product.company.logo.url }}"
                     alt="{{ product.company.name }}">
                 <h5 class="px-3 pt-3">{{ product.company.name }}</h5>
                 <a href=" {{ product.company.company_url }}" target="_blank"
-                    rel="noopener" class="btn button-yellow">
-                    Visit {{ product.company.name }}
+                    rel="noopener" class="btn button-yellow my-auto">
+                    Visit
                 </a>
             </div>
         </div>
@@ -60,7 +60,8 @@
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-4 mb-4 featured-recipe">
             <a href="{% url 'recipe_detail' recipe.title %}"><img
-                    src="{{ recipe.image.url }}" alt="{{ recipe.title }}"></a>
+                    src="{{ recipe.image.url }}"
+                    alt="Table set with {{ recipe.title }}"></a>
             <h4 class="text-center p-2">{{ recipe.title }}</h4>
         </article>
         {% endfor %}
