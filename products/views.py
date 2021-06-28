@@ -50,7 +50,7 @@ def product_details(request, product_id):
 
     # If statements incase system has no available recipes or less than a
     # random sample requires.
-    if len(Recipe.objects.all()) > 2:
+    if len(Recipe.objects.filter(publish_date__lte=now)) > 2:
         # If product does not have 2 linked recipes, choose 2 from all recipes.
         if len(recipe_list) >= 2:
             recipes = random.sample(recipe_list, 2)
@@ -58,7 +58,7 @@ def product_details(request, product_id):
             all_recipes = list(Recipe.objects.all())
             recipes = random.sample(all_recipes, 2)
     else:
-        recipes = Recipe.objects.all()
+        recipes = Recipe.objects.filter(publish_date__lte=now)
 
     context = {
         "product": product,

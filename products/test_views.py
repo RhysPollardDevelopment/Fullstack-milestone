@@ -1,4 +1,6 @@
+from datetime import datetime
 from django.test import TestCase
+from django.utils import timezone
 from .models import Product, Company
 from unittest.mock import patch
 from django.contrib.messages import get_messages
@@ -41,8 +43,8 @@ class TestProductViews(TestCase):
         )
 
         # Creates enough products to satisfy page requirements.
-        i = 0
-        while i < 4:
+        i = 1
+        while i < 5:
             Product.objects.create(
                 name=f"new product{i}",
                 description=f"Product test description {i}",
@@ -52,6 +54,9 @@ class TestProductViews(TestCase):
                 title=f"New recipe {i}",
                 description=f"New recipe description {i}",
                 image=self.test_image,
+                publish_date=datetime(
+                    2021, i, 1, 10, 40, 30, 0, tzinfo=timezone.utc
+                ),
             )
             i += 1
 

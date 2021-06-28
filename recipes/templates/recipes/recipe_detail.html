@@ -73,11 +73,11 @@
         </div>
     </div>
 </section>
-
 <!-- Other recipes -->
 <section class="container py-4 mb-5">
     <h3 class="text-center pb-4">You May Also Enjoy</h3>
     <div class="row d-flex justify-content-center">
+        {% if recipes != None %}
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-3 other-recipe text-center">
             <a href="{% url 'recipe_detail' recipe.title %}"
@@ -86,9 +86,20 @@
             <h4 class="p-1 mb-3">{{ recipe.title }}</h4>
         </article>
         {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <h3 class="text-center">There doesn't seem to be anything here right
+                now.</h3>
+            <p class="text-center">Come back soon and we'll have some really
+                nice ideas
+                for this
+                honey to share.</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 {% else %}
+
 <!-- Restricted Filler content-->
 <article class="container page-push">
     <div class="row pt-2 pt-lg-4 recipe">

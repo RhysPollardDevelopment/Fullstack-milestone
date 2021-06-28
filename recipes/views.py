@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404, reverse
 from datetime import datetime, timezone
-from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required, user_passes_test
 import random
 
@@ -58,12 +57,9 @@ def recipe_detail(request, recipe_title):
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
 
-    # Finds the date time 3 months prior to today
-    three_months = datetime.now(tz=timezone.utc) + relativedelta(months=-3)
-
     # If recipe publish date is within last 3 months, is restricted to users
     # without subscriptions.
-    if recipe.publish_date > three_months:
+    if recipe.is_restricted:
         # Requires check if authenticated to stop error on anonymous users.
         if request.user.is_authenticated and profile.has_active_subscription:
             restricted = False
@@ -72,14 +68,19 @@ def recipe_detail(request, recipe_title):
     else:
         restricted = False
 
+    now = datetime.now(tz=timezone.utc)
+
+    other_recipes = list(
+        Recipe.objects.filter(publish_date__lte=now).exclude(id=recipe.id)
+    )
     # If statement to defend against unlikely instance of less than four
     # recipes. Also assign to none if empty to allow prepared message.
-    if len(Recipe.objects.exclude(id=recipe.id)) > 3:
-        recipes = random.sample(list(Recipe.objects.exclude(id=recipe.id)), 4)
-    elif len(Recipe.objects.exclude(id=recipe.id)) == 0:
+    if len(other_recipes) > 3:
+        recipes = random.sample((other_recipes), 4)
+    elif len(other_recipes) == 0:
         recipes = None
     else:
-        recipes = Recipe.objects.exclude(id=recipe.id)
+        recipes = other_recipes
 
     template = "recipes/recipe_detail.html"
     context = {
