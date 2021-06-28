@@ -64,10 +64,8 @@ def update_address(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     billing = stripe.Customer.retrieve(profile.stripe_customer_id)
-    print(billing)
     if billing.address:
 
-        print(billing["name"])
         billing_info = {
             "billing_full_name": billing["name"],
             "billing_phone_number": billing["phone"],
