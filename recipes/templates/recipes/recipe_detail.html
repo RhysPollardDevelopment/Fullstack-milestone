@@ -24,10 +24,6 @@
                 {% endfor %}
             </ul>
         </div>
-        <!-- Recipe Image-->
-        <div class="col-12 d-flex justify-content-center">
-
-        </div>
         <!-- Ingredients section for Mobile and tablet-->
         <div class="col-12 col-lg-6 pt-4 d-lg-none">
             <p>{{ recipe.description }}</p>
@@ -102,9 +98,10 @@
 {% else %}
 
 <!-- Restricted Filler content-->
-<article class="container page-push">
-    <div class="row pt-2 pt-lg-4 recipe">
+<article class="container pt-2 pt-lg-5">
+    <div class="row recipe mt-lg-3">
         <!-- Recipe section-->
+        <img src="{{ recipe.image.url }}" alt="Picture of {{ recipe.title }}.">
         <div class="col-12 col-lg-5 pt-4 p-lg-4 details">
             <h1 class="mb-3 text-center text-md-left">{{ recipe.title }}</h1>
             <p class="d-none d-lg-block">{{ recipe.description }}</p>
@@ -115,10 +112,6 @@
                 <li class="mb-1">{{ ingredient }}</li>
                 {% endfor %}
             </ul>
-        </div>
-        <!-- Recipe Image-->
-        <div class="col-12 d-flex justify-content-center">
-            <img src="{{ recipe.image.url }}" alt="Link to {{ recipe.title }}">
         </div>
         <!-- Ingredients section for Mobile and tablet-->
         <div class="col-12 col-lg-6 pt-4 d-lg-none">
