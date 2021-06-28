@@ -16,11 +16,12 @@
             </h1>
             <p>{{ product.description }}</p>
             <div class="d-flex mb-4 logo">
-                <img src="{{ product.company.logo.url }}" alt="{{ product.company.name }]">
+                <img src="{{ product.company.logo.url }}"
+                    alt="{{ product.company.name }}">
                 <h5 class="px-3 pt-3">{{ product.company.name }}</h5>
                 <a href=" {{ product.company.company_url }}" target="_blank"
                     rel="noopener" class="btn button-yellow">
-                Visit {{ product.company.name }}
+                    Visit {{ product.company.name }}
                 </a>
             </div>
         </div>
@@ -54,7 +55,8 @@
 </section>
 <!-- Other recipes -->
 <section class="container py-4 mb-3">
-    <div class="row">
+    <div class="row d-flex justify-content-center">
+        {% if recipes != None %}
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-4 mb-4 featured-recipe">
             <a href="{% url 'recipe_detail' recipe.title %}"><img
@@ -72,6 +74,13 @@
             <a href="{% url 'recipes' %}" class="btn button-yellow">Our
                 recipes</a>
         </div>
+        {% else %}
+        <div class="col-12">
+            <h3>Seems we don't have anything here right now.</h3>
+            <p>Come back soon and we'll have some really nice ideas for this
+                honey to share.</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 <div class="container">
@@ -82,7 +91,15 @@
 <!-- Other products -->
 <section class="container mb-5 text-center">
     <h2 class="py-4">Your might also like</h2>
-    <div class="row">
+    <div class="row d-flex justify-content-center">
+        {% if products == None %}
+        <div class="col-12">
+            <h3>Seems we don't have anything here right now.</h3>
+            <p>Come back soon and there will be something lovely and
+                sweet here
+                waiting.</p>
+        </div>
+        {% else %}
         {% for product in products %}
         <article class="col-12 col-md-6 col-lg-3 px-4 mb-3 other-product">
             <a href="{% url 'product_details' product.id %}"><img
@@ -90,6 +107,7 @@
             <h5>{{ product.name }}</h5>
         </article>
         {% endfor %}
+        {% endif %}
     </div>
 </section>
 

@@ -72,7 +72,14 @@ def recipe_detail(request, recipe_title):
     else:
         restricted = False
 
-    recipes = random.sample(list(Recipe.objects.exclude(id=recipe.id)), 4)
+    # If statement to defend against unlikely instance of less than four
+    # recipes. Also assign to none if empty to allow prepared message.
+    if len(Recipe.objects.exclude(id=recipe.id)) > 3:
+        recipes = random.sample(list(Recipe.objects.exclude(id=recipe.id)), 4)
+    elif len(Recipe.objects.exclude(id=recipe.id)) == 0:
+        recipes = None
+    else:
+        recipes = Recipe.objects.exclude(id=recipe.id)
 
     template = "recipes/recipe_detail.html"
     context = {

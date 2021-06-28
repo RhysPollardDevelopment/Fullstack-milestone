@@ -110,7 +110,7 @@ The structure for this site was chosen around each ap containing as much likewis
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
 The main app was split into the following models, with invoice and recipes only loosely being connected by their dates:
-![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/drawSQL-export-2021-06-16_15_51.png "Entity relationship Diagram")
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/Entity-Relationship-Diagram.png "Entity relationship Diagram")
 
 * **CustomerService**:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.

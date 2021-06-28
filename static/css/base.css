@@ -111,7 +111,7 @@ p {
 
 .navigation .navbar-brand img {
     height: 2rem;
-    width: 3rem;
+    width: auto;
 }
 
 .navigation .nav-link {
@@ -157,7 +157,7 @@ p {
 
 .footer-brand img {
     height: 3rem;
-    width: 4rem;
+    width: auto;
 }
 
 .footer-collapse {

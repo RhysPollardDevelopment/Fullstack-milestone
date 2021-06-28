@@ -33,18 +33,32 @@ def product_details(request, product_id):
     # https://stackoverflow.com/questions/22816704/django-get-a-random-object
     # Suggested answer used to create list of random recipes.
 
-    products = random.sample(list(Product.objects.exclude(id=product.id)), 4)
+    # If statement to defend against unlikely instance of less than four
+    # products. Also assign to none if empty to allow prepared message.
+    if len(Product.objects.exclude(id=product.id)) > 3:
+        products = random.sample(
+            list(Product.objects.exclude(id=product.id)), 4
+        )
+    elif len(Product.objects.exclude(id=product.id)) == 0:
+        products = None
+    else:
+        products = Product.objects.exclude(id=product.id)
 
     recipe_list = list(
         Recipe.objects.filter(featured_product=product, publish_date__lte=now)
     )
 
-    # If recipe does not have more than 2 recipes, choose 2 from all recipes.
-    if len(recipe_list) >= 2:
-        recipes = random.sample(recipe_list, 2)
+    # If statements incase system has no available recipes or less than a
+    # random sample requires.
+    if len(Recipe.objects.all()) > 2:
+        # If product does not have 2 linked recipes, choose 2 from all recipes.
+        if len(recipe_list) >= 2:
+            recipes = random.sample(recipe_list, 2)
+        else:
+            all_recipes = list(Recipe.objects.all())
+            recipes = random.sample(all_recipes, 2)
     else:
-        all_recipes = list(Recipe.objects.all())
-        recipes = random.sample(all_recipes, 2)
+        recipes = Recipe.objects.all()
 
     context = {
         "product": product,

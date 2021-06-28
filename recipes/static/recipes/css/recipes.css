@@ -130,6 +130,14 @@ input[type="file"] {
     .featured-product img {
         height: 13rem;
     }
+
+    .restricted.container {
+        position: absolute;
+        bottom: -20%;
+        padding: 1rem;
+        left: 0;
+        right: 0;
+    }
 }
 
 /*------------------Laptops---------------------*/
@@ -174,18 +182,16 @@ input[type="file"] {
         object-fit: cover;
     }
 
-    .restricted {
-        bottom: -26%;
-        left: 25%;
-        width: 50%;
+    .restricted.container {
+        bottom: -2%;
+        padding: 3rem;
     }
 }
 
 /*--------------XL screens------------------*/
 @media(min-width:1200px) {
-    .restricted {
-        position: absolute;
-        bottom: 12%;
-        padding: 1rem;
+    .restricted.container {
+        top: 44rem;
+        padding: 3rem;
     }
 }

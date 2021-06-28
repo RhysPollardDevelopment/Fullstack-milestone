@@ -1,6 +1,6 @@
 /*----------Index----------*/
 .landing {
-    background-image: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background-landscape.jpg');
+    background: url('/media/bermix-studio-tRA2_EGKhpA-unsplash.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;
@@ -17,7 +17,7 @@
 }
 
 .product-featurette {
-    background: url('/media/bermix-studio-tRA2_EGKhpA-unsplash.jpg');
+    background-image: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background-landscape.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;
