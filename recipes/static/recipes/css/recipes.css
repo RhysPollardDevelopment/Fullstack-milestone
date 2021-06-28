@@ -93,9 +93,9 @@
     filter: blur(6px);
 }
 
-.restricted {
+.restricted.container {
     position: absolute;
-    bottom: -45%;
+    top: 42rem;
     padding: 1rem;
 }
 
@@ -133,7 +133,7 @@ input[type="file"] {
 
     .restricted.container {
         position: absolute;
-        bottom: -20%;
+        top: 48rem;
         padding: 1rem;
         left: 0;
         right: 0;
@@ -183,7 +183,7 @@ input[type="file"] {
     }
 
     .restricted.container {
-        bottom: -2%;
+        top: 46rem;
         padding: 3rem;
     }
 }
