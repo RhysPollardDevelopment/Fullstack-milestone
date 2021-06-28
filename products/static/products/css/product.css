@@ -40,7 +40,6 @@ img {
 }
 
 .card img {
-    height: 15rem;
     padding: 1rem;
     filter: drop-shadow(2px 4px 6px black);
 }
@@ -99,9 +98,17 @@ img {
     height: 15rem;
 }
 
+.restricted-badge img {
+    position: absolute;
+    height: 6rem;
+    width: 30%;
+    left: 67%;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 3px black);
+}
+
 .other-product img {
-    height: 13rem;
-    padding: 0.5rem;
+    padding: 1rem;
     filter: drop-shadow(2px 4px 5px black);
 }
 

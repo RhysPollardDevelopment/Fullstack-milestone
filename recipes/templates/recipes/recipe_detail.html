@@ -125,9 +125,21 @@
         </div>
     </div>
     <div class="row divider mx-auto my-3 d-lg-none"></div>
-    <div class="row blur py-lg-5">
-        <h3 class="text-center col-12 pt-4">Instructions</h3>
-        <ol class="col-12 white">
+    <div class="row py-lg-5 relative">
+        <div class="col-12 restricted text-center">
+            <h3>You must be subscribed to view.</h3>
+            <p>
+                If you're interested in reading the tastiest new recipes
+                as soon
+                as they
+                are published, why not subscribe and help us look after
+                our bees
+            </p>
+            <a href="{% url 'subscription_page' %}"
+                class="btn-lg button-yellow mx-auto" role="button">Subscribe</a>
+        </div>
+        <h3 class="text-center col-12 pt-4 blur">Instructions</h3>
+        <ol class="col-12 white blur">
             <li class="m-3">This content is restricted and cannot be accessed by
                 unsubscribed users. To access this content please subscribe to
                 FreeBees or wait until this becomes available at a later date.
@@ -165,18 +177,9 @@
         </div>
     </div>
 </section>
-<div class="restricted container text-center">
+<div class="container text-center">
     <div class="row d-flex justify-content-center">
-        <div class="col-12">
-            <h3>You must be subscribed to view.</h3>
-            <p>
-                If you're interested in reading the tastiest new recipes as soon
-                as they
-                are published, why not subscribe and help us look after our bees
-            </p>
-            <a href="{% url 'subscription_page' %}"
-                class="btn-lg button-yellow mx-auto" role="button">Subscribe</a>
-        </div>
+
     </div>
 </div>
 {% endif %}

@@ -54,29 +54,37 @@
     </div>
 </section>
 <!-- Other recipes -->
-<section class="container py-4 mb-3">
+<section class="container py-4 mb-1">
     <div class="row d-flex justify-content-center">
+        <div class="col-12 col-lg-4 text-center text-lg-left order-md-last">
+            <h3 class="pt-2">Need some inspiration?</h3>
+            <p class="py-2">
+                Come and see what honey is really good for, make
+                something
+                special and share some freebees with others.
+            </p>
+            <a href="{% url 'recipes' %}" class="btn button-yellow mb-5">Our
+                recipes</a>
+        </div>
         {% if recipes != None %}
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-4 mb-4 featured-recipe">
+            <!-- Adds a restricted badge to recipe if within last 3 months-->
+            {% if recipe.is_restricted %}
+            <div class="restricted-badge">
+                <img src="{{ MEDIA_URL }}pngkey.com-star-burst-png-4385724.png"
+                    alt="Subscription required badge">
+            </div>
+            {% endif %}
             <a href="{% url 'recipe_detail' recipe.title %}"><img
                     src="{{ recipe.image.url }}"
                     alt="Table set with {{ recipe.title }}"></a>
             <h4 class="text-center p-2">{{ recipe.title }}</h4>
         </article>
         {% endfor %}
-        <div class="col-12 col-lg-4">
-            <h3 class="pt-2">Need some inspiration?</h3>
-            <p class="">
-                Come and see what honey is really good for, make
-                something
-                special and share some freebees with others.
-            </p>
-            <a href="{% url 'recipes' %}" class="btn button-yellow">Our
-                recipes</a>
-        </div>
+
         {% else %}
-        <div class="col-12">
+        <div class="col-12 text-center">
             <h3>Seems we don't have anything here right now.</h3>
             <p>Come back soon and we'll have some really nice ideas for this
                 honey to share.</p>
