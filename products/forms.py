@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.widgets import TextInput
+from django.forms.widgets import TextInput, Textarea
 from .models import Product, Company
 
 
@@ -20,8 +20,12 @@ class ProductForm(forms.ModelForm):
 
         widgets = {
             "name": TextInput(attrs={"placeholder": "Name"}),
-            "description": TextInput(
-                attrs={"placeholder": "Product description"}
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Product description",
+                    "rows": 4,
+                    "cols": 20,
+                }
             ),
             "texture": TextInput(attrs={"placeholder": "Texture"}),
             "flavour": TextInput(attrs={"placeholder": "Flavour profile"}),
