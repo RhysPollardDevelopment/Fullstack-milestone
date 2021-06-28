@@ -77,6 +77,7 @@
 .featured-product img {
     height: 10rem;
     object-fit: cover;
+    filter: drop-shadow(2px 4px 6px black);
 }
 
 .featured-product img:hover {

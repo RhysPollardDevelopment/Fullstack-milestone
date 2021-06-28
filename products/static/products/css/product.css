@@ -41,6 +41,8 @@ img {
 
 .card img {
     height: 15rem;
+    padding: 1rem;
+    filter: drop-shadow(2px 4px 6px black);
 }
 
 .card-body {
@@ -95,6 +97,8 @@ img {
 
 .other-product img {
     height: 13rem;
+    padding: 0.5rem;
+    filter: drop-shadow(2px 4px 5px black);
 }
 
 /*-----------Partners page------------------*/
@@ -149,6 +153,10 @@ input[type="file"] {
         height: 28rem;
     }
 
+    .card img {
+        height: 17rem;
+    }
+
     /*--------Product-detail--------*/
     .product-detail {
         background-image: url('/media/background-3.png');
@@ -157,6 +165,10 @@ input[type="file"] {
 
     .product-image img {
         height: 23rem;
+    }
+
+    .other-product img {
+        height: 16rem;
     }
 
     /*--------Partners-----------*/
@@ -192,6 +204,10 @@ input[type="file"] {
         padding-top: 3rem
     }
 
+    .other-product img {
+        height: 15rem;
+    }
+
     /*------------Products----------*/
     .alt {
         height: 38rem;
@@ -218,6 +234,13 @@ input[type="file"] {
 
 /*-------------XL screens---------------*/
 @media(min-width: 1200px) {
+
+    /*----------Products-------------*/
+    .card img {
+        padding: 2rem
+    }
+
+    /*----------Product detail-----------*/
     .product-detail {
         height: 44rem;
         background-position: center;
