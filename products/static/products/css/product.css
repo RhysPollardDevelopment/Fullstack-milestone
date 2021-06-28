@@ -217,6 +217,10 @@ input[type="file"] {
         padding-top: 10rem;
     }
 
+    .card img {
+        height: 17rem;
+    }
+
     /*-------------Partners--------------*/
     .company {
         width: 100%;
