@@ -1,6 +1,6 @@
 /*----------Index----------*/
 .landing {
-    background: url('/media/bermix-studio-tRA2_EGKhpA-unsplash.jpg');
+    background: url('/media/index_landing.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;
@@ -8,7 +8,7 @@
 }
 
 .recipe-featurette {
-    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
+    background: url('/media/recipe_featurette.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;
@@ -17,7 +17,7 @@
 }
 
 .product-featurette {
-    background-image: url('/media/honey-jar-with-wooden-stick-drains-honey-dark-background-landscape.jpg');
+    background-image: url('/media/product-featurette.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;

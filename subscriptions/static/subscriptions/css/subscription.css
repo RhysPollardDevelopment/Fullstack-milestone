@@ -1,6 +1,6 @@
 /*-------------Subscriptions page---------*/
 .subscriptions {
-    background-image: url('/media/bianca-ackermann-IGTlDjRN3kc-unsplash.jpg');
+    background-image: url('/media/subscriptions-header.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 20rem;
@@ -22,20 +22,20 @@
 }
 
 .one {
-    background-image: url('/media/annie-spratt-8_WZU5xKFKk-unsplash.jpg');
+    background-image: url('/media/subscriptions-1.jpg');
 }
 
 .two {
-    background-image: url('/media/boris-smokrovic-gr7ZkoZnHXU-unsplash.jpg');
+    background-image: url('/media/subscriptions2.jpg');
     background-position: right;
 }
 
 .three {
-    background-image: url('/media/bee-naturalles-fManUbiXzGI-unsplash.jpg');
+    background-image: url('/media/subscriptions-3.jpg');
 }
 
 .four {
-    background-image: url('/media/georg-eiermann-MW9LUlk9WVM-unsplash.jpg');
+    background-image: url('/media/subscriptions-4.jpg');
     background-position: center;
 }
 
@@ -63,7 +63,7 @@
 
 /*----------Checkout-Complete--------------*/
 .thank-you {
-    background-image: url('/media/boris-smokrovic-gr7ZkoZnHXU-unsplash.jpg');
+    background-image: url('/media/subscriptions2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -79,7 +79,7 @@
 /*--------Cancellation Confirmation-------------*/
 
 .cancelled {
-    background-image: url('/media/damien-tupinier-OFEvgVfr6iU-unsplash.jpg');
+    background-image: url('/media/cancellation-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-color: black;
@@ -159,7 +159,7 @@ project work */
     }
 
     .checkout-img {
-        background-image: url('/media/pexels-pille-kirsi-1116959.jpg');
+        background-image: url('/media/checkout-side.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position-x: 26%;

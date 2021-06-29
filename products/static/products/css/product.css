@@ -20,7 +20,7 @@
 
 /*---------------Product main page------------*/
 .product-header {
-    background-image: url('/media/pexels-polina-kovaleva-5645127.jpg');
+    background-image: url('/media/product-header.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: right;
@@ -144,7 +144,7 @@ img {
 
 /* Loaded in base.css and product.css so app is truly self-sufficient */
 .recipe-featurette {
-    background: url('/media/mae-mu-ecUVGNZA1TM-unsplash.jpg');
+    background: url('/media/recipe_featurette.jpg');
     height: 35rem;
     background-size: cover;
     background-repeat: no-repeat;

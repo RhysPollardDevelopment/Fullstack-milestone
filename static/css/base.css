@@ -306,7 +306,7 @@ p {
 }
 
 .login-img {
-    background-image: url('/media/pexels-artem-saranin-1187079.jpg');
+    background-image: url('/media/login-signup.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     border-top-left-radius: 4%;
@@ -477,7 +477,7 @@ p {
     }
 
     .login-img {
-        background-image: url('/media/pexels-artem-saranin-1187079.jpg');
+        background-image: url('/media/login-signup.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         border-top-left-radius: 4%;
