@@ -255,8 +255,9 @@ def webhook_received(request):
 
             # Create email for customer.
             customer_email = freebees_customer.user.email
+            # Subject template name shortened to conform PEP8
             subject = render_to_string(
-                "subscriptions/email_templates/subscription_created_subject.txt",
+                "subscriptions/email_templates/sub_created_subject.txt",
                 {"invoice": invoice},
             )
             body = render_to_string(
