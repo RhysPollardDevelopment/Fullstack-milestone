@@ -121,7 +121,14 @@ def webhook_received(request):
         freebees_customer = UserProfile.objects.get(
             stripe_customer_id=customer_id
         )
-        subscription = StripeSubscription.objects.get()
+        stripe_subscription = data_object["subscription"]
+        subscription = UserProfile.objects.get(
+            subscription_id=stripe_subscription
+        )
+
+        # Set cancel at end to True so if on current subscription period does
+        # not renew without admin authorisation.
+        subscription.cancel_at_end = True
 
         invoice = subscription.invoice_set.all().order_by("current_end")[0]
 

@@ -75,6 +75,10 @@ def partners(request):
     main website.
     """
     companies = Company.objects.all()
+
+    if companies.count() == 0:
+        companies = None
+
     context = {"companies": companies}
 
     return render(request, "products/partners.html", context)

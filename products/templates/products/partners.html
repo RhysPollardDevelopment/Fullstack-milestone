@@ -21,6 +21,13 @@
 <!-- Current Partners-->
 <section class="container">
     <div class="row px-4">
+        {% if companies == None %}
+        <div class="col-12 text-center py-4">
+            <h3>We're currently on the look out for some new partners.</h3>
+            <p>Please check back in another time and we'll let you know when we
+                find our amazing team.</p>
+        </div>
+        {% else %}
         <!-- Company info sections-->
         {% for company in companies %}
         <div class="col-12 col-lg-4 mx-auto mb-4 pt-3">
@@ -53,6 +60,7 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
 </section>
 
