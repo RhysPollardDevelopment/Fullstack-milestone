@@ -18,7 +18,7 @@ I have chosen to build a subscription based service for sale and support of ethi
 10. [Acknowledgement]
 
 ## Live Site
-[Live Website](https://freebees-fullstack-milestone.herokuapp.com/)S
+[Live Website](https://freebees-fullstack-milestone.herokuapp.com/)
 
 ## User Experience (UX):
 The purpose of Freebees was a website designed to support apiasts and smaller scale farms who use biodynamic/natural beekeeping practices and offer an alternative to the more commonly available forms of honey which are often made using unnecessary and unpleasant practices. The site's purpose was also designed with the intent of supporting other charities in the care and conservation of the UK's wildlife.
@@ -110,7 +110,7 @@ The structure for this site was chosen around each ap containing as much likewis
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
 The main app was split into the following models, with invoice and recipes only loosely being connected by their dates:
-![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/Entity-Relationship-Diagram.png "Entity relationship Diagram")
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/entity-relationship-diagram.png "Entity relationship Diagram")
 
 * **CustomerService**:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.
