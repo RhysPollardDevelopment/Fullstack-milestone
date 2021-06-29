@@ -211,68 +211,71 @@ def webhook_received(request):
         """
         # set up email to tell customer they have a new subscription.
         # Find customer using stripe ID.
-        customer_id = data_object["customer"]
-        freebees_customer = UserProfile.objects.get(
-            stripe_customer_id=customer_id
-        )
-        # Create and fill in new stripe subscription using stripe info and
-        # customer from database.
-        new_subscription = StripeSubscription.objects.create(
-            subscription_id=data_object["id"],
-            start_date=datetime.fromtimestamp(
-                data_object["start_date"], tz=timezone.utc
-            ),
-            end_date=datetime.fromtimestamp(
-                data_object["current_period_end"], tz=timezone.utc
-            ),
-            stripe_user=freebees_customer,
-        )
-
-        # Create new invoice instance using stripe data. Created here as
-        # invoice.paid could come before subscription.created.
-        # If so then no stripesubscription to assign to, causes error.
-        first_invoice = stripe.Invoice.retrieve(data_object["latest_invoice"])
-        invoice_shipping = first_invoice["customer_shipping"]
-        invoice = Invoice.objects.create(
-            stripe_subscription=new_subscription,
-            invoice_number=first_invoice["id"],
-            current_start=datetime.fromtimestamp(
-                data_object["current_period_start"], tz=timezone.utc
-            ),
-            current_end=datetime.fromtimestamp(
-                data_object["current_period_end"], tz=timezone.utc
-            ),
-            delivery_name=invoice_shipping["name"],
-            address_1=invoice_shipping["address"]["line1"],
-            address_2=invoice_shipping["address"]["line2"],
-            town_or_city=invoice_shipping["address"]["city"],
-            county=invoice_shipping["address"]["state"],
-            postcode=invoice_shipping["address"]["postal_code"],
-        )
-
-        # Create email for customer.
-        customer_email = freebees_customer.user.email
-        subject = render_to_string(
-            "subscriptions/email_templates/subscription_created_subject.txt",
-            {"invoice": invoice},
-        )
-        body = render_to_string(
-            "subscriptions/email_templates/subscription_created_body.txt",
-            {
-                "invoice": invoice,
-                "contact_email": settings.DEFAULT_FROM_EMAIL,
-            },
-        )
-        try:
-            send_mail(
-                subject,
-                body,
-                settings.DEFAULT_FROM_EMAIL,
-                [customer_email],
-                fail_silently=False,
+        if data_object["status"] == "active":
+            customer_id = data_object["customer"]
+            freebees_customer = UserProfile.objects.get(
+                stripe_customer_id=customer_id
             )
-        except BadHeaderError:
-            return HttpResponse("Invalid header found")
+            # Create and fill in new stripe subscription using stripe info and
+            # customer from database.
+            new_subscription = StripeSubscription.objects.create(
+                subscription_id=data_object["id"],
+                start_date=datetime.fromtimestamp(
+                    data_object["start_date"], tz=timezone.utc
+                ),
+                end_date=datetime.fromtimestamp(
+                    data_object["current_period_end"], tz=timezone.utc
+                ),
+                stripe_user=freebees_customer,
+            )
+
+            # Create new invoice instance using stripe data. Created here as
+            # invoice.paid could come before subscription.created.
+            # If so then no stripesubscription to assign to, causes error.
+            first_invoice = stripe.Invoice.retrieve(
+                data_object["latest_invoice"]
+            )
+            invoice_shipping = first_invoice["customer_shipping"]
+            invoice = Invoice.objects.create(
+                stripe_subscription=new_subscription,
+                invoice_number=first_invoice["id"],
+                current_start=datetime.fromtimestamp(
+                    data_object["current_period_start"], tz=timezone.utc
+                ),
+                current_end=datetime.fromtimestamp(
+                    data_object["current_period_end"], tz=timezone.utc
+                ),
+                delivery_name=invoice_shipping["name"],
+                address_1=invoice_shipping["address"]["line1"],
+                address_2=invoice_shipping["address"]["line2"],
+                town_or_city=invoice_shipping["address"]["city"],
+                county=invoice_shipping["address"]["state"],
+                postcode=invoice_shipping["address"]["postal_code"],
+            )
+
+            # Create email for customer.
+            customer_email = freebees_customer.user.email
+            subject = render_to_string(
+                "subscriptions/email_templates/subscription_created_subject.txt",
+                {"invoice": invoice},
+            )
+            body = render_to_string(
+                "subscriptions/email_templates/subscription_created_body.txt",
+                {
+                    "invoice": invoice,
+                    "contact_email": settings.DEFAULT_FROM_EMAIL,
+                },
+            )
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [customer_email],
+                    fail_silently=False,
+                )
+            except BadHeaderError:
+                return HttpResponse("Invalid header found")
 
     if event_type == "customer.subscription.updated":
         # set up email to tell customer they have a new subscription.
