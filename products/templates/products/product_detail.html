@@ -15,6 +15,7 @@
             <h1 class="p-3 pt-md-5 pb-md-0 text-center">{{ product.name }}
             </h1>
             <p>{{ product.description }}</p>
+            {% if product.company %}
             <div class="d-flex mb-4 logo my-auto">
                 <img src="{{ product.company.logo.url }}"
                     alt="{{ product.company.name }}">
@@ -24,6 +25,7 @@
                     Visit
                 </a>
             </div>
+            {% endif %}
         </div>
         <div class="col-12 col-md-6 product-image">
             <img src="{{ product.image.url }}" alt="{{ product.name }}"

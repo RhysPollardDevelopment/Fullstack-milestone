@@ -46,6 +46,7 @@ img {
 
 .card-body {
     background-color: #d4c059;
+    min-height: 6.2rem;
 }
 
 .body-dark {

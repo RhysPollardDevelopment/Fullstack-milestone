@@ -28,9 +28,11 @@
                 </a>
                 <div class="card-body">
                     <h5 class="card-title black">{{ product.name }}</h5>
+                    {% if product.company %}
                     <p class=" card-text black">
                         {{ product.company.county }}
                     </p>
+                    {% endif %}
                 </div>
                 <div class="card-body pt-1 body-dark">
                     <h6 class="card-title pt-2">Hints of:</h6>
@@ -41,6 +43,7 @@
                     <a href="{% url 'product_details' product.id %}"
                         class="btn button-yellow"> More Info</a>
                 </div>
+                <!-- Admin section for editing and deleting products -->
                 {% if request.user.is_superuser %}
                 <div class="admin-section p-3">
                     <a href="{% url 'update_product' product.id %}"
