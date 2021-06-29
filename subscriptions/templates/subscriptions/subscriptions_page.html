@@ -45,8 +45,9 @@
         {% if not request.user.userprofile.has_active_subscription %}
         <a href="{% url 'checkout' %}"
             aria-label="Enter your details to subscribe."
-            class="btn btn-lg button-yellow mx-auto mb-2" role="button">Get
-            started</a>
+            class="btn btn-lg button-yellow mx-auto mb-2"
+            role="button">Subscribe Now
+        </a>
         {% endif %}
     </div>
 </section>

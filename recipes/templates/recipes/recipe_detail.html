@@ -46,6 +46,7 @@
     </div>
 </article>
 <!-- Featured Product-->
+{% if recipe.featured_product != None %}
 <section class="container">
     <div class="row mb-3 py-lg-2 featured-product">
         <div class="col-12 col-md-5 text-center py-3 mt-3 mt-md-2 mt-lg-0">
@@ -70,6 +71,23 @@
         </div>
     </div>
 </section>
+{% else %}
+<section class="container">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <h3>This recipe has not been given one of our lovely honies yet.
+            </h3>
+            <p>Whoops! Seems we've eaten all this honey and haven't updated this
+                recipe yet.</p>
+            <p>Check in soon and we will have this updated, or
+                <a href="{% url 'contact' %}"
+                    aria-label="Contact us about this issue.">let us know</a>
+                that something went wrong.
+            </p>
+        </div>
+    </div>
+</section>
+{% endif %}
 <!-- Other recipes -->
 <section class="container py-4 mb-5">
     <h3 class="text-center pb-4">You May Also Enjoy</h3>
@@ -77,6 +95,13 @@
         {% if recipes != None %}
         {% for recipe in recipes %}
         <article class="col-12 col-md-6 col-lg-3 other-recipe text-center">
+            <!-- Adds a restricted badge to recipe if within last 3 months-->
+            {% if recipe.is_restricted %}
+            <div class="restricted-badge">
+                <img src="{{ MEDIA_URL }}pngkey.com-star-burst-png-4385724.png"
+                    alt="Subscription required badge">
+            </div>
+            {% endif %}
             <a href="{% url 'recipe_detail' recipe.title %}"
                 aria-label="See details for {{recipe.title}}"><img
                     src="{{ recipe.image.url }}" alt="{{ recipe.title }}"></a>

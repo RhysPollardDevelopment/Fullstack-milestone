@@ -120,6 +120,10 @@ p {
     color: rgba(224, 224, 224, 0.788);
 }
 
+.navigation .nav-link.active {
+    color: white;
+}
+
 .navigation .nav-link:hover {
     color: white;
 }

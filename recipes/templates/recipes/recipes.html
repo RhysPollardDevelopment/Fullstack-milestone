@@ -24,6 +24,7 @@
 </div>
 <!-- recipes list-->
 <div class="container py-5 pt-lg-4">
+    {% if recipes|length != 0 %}
     {% for recipe in recipes %}
     <article class="row recipe-list my-4">
         <div class="col-12 col-md-4 p-0">
@@ -67,6 +68,15 @@
         {% endif %}
     </article>
     {% endfor %}
+    {% else %}
+    <div class="col-12 text-center py-5">
+        <h3 class="pt-5">There aren't currently any recipes to show.
+        </h3>
+        <p class="pb-5">We'll make sure to share them once we tested how good
+            they taste.
+        </p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 

@@ -90,6 +90,11 @@
     width: 75%;
 }
 
+.other-recipe .restricted-badge img {
+    height: 4rem;
+    width: 4rem;
+}
+
 .blur {
     filter: blur(6px);
 }
@@ -102,6 +107,7 @@
     position: absolute;
     top: 10%;
     padding: 1rem;
+    z-index: 1000;
 }
 
 .divider {
