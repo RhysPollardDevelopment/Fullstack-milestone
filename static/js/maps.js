@@ -8,7 +8,7 @@ function initMap() {
     const freebees = {
         lat: 51.5169369045755,
         lng: -0.1882490284293385
-    }
+    };
     const map = new google.maps.Map(document.getElementById("map"), {
         center: freebees,
         zoom: 12,

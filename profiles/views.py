@@ -188,12 +188,15 @@ def subscription_history(request):
         sub_invoices = sub.invoice_set.all()
         # Each invoice per sub is added to the invoices list.
         for sub_invoice in sub_invoices:
-            # If recipe and product exists, assigns to easy access property.
-            # Covers edge case where objects are deleted and not replaced.
-            if (
-                sub_invoice.related_recipe
-                and sub_invoice.related_recipe.featured_product
-            ):
+
+            # Shortened for PEP8 requirements during if statement.
+            # Prevents broken operator.
+            inv = sub_invoice
+
+            # If recipe and product exists, assigns product to easy access
+            # property.
+            # Covers edge case where objects are deleted and not returned.
+            if inv.related_recipe and inv.related_recipe.featured_product:
                 sub_invoice.product = (
                     sub_invoice.related_recipe.featured_product
                 )

@@ -123,6 +123,11 @@ input[type="file"] {
 /*------------------Tablets---------------------*/
 @media(min-width: 768px) {
 
+    /*-----------recipes---------*/
+    .recipe-list img {
+        height: 100%;
+    }
+
     /*------------Admin-----------*/
     .admin-section {
         display: flex;

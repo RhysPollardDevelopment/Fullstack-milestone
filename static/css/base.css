@@ -28,11 +28,6 @@ body {
     background-repeat: no-repeat;
 }
 
-.row:before,
-.row:after {
-    display: inline-block;
-}
-
 /*------------Typography-----------*/
 h1,
 h2,
