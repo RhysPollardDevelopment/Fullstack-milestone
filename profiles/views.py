@@ -64,7 +64,6 @@ def update_address(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     billing = stripe.Customer.retrieve(profile.stripe_customer_id)
-    print(billing)
     if billing.address:
         billing_info = {
             "billing_full_name": billing["name"],
@@ -189,6 +188,11 @@ def subscription_history(request):
         sub_invoices = sub.invoice_set.all()
         # Each invoice per sub is added to the invoices list.
         for sub_invoice in sub_invoices:
+            # If product exists, assign to easier to access property for html.
+            if sub_invoice.related_recipe.featured_product:
+                sub_invoice.product = (
+                    sub_invoice.related_recipe.featured_product
+                )
             invoices.append(sub_invoice)
 
     # https://www.w3schools.com/python/ref_list_sort.asp - ref for reverse.

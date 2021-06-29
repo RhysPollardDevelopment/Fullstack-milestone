@@ -29,11 +29,11 @@
                     <li>{{ invoice.postcode }}</li>
                 </ul>
             </div>
-            <!-- Checks if invoice has a related recipe -->
-            {% if invoice.related_recipe  %}
+            <!-- Checks if invoice has a related recipe and a featured product.
+            Covers edge case where product is deleted. -->
+            {% if invoice.related_recipe and invoice.product %}
             <div class="col-12 col-md-4 align-self-center pt-md-3">
-                <a
-                    href="{% url 'recipe_detail' invoice.related_recipe.title %}">
+                <a href="{%url 'recipe_detail' invoice.related_recipe.title%}">
                     <img src="{{ invoice.related_recipe.image.url }}"
                         alt="{{ invoice.related_recipe }}">
                     <p class="text-center text-capitalize mb-md-1">
@@ -43,12 +43,11 @@
 
             </div>
             <div class="col-12 col-md-4 align-self-center pt-md-3">
-                <a
-                    href="{% url 'product_details' invoice.related_recipe.featured_product.id %}">
-                    <img src="{{ invoice.related_recipe.featured_product.image.url  }}"
-                        alt="{{ invoice.related_recipe.featured_product }}">
+                <a href="{% url 'product_details' invoice.product.id %}">
+                    <img src="{{ invoice.product.image.url }}"
+                        alt="{{ invoice.product }}">
                     <p class="text-center text-capitalize mb-md-1">
-                        {{ invoice.related_recipe.featured_product.name }}
+                        {{ invoice.product.name }}
                     </p>
                 </a>
             </div>
