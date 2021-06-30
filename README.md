@@ -287,23 +287,24 @@ Designs were focussed on large, pleasant images to engage users and form a posit
 * [CRUD form Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/add-form.png)
 
 ###### Note
-These wireframes represent the early to mid stages of development and have only been updated where larger deviations in design or structure have occurred as the website evolved and adapted to it's content over the course of development. As such some elements which are included in the wireframe but not in the final product (such as recipe filters, social account access) were removed because they were not considered a priority for the final release and did not meet time constrains. These have been included in the [features](#Features) to implement section.
+These wireframes represent the early to mid stages of development and have only been updated where larger deviations in design or structure have occurred as the website evolved and adapted to it's content over the course of development.   
+As such some elements which are included in the wireframe but not in the final product (such as recipe filters, social account access) were removed because they were not considered a priority for the final release and did not meet time constrains. These have been included in the [features](#Features) to implement section.
 
 ### Surface Design
-* **Colour scheme**:
+* **Colour scheme**:  
 The colour scheme chosen for Freebees was based on the classical black and yellow colour of bees. To separate the look and feel of Freebees from other sites this colouring was used to create create features of colour on a darker background. The colours were chosen to give a sense of maturity and sleek design, rather than the usual white and soft pastel colours chosen for honey websites. The intention is to be unique and modern for a younger crowd.
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/freebees-palette.png "Freebees Colour Palette")
 
-* **Typography**:
+* **Typography**:  
 The two types of text chosen for Freebees were Bebas Neue and Montserrat. These fonts were chosen for the titles and main text respectively since Monserrat worked well with Bebas Neue where the main style and attention was drawn. Bebas Neue offered a strong, bold font which stood out well on dark backgrounds and across images without much assistance; the colour #d4c059 was most often applied to Bebas Neue as the gold-yellow worked best as splashes of colour than large areas.   
 Montserrat offered a crisp, modern look which managed to stand out in light colours without looking blurry or muddled. The font was often white as it had to fill large areas of dark background and was much easier to increase accessibility and focus with such a stark contrast.
 
-* **Images**:
+* **Images**:  
 As a e-commerce site appealing to an emotional response the use of images is key to developing an appealing, engaging website. Therefore there are lots of vivid, interesting images to contrast the darker theme of the page. Some images have been darkened to help them create contrast against lighter text. Image selection was key as an excess of flowers and bees might be too distracting against the dark, minimalist containers.
 Icons were used also to attract attention and accentuate text rather than dominate a section of screen, most often these were sourced from [Font-Awesome](https://fontawesome.com/) and also [PNGkey](https://www.pngkey.com/).  
 Product images were edited in [Clip Paint Studio](https://www.clipstudio.net/en/) using a base stock image found from [mockuptree](https://mockuptree.com/free/realistic-honey-jar-mockup/). This was done to create a more dynamic style for products while keeping a theme between different honies.
 
-* **Forms**:
+* **Forms**:  
 As django crispy forms does not have a date time picker widget, I have decided to keep the text-input provided. This decision was made as date pickers can vary heavily between browsers and this is more than effective for the website's purpose.
 
 ## Features
@@ -646,13 +647,16 @@ This process will allow you to publish and host a live version of this project o
 
 ### Code reference
 * Django testing was aided significantly with help from [Pluralsight](https://app.pluralsight.com/), specifically their course on [Django testing, security and performance](https://app.pluralsight.com/library/courses/django-testing-security-and-performance), alongside the code institute introduction module for django.
-* [Django documents](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) was also referenced throughout testing.
-* The majority of coding examples and insights were taken from [python docs](https://docs.python.org/3/) and [Django Docs](https://www.djangoproject.com/) as they are the primary sources of information.
+* [Django documents](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) was used extensively throughout this project and often was the chosen answer to solving most issues or selecting methods to use.
+* The majority of coding examples and insights were taken from [python docs](https://docs.python.org/3/) and [Django Docs](https://www.djangoproject.com/). The majority of functions and methods chosen to complete tasks were selected using these documentations as a guideline.
 * `Stripe_elements.js` and much of the code for the `create_subscription` view was copied and edited from [a stripe subscription tutorial](https://stripe.com/docs/billing/subscriptions/fixed-price) or inspired heavily by their official subscription documents. Their API references were also used extensively in the collection of data from webhooks and API calls, specifically API references for [customers](https://stripe.com/docs/api/customers), [invoices](https://stripe.com/docs/api/invoices) and [subscriptions](https://stripe.com/docs/api/subscriptions).
+* The google map in contact.html is sourced from two different google maps tutorials ([here](https://developers.google.com/maps/documentation/javascript/examples/style-array#maps_style_array-javascript) and [here](https://developers.google.com/maps/documentation/javascript/adding-a-google-map#maps_add_map-javascript)), the only code which is unique to me is the co-ordinates and const name "Freebees".
 * Where these sources of information were not suitable or specific enough I have endeavoured to place comments in the code detailing the origin of the code snippet, or at least inspiration for the written code result.
 
 ### Acknowledgements
-Special thanks to my mentor Brian Macharia for his help and advice in development this project. Extra thanks go to the testers composed of family and friends.
+Special thanks to my mentor Brian Macharia for his help and advice in development this project. 
+
+A warm thanks goes to my family and friends who helped me test this project, especially my partner Tim.
 
 ### Disclaimer
 This project has been made for purely academic purposes.
