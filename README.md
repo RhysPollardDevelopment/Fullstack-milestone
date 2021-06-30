@@ -1,4 +1,5 @@
 # FreeBees
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/readme-header.png "Freebees Responsive Header")
 ## Code Institute - Full Stack Development Milestone
 This is my final Milestone project, the goal of which is a full-stack e-commerce site capable of handling some form of transaction from a customer.
 I have chosen to build a subscription based service for sale and support of ethically produced honey.
@@ -7,7 +8,7 @@ I have chosen to build a subscription based service for sale and support of ethi
 
 ## Table of Contents
 1. 
-2. [UX](#User-experience-(UX))
+2. [UX](#User Experience)
 3. [Design]
 4. [Wireframes]
 5. [Features]
@@ -20,10 +21,10 @@ I have chosen to build a subscription based service for sale and support of ethi
 ## Live Site
 [Live Website](https://freebees-fullstack-milestone.herokuapp.com/)
 
-## User Experience (UX):
-The purpose of Freebees was a website designed to support apiasts and smaller scale farms who use biodynamic/natural beekeeping practices and offer an alternative to the more commonly available forms of honey which are often made using unnecessary and unpleasant practices. The site's purpose was also designed with the intent of supporting other charities in the care and conservation of the UK's wildlife.
+## User Experience:
+The purpose of Freebees is a website designed to encourage subscriptions for monthly honey while also supporting apiasts and smaller scale farms who use biodynamic/natural beekeeping practices. The offer of an alternative to the more commonly available forms of honey which are often made using unnecessary and unpleasant practices. The site's purpose is to generate revenue and support charitable/small scale businesses.
 
-The website was conceived as there are other sites which work between local or smaller scale producers and offer them a means to sell with less mark up on products, such as [naked wines](https://www.nakedwines.com/). There are not any viable equivalents for honey or encouraging better practices, as someone interested in the environment and with a science background this was something which was of great importance to me, plus I really enjoy honey.
+The website was conceived as there are other sites which work between local or smaller scale producers and offer them a means to sell with less mark up on products, such as [naked wines](https://www.nakedwines.com/). There are not any viable equivalents for honey or encouraging better practices; as someone interested in the environment and with a science background this was something which was of great importance to me, plus I really enjoy honey.
 
 ### Strategy Plane
 The main business goals of this website are to encourage ethical honey purchases, preserve bees and their habitat, educate users and primarily encourage user subscriptions.
@@ -105,11 +106,11 @@ Minimum Viable Product:
 Other features are considered future goals should the website continue to be developed and can be found in the [features](#Features) section.
 
 ### Structure Plane
-The structure for this site was chosen around each ap containing as much likewise information and views as was necessary, therefore each app often contains multiple models and instances of data.
+The structure for the apps within the Freebees site was the group similar information or themed views together, therefore each app often contains multiple models and instances of data. For example, all purely customer facing views and templates displaying company information come under customerservices. Similarly, all subscription, checkout and management come under the subscription app to keep separation of concerns.
 
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
-The main app was split into the following models, with invoice and recipes only loosely being connected by their dates:
+The main app was split into the following models, with invoice and recipes being presented together through their dates in the subscription history:
 ![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/entity-relationship-diagram.png "Entity relationship Diagram")
 
 * **CustomerService**:  
@@ -145,7 +146,7 @@ Products Model
 
 
 *  **Profiles app**:  
-Stores User information and stripe customer id. Also has a property to decide if user has an active subscription or not.  
+Stores User information and stripe customer id. Also has the property has_active_subscription to decide if user has an active subscription or not.  
     Profiles Model
 
         user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -165,8 +166,6 @@ Stores User information and stripe customer id. Also has a property to decide if
         default_county = models.CharField(max_length=80, null=True, blank=True)
         default_postcode = models.CharField(max_length=20, null=True, blank=True)
 
-        # Checks if there is an active subscription with an expiry date
-        # after or equal to today.
         @property
         def has_active_subscription(self):
             today = timezone.now()
@@ -176,7 +175,7 @@ Stores User information and stripe customer id. Also has a property to decide if
             return active_subscriptions.count() > 0
 
 * **Recipes app**:  
-Displays recipes to the user and manages all CRUD operations in relation to recipe instances in model.  
+Displays recipes to the user and manages all CRUD operations in relation to recipe instances in model. The is_restricted property uses local time to assess whether the recipe's publish date is within the previous three months and would therefore be restricted. 
     Recipes Model
     
         title = models.CharField(max_length=255)
@@ -192,8 +191,21 @@ Displays recipes to the user and manages all CRUD operations in relation to reci
             Product, null=True, on_delete=models.SET_NULL
         )
 
+        @property
+        def is_restricted(self):
+            three_months_ago = datetime.now(tz=timezone.utc) + relativedelta(
+                months=-3
+            )
+
+            # If recipe publish date is within last 3 months, is restricted to
+            # users without subscriptions.
+            return self.publish_date > three_months_ago
+
+        def __str__(self):
+            return self.title
+
 * **Subscriptions app**:  
-Stores key information from stripe to prevent need for frequent API calls. Invoices are also stored to reduce calls to stripe API and allow local assignment and comparison against products earnt for monthly subscriptions.  
+Stores key information from stripe to prevent need for frequent API calls. Invoices are also stored to reduce calls to stripe API and allow local assignment; the related_recipe property allows each invoice to find any recipes which the user would have access to within that invoice period.  
     StripeSubscription Model
 
         subscription_id = models.CharField(
@@ -239,31 +251,60 @@ Stores key information from stripe to prevent need for frequent API calls. Invoi
         county = models.CharField(max_length=255)
         postcode = models.CharField(max_length=255)
 
+        @property
+        def related_recipe(self):
+            recipes = Recipe.objects.all()
+            for recipe in recipes:
+                d = recipe.publish_date
+                if self.current_start < d and self.current_end > d:
+                    return recipe
+
         def __str__(self):
             return self.invoice_number
 
 ### Wireframes
-All wireframes have been constructed using the Balsamiq tool at the beginning of the project. Any key or major changes to design and purpose were redesigned before being made in html and are includes within the documents below.
+All wireframes have been constructed using the [Balsamiq](https://balsamiq.com/) tool at the beginning of the project. Any key or major changes to design and purpose were redesigned before being made in html and are included within the documents below.
 
 Designs were focussed on large, pleasant images to engage users and form a positive, emotional response from the website.
 
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
-* Wireframe
+* [Index Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/index.png)
+* [About Us Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/about-us.png)
+* [Contact Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/contact.png)
+* [Subscriptions page Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/subscriptions.png)
+* [Checkout Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/checkout.png)
+* [Subscription Confirmation Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/order-confirmation.png)
+* [Products Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/products.png)
+* [Product Page Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/product-page.png)
+* [Recipes List Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/all-recipes.png)
+* [Recipe Page Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/recipe-details.png)
+* [Partners Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/partners.png)
+* [Profile Page Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/profile-page.png)
+* [Update Address Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/update-address.png)
+* [Subscription History Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/subscription-history.png)
+* [Cancellation/reactivation Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/cancellation_reactivation.png)
+* [Login Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/login.png)
+* [Register Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/register.png)
+* [CRUD form Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/add-form.png)
+
+###### Note
+These wireframes represent the early to mid stages of development and have only been updated where larger deviations in design or structure have occurred as the website evolved and adapted to it's content over the course of development. As such some elements which are included in the wireframe but not in the final product (such as recipe filters, social account access) were removed because they were not considered a priority for the final release and did not meet time constrains. These have been included in the [features](#Features) to implement section.
 
 ### Surface Design
-* Colour scheme
-* Typography
-* Images:
-* Forms:
-    * Date time picker for recipe publish date gracefully regressed to a text input with a format applied as django crispy forms does not have a date time picker widget. I have decided to keep this as date pickers can vary heavily between browsers and this is more than effective for the website's purpose.
+* **Colour scheme**:
+The colour scheme chosen for Freebees was based on the classical black and yellow colour of bees. To separate the look and feel of Freebees from other sites this colouring was used to create create features of colour on a darker background. The colours were chosen to give a sense of maturity and sleek design, rather than the usual white and soft pastel colours chosen for honey websites. The intention is to be unique and modern for a younger crowd.
+![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/freebees-palette.png "Freebees Colour Palette")
 
+* **Typography**:
+The two types of text chosen for Freebees were Bebas Neue and Montserrat. These fonts were chosen for the titles and main text respectively since Monserrat worked well with Bebas Neue where the main style and attention was drawn. Bebas Neue offered a strong, bold font which stood out well on dark backgrounds and across images without much assistance; the colour #d4c059 was most often applied to Bebas Neue as the gold-yellow worked best as splashes of colour than large areas.   
+Montserrat offered a crisp, modern look which managed to stand out in light colours without looking blurry or muddled. The font was often white as it had to fill large areas of dark background and was much easier to increase accessibility and focus with such a stark contrast.
+
+* **Images**:
+As a e-commerce site appealing to an emotional response the use of images is key to developing an appealing, engaging website. Therefore there are lots of vivid, interesting images to contrast the darker theme of the page. Some images have been darkened to help them create contrast against lighter text. Image selection was key as an excess of flowers and bees might be too distracting against the dark, minimalist containers.
+Icons were used also to attract attention and accentuate text rather than dominate a section of screen, most often these were sourced from [Font-Awesome](https://fontawesome.com/) and also [PNGkey](https://www.pngkey.com/).  
+Product images were edited in [Clip Paint Studio](https://www.clipstudio.net/en/) using a base stock image found from [mockuptree](https://mockuptree.com/free/realistic-honey-jar-mockup/). This was done to create a more dynamic style for products while keeping a theme between different honies.
+
+* **Forms**:
+As django crispy forms does not have a date time picker widget, I have decided to keep the text-input provided. This decision was made as date pickers can vary heavily between browsers and this is more than effective for the website's purpose.
 
 ## Features
 #### Common Features:
@@ -280,9 +321,9 @@ Footer containing an extra set of navigation links and some site legal informati
 * **Login authentication system**:  
 Users can register, login and store their security information in django-all-auth using back end validation.
 * **Subscriptions**:  
-Stripe api used to create a payment method and intent which can call for monthly payments to maintain subscription.
+Stripe api is used to create and monitor users payment information, card details and monthly payment attempts.
 * **Subscription form**:  
-Use of stripe card element for dynamic error and updating features. Form also supports delivery and billing address with hidden forms selectable through use of a checkbox.
+Use of stripe card element for dynamic error and updating features. Form also supports delivery and billing address, with the billing form being hidden and selected using a checkbox control.
 * **Password Reset**:  
 Django-all-auth provided password reset system to allow users to change or be sent a reset link for their Freebees password.
 * **Recipe Collection**:  
@@ -303,6 +344,8 @@ Webhooks from stripe are used to not only create and update subscription models,
 #### Future goals:
 Goals to be implemented should the project be continued at a future point in further releases.
 * Filter for recipes on main recipe list.
+* Social accounts for registration and sign in.
+* Two factor authentication.
 * Pagination for recipes, subscription history and maybe products as site grows.
 * Promotional offers.
 * 12 month/6 month subscriptions.
@@ -339,7 +382,7 @@ HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
 * [Google Fonts](https://fonts.google.com/): Library used to embed and link expanded font choices into the project.
 * [Gmail](https://www.google.com/gmail/): Email service used to deliver emails from python.
 * [favicon-generator](https://www.favicon-generator.org/): Favicon generator which converts images into favicons for use in the browser tab.
-* [Adobe Color](https://color.adobe.com/explore): Online tool used for identifying colour palettes and themes. Used to extrapolate colours from images and find suitable colour rnges.
+* [Coolors](https://coolors.co/): Online tool used for identifying colour palettes and creating themes for styling.
 * [Balsamiq](https://balsamiq.com/): Wireframing tool for concept creation and design for website.
 * [Font-Awesome](https://fontawesome.com/): Library offering a wide icon set for use in projects.
 * [Autoprefixer CSS Online](https://autoprefixer.github.io/): parsed CSS and produced webkit vendor prefixes for CSS stylings to work correctly on other browsers.
@@ -349,9 +392,10 @@ HTML, CSS, JavaScript, Python, Django, Postgres, Stripe payments.
 * [ESLint](https://eslint.org/): Linting tool installed in visual studio code.
 * [Pep8 Online](http://pep8online.com/): Linting tool online used to correct python code and ensure was pep8 compliant. 
 * [Am i responsive](http://ami.responsivedesign.is/): Tool used to see if a webpage is responsive across multiple screens.
+* [Responsive design checker](https://responsivedesignchecker.com/): Website for checking web addresses for their responsiveness and design.
 * [Responsinator](http://www.responsinator.com/): Website which mocks multiple phones and devices of different sizes and orientations.
 * [Clip Paint Studio](https://www.clipstudio.net/en/): Used to adjust some images and create landing page header.
-* [Compressjpeg.com](https://compressjpeg.com/): To make larger images smaller and easy to load.
+* [Compressjpeg.com](https://compressjpeg.com/): To make larger images smaller and quicker to load.
 
 #### Databases:
 * [PostgresSQL](https://www.postgresql.org/): The relational database used for the deployed project.
@@ -577,16 +621,34 @@ This process will allow you to publish and host a live version of this project o
 
 ## Credits
 ### Content
-* All partner companies and apiaists are fictional and created by myself purely for this project.
-* 
+* All partner companies and apiaists are fictional and created by myself purely for this project, their icons were collected from [flaticon](https://www.flaticon.com/) and their urls are completely fictional. Any real life websites reached through these urls is purely coincidental.
+* All products are created using inspiration from [honeytraveler.com](https://www.honeytraveler.com/) and [great british chefs](https://www.greatbritishchefs.com/features/honey-guide). These sources were used to create the information on texture, flavour and colour used.
+* All recipe ingredients and instructions are taken from other websites as follows (with minor edits to include freebees honey):
+    * [Heather honey sponge](https://git.macropus.org/bbc-food/www.bbc.co.uk/food/recipes/heather_honey_sponge_11301.html)
+    * [Soy and Honey chicken](https://www.bbc.co.uk/food/recipes/soy_and_honey_chicken_37066)
+    * [Seared Salmon and heather honey](https://www.bbcgoodfood.com/recipes/seared-salmon-heather-honey-dressing)
+    * [Honey cake with almonds](https://www.bbcgoodfood.com/recipes/honey-cake-honeyed-almond-crunch)
+    * [Pancakes for one](https://www.bbcgoodfood.com/recipes/pancakes-one)
+    * [Honey Flapjacks](https://www.bbcgoodfood.com/recipes/easy-honey-flapjacks)
+    * [Honey and sriracha hot wings](https://www.bbcgoodfood.com/recipes/honey-sriracha-hot-wings)
+    * [Bees Knees cocktail](https://www.epicurious.com/recipes/food/views/the-new-bees-knees-231719)
+    * [T bone steaks](https://www.epicurious.com/recipes/food/views/grilled-t-bone-steaks-with-balsamic-onion-confit-365131)
+* These recipes are free to access but some are restricted on the Freebees site. As this website is for academic purposes, no commercial gain was intended from their use in this manner. 
 
 #### Media
+* All of the images used for the base Freebees website are sourced from [Pexels](https://www.pexels.com/) and [Unsplash](https://unsplash.com/) as they offer royalty free pictures.
+* The majority of the recipes' images are from pexels and unsplash due to the low quality of the original source. However, some do originate from their original recipe as they were high enough quality to display.
+* The image used to create the products' main image was found at [mockuptree](https://mockuptree.com/free/realistic-honey-jar-mockup/). This image has been edited with an altered label for every product to create a sense of familiarity with the products and a continuous style.
+* Icons for social media, how it works sections are from [Font Awesome](https://fontawesome.com/).
+* Icons for the company logos are from [Flaticon](https://www.flaticon.com/).
+* The badge used for restricted recipes was found at [pngkey](https://www.pngkey.com/).
+* The freebees logo and favicon were created for the site itself.
 
 ### Code reference
 * Django testing was aided significantly with help from [Pluralsight](https://app.pluralsight.com/), specifically their course on [Django testing, security and performance](https://app.pluralsight.com/library/courses/django-testing-security-and-performance), alongside the code institute introduction module for django.
 * [Django documents](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) was also referenced throughout testing.
 * The majority of coding examples and insights were taken from [python docs](https://docs.python.org/3/) and [Django Docs](https://www.djangoproject.com/) as they are the primary sources of information.
-* `Stripe_elements.js` and much of the code for the `create_subscription` view was copied and edited from [a stripe subscription tutorial](https://stripe.com/docs/billing/subscriptions/fixed-price) or inspired heavily by their official subscription documents. Their API references were also used extensively in the collection of data from webhooks and API calls.
+* `Stripe_elements.js` and much of the code for the `create_subscription` view was copied and edited from [a stripe subscription tutorial](https://stripe.com/docs/billing/subscriptions/fixed-price) or inspired heavily by their official subscription documents. Their API references were also used extensively in the collection of data from webhooks and API calls, specifically API references for [customers](https://stripe.com/docs/api/customers), [invoices](https://stripe.com/docs/api/invoices) and [subscriptions](https://stripe.com/docs/api/subscriptions).
 * Where these sources of information were not suitable or specific enough I have endeavoured to place comments in the code detailing the origin of the code snippet, or at least inspiration for the written code result.
 
 ### Acknowledgements
