@@ -7,16 +7,16 @@ I have chosen to build a subscription based service for sale and support of ethi
 [Live Website](https://freebees-fullstack-milestone.herokuapp.com/)
 
 ## Table of Contents
-1. 
-2. [UX](#User Experience)
-3. [Design]
-4. [Wireframes]
-5. [Features]
-6. [Technology Used]
-7. [Testing]
-8. [Deployment]
-9. [Credits]
-10. [Acknowledgement]
+1. [Live Site](#live-site)
+2. [UX](#user-experience)
+3. [Data Hierachy](#structure-plane)
+4. [Wireframes](#wireframes)
+5. [Features](#features)
+6. [Technology Used](#technologies)
+7. [Testing](#testing)
+8. [Deployment](#deployment)
+9. [Credits](#credits)
+10. [Acknowledgement](#acknowledgements)
 
 ## Live Site
 [Live Website](https://freebees-fullstack-milestone.herokuapp.com/)
@@ -61,7 +61,6 @@ To decide on what requirements would be necessary for the site, user stories wer
 14.	As a user, I want checkout to be simple and efficient with the minimum required number of steps.
 15.	As a user, I want a secure payment system which encourages me that my details are safe.
 16.	As a user, I would like a confirmation page and email re-assuring me of my purchases and subscription is complete. 
-17.	As an authenticated/subscribed user, I want to contact the company regarding my subscription or details quickly.
 18.	As an authenticated/previously subscribed user, I want to see my previous months’ deliveries and recipes.
 19.	As an authenticated user, I want to look at recipes on the website.
 20.	As a subscribed user, I want to look at the recipes on this website.
@@ -80,9 +79,8 @@ To decide on what requirements would be necessary for the site, user stories wer
 4.	As an admin, I want to add new recipes to the website.
 5.	As an admin, I want to edit current recipes on the website.
 6.	As an admin, I want to delete recipes on the website.
-7.	As an admin, I want to update membership details on the website.
-8.	As an admin, I want to update the monthly gifts received on main page.
-9.	As the business owner, I want customers to validate their emails so that promotional material or updates can be given easily.
+7.	As an admin, I want to update the monthly gifts received on main page.
+8.	As the business owner, I want customers to validate their emails so that promotional material or updates can be given easily.
 
 #### Features implementation
 In the decision of which features to create and their priority, a list was constructed to compare viability vs importance. Each object was scored from 1-5 in importance (how necessary to the site) and viability (how easily it could be achieved) and then plotted on a chat to decide which features were essential for minimum viable product (MVP) and which were set for future goals/stretch goals.
@@ -286,7 +284,7 @@ Designs were focussed on large, pleasant images to engage users and form a posit
 * [Register Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/register.png)
 * [CRUD form Wireframes](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/wireframes/add-form.png)
 
-###### Note
+#### Note
 These wireframes represent the early to mid stages of development and have only been updated where larger deviations in design or structure have occurred as the website evolved and adapted to it's content over the course of development.   
 As such some elements which are included in the wireframe but not in the final product (such as recipe filters, social account access) were removed because they were not considered a priority for the final release and did not meet time constrains. These have been included in the [features](#Features) to implement section.
 
@@ -622,6 +620,7 @@ This process will allow you to publish and host a live version of this project o
 18. Your app is now deployed, as a super user you may add products, recipes and companies using the `heroku_url/admin/` panel or using any CRUD forms available on the site.
 
 ## Credits
+
 ### Content
 * All partner companies and apiaists are fictional and created by myself purely for this project, their icons were collected from [flaticon](https://www.flaticon.com/) and their urls are completely fictional. Any real life websites reached through these urls is purely coincidental.
 * All products are created using inspiration from [honeytraveler.com](https://www.honeytraveler.com/) and [great british chefs](https://www.greatbritishchefs.com/features/honey-guide). These sources were used to create the information on texture, flavour and colour used.
@@ -655,6 +654,7 @@ This process will allow you to publish and host a live version of this project o
 * Where these sources of information were not suitable or specific enough I have endeavoured to place comments in the code detailing the origin of the code snippet, or at least inspiration for the written code result.
 
 ### Acknowledgements
+
 Special thanks to my mentor Brian Macharia for his help and advice in development this project. 
 
 A warm thanks goes to my family and friends who helped me test this project, especially my partner Tim.
