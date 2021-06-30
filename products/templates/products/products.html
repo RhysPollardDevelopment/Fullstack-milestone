@@ -45,26 +45,26 @@
                 </div>
                 <!-- Admin section for editing and deleting products -->
                 {% if request.user.is_superuser %}
-                <div class="admin-section p-3">
-                    <a href="{% url 'update_product' product.id %}"
-                        class="btn button-edit btn-block"
-                        aria-label="Update {{product.name}} here.">Edit</a>
-                    <button type="button"
-                        class="btn button-delete btn-block delete"
-                        data-toggle="modal" data-target="#deleteConfirm"
-                        data-info="{% url 'delete_product' product.id %}">
-                        Delete
-                    </button>
-                </div>
+                    <div class="admin-section p-3">
+                        <a href="{% url 'update_product' product.id %}"
+                            class="btn button-edit btn-block"
+                            aria-label="Update {{product.name}} here.">Edit</a>
+                        <button type="button"
+                            class="btn button-delete btn-block delete"
+                            data-toggle="modal" data-target="#deleteConfirm"
+                            data-info="{% url 'delete_product' product.id %}">
+                            Delete
+                        </button>
+                    </div>
                 {% endif %}
             </div>
         </article>
         {% endfor %}
         {% else %}
-        <div class="col-12 text-center py-5">
-            <h3 class="pt-5">There aren't currently any products to show.</h3>
-            <p class="pb-5">We'll get some as soon as the bees are finished.</p>
-        </div>
+            <div class="col-12 text-center py-5">
+                <h3 class="pt-5">There aren't currently any products to show.</h3>
+                <p class="pb-5">We'll get some as soon as the bees are finished.</p>
+            </div>
         {% endif %}
     </div>
 </div>

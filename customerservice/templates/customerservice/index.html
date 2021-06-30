@@ -17,13 +17,15 @@
                 ethical beekeeping.
             </h5>
             {% if request.user.userprofile.has_active_subscription %}
-            <a href="{% url 'recipes' %}" class="btn-lg button-yellow"
-                aria-label="List of Freebees recipes.">Try
-                Something New</a>
+                <a href="{% url 'recipes' %}" class="btn-lg button-yellow"
+                    aria-label="List of Freebees recipes.">Try
+                    Something New
+                </a>
             {% else %}
-            <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow"
-                aria-label="See why you should subscribe to Freebees.">Subscribe
-                Now</a>
+                <a href="{% url 'subscription_page' %}" class="btn-lg button-yellow"
+                    aria-label="See why you should subscribe to Freebees.">Subscribe
+                    Now
+                </a>
             {% endif %}
         </div>
     </div>
@@ -68,8 +70,9 @@
                 practices and support charities for our nation's bees.</p>
         </div>
         {% if not request.user.userprofile.has_active_subscription %}
-        <a href="{% url 'subscription_page' %}"
-            class="btn-lg button-yellow mx-auto">Subscribe Now</a>
+            <a href="{% url 'subscription_page' %}"
+                class="btn-lg button-yellow mx-auto">Subscribe Now
+            </a>
         {% endif %}
     </div>
 </section>

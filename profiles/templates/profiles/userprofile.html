@@ -21,13 +21,13 @@
             {{ request.user.date_joined| date }}</h4>
 
         <!-- If User has subscription, show join date-->
-        {% if profile.has_active_subscription %}
-        <h4 class="col-12 pb-3 px-md-0 pt-lg-3">
-            Subscribed since {{ subscription.start_date|date:"M, Y" }}
-        </h4>
+            {% if profile.has_active_subscription %}
+            <h4 class="col-12 pb-3 px-md-0 pt-lg-3">
+                Subscribed since {{ subscription.start_date|date:"M, Y" }}
+            </h4>
         <!-- No active subscription prompt -->
         {% else %}
-        <h4 class="col-12 px-md-0 pb-3">No Active subscription</h4>
+            <h4 class="col-12 px-md-0 pb-3">No Active subscription</h4>
         {% endif %}
 
         <p class="pb-1">User: {{ profile.user.username }}</p>
@@ -35,17 +35,17 @@
 
         <!-- Inner query: If cancel_at_end is true, display end date. -->
         {% if profile.has_active_subscription %}
-        {% if subscription.cancel_at_end %}
-        <p class="pb-3">
-            Your subscription is active until
-            {{ subscription.end_date|date }}.
-        </p>
-        <!-- else just show next billing date. -->
-        {% else %}
-        <p class="pb-3">
-            Your next billing date is {{ subscription.end_date|date }}.
-        </p>
-        {% endif %}
+            {% if subscription.cancel_at_end %}
+                <p class="pb-3">
+                    Your subscription is active until
+                    {{ subscription.end_date|date }}.
+                </p>
+            <!-- else just show next billing date. -->
+            {% else %}
+                <p class="pb-3">
+                    Your next billing date is {{ subscription.end_date|date }}.
+                </p>
+            {% endif %}
         {% endif %}
 
         <a href="{% url 'account_change_password' %}"
@@ -55,14 +55,14 @@
             href="{% url 'account_email' %}">Change Email</a>
         <!--if subscription is active, show cancel. If cancelled show renew-->
         {% if profile.has_active_subscription %}
-        {% if subscription.cancel_at_end %}
-        <a href="{% url 'reactivate' %}"
-            class="btn button-yellow col-12 mt-4 mb-5 p-2">Reactivate</a>
-        {% else %}
-        <button class="btn button-yellow col-12 mt-4 mb-5 p-2 cancel"
-            data-info="{% url 'cancel_subscription' %}">Cancel
-            Subscription</button>
-        {% endif %}
+            {% if subscription.cancel_at_end %}
+            <a href="{% url 'reactivate' %}"
+                class="btn button-yellow col-12 mt-4 mb-5 p-2">Reactivate</a>
+            {% else %}
+            <button class="btn button-yellow col-12 mt-4 mb-5 p-2 cancel"
+                data-info="{% url 'cancel_subscription' %}">Cancel
+                Subscription</button>
+            {% endif %}
         {% endif %}
     </div>
 </div>

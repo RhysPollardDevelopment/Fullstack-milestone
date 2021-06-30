@@ -16,11 +16,11 @@
                 <h1 class="col-12 text-center mt-4 pb-3">
                     <span class="underline">
                         {% block formtype %}{% endblock%}
-                        {% if product %}
-                        {{product.name}}
-                        {% elif company %}
-                        {{company.name}}
-                        {% else %}
+                            {% if product %}
+                                {{product.name}}
+                            {% elif company %}
+                                {{company.name}}
+                            {% else %}
                         {% endif %}
                     </span>
                 </h1>
@@ -31,11 +31,11 @@
                     as no crispy widget for these.-->
                     {% csrf_token %}
                     {% for field in form %}
-                    {% if field.name == 'image' or field.name == 'logo' %}
-                    {{ field }}
-                    {% else %}
-                    {{ field| as_crispy_field }}
-                    {% endif %}
+                        {% if field.name == 'image' or field.name == 'logo' %}
+                            {{ field }}
+                        {% else %}
+                            {{ field| as_crispy_field }}
+                        {% endif %}
                     {% endfor %}
                     <div class="row px-2 pt-lg-2">
                         <div class="col-12 col-md-6 px-md-2">

@@ -72,14 +72,14 @@
 </div>
 {% endfor %}
 {% else %}
-<div class="row mt-5">
-    <div class="col-12 text-center py-5">
-        <h1>Nothing to show right now</h1>
-        <p>Fix that now by signing up for a subscription!</p>
-        <a href="{% url 'subscription_page' %}"
-            class="btn button-yellow px-4">Subscribe</a>
+    <div class="row mt-5">
+        <div class="col-12 text-center py-5">
+            <h1>Nothing to show right now</h1>
+            <p>Fix that now by signing up for a subscription!</p>
+            <a href="{% url 'subscription_page' %}"
+                class="btn button-yellow px-4">Subscribe</a>
+        </div>
     </div>
-</div>
 {% endif %}
 
 {% endblock %}

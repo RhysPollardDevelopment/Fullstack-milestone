@@ -308,14 +308,14 @@ The following user and admin stories have been de-prioritized over the course of
 **Bug**: CSS not loading on live website: Checkout and some subscription pages did not load CSS files due to Cross Origin Resource Sharing security.
 **Fix**: Was resolved when the attribute of cross-origin = "anonymous" was removed from the CSS link in the header.
 
-**Bug**:Auto-generated text and labels from crispy forms being untargetable.
+**Bug**: Auto-generated text and labels from crispy forms being untargetable.
 **Fix**: Labels were set as a general rule to have their display property set to none (besides some circumstances such as checkboxes) and the general colour of a container was set to target non-tagged elements of text.
 
 #### Edge cases:
 * While they should not need to be deleted often, it is possible to delete products without their recipes being deleted or updated with a new product. This can cause errors in the loading of HTML as there is no object to satisfy the django template criteria. To account for these cases, any HTML which requires an object instance from python can assess if it is available (i.e. if it is None or if the number is 0) and prepare a message to accomodate the lack of products/recipes,etc.
 
 ### Unresolved Bugs
-During testing, some time was spent trying to prevent Cross Origin Resource Sharing security from blocking stripe.js, css files or media folders during the checkout process. This situation could not be replicated on any other computer and did not occurr on Browserstacks emulated machines. This suggests a local environment issue but is worth noting.
+During testing, some time was spent trying to prevent Cross Origin Resource Sharing security from blocking stripe.js, css files or media folders during the checkout process. This situation could not be replicated on any other computer and did not occur on Browserstacks emulated machines. This suggests a local environment issue but is worth noting.
 
 ## Future testing
 To increase the amount of testing of webhooks in django, due to high percentage across the site relative complexity of stripe data needing to be mocked, it did not seem pertinent to focus on this during this release.
