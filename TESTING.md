@@ -292,19 +292,24 @@ The following user and admin stories have been de-prioritized over the course of
 
 ## Bugs
 
-### Fixed Bugs
-
 #### Fixed Functionality:   
 * **No 25:** Originally failed as discovered edge case: As products had been deleted during testing, the recipe loaded with a 500 error as no product object was available for the HTML template. This should not happen as product should be updated and recipes not left without a product; to account for this low risk the html checks if the product is None or exists and displays HTML accordingly.
 * **No 25:** Also failed as restricted message overlay had an unreachable button. The z-index was too low and the button was not clickable, this was fixed by increasing the z-index so it was the highest object in its' div.
 * **No 81:** While this passed its critera, in the back end this was a failure as the webhooks associated did not correctly respond to card authorization requests. When declined, the webhook for `customer.subscription.created` was called prior to failure, resulting in a new subscription and invoice instance which did not match the Stripe instance. This was solved by instead checking for the `invoice.paid` event which was created with the specific billing reason of `subscription-created`. As this webhook is called following the authorization decision, it better reflects the active state of the subscription.
 * **No 82:** This also failed for the same reasons as No.81, however it also failed in the back end database as the `customer.subscription.update` webhook is called following a successful subscription. This webhook sent invalid emails and risked an internal error if the webhook was received prior to the subscription being created as it was dependent on an existing subscription object. As webhooks are not received in order, the `customer.subscription.update` was updated to check us user had an active subscription before attempting to update.
 
-#### General Bug Fixes:
-* Stripe.js: Stripe.js is sourced from the [create fixed-price subscription](https://stripe.com/docs/billing/subscriptions/fixed-price) tutorial, however it does not allow for a transaction requiring authorisation to successfully complete, even if authorization if accepted. This occurrs because the javascript does not have any way of accommodating the `status==incomplete` which is generated during authorization so looks for a payment_intent to succeed. To correct for this, if payment_intent does succeed, the status is changed to `active` so the chain can pass to the successful end point.
-* Bug in testing where forms would not validate without an image file, but mock NamedTemporaryFiles were not deleted following testing even though it was supposedly part of their function. A temporary fake directory was used instead with SimpleUploadedFiles set to contain and RGB value. The file was deleted after the test suite completed to keep media and memory clear.
-* CSS not loading on live website: Checkout and some subscription pages did not load CSS files due to Cross Origin Resource Sharing security. Was resolved when the attribute of cross-origin = "anonymous" was removed from the CSS link in the header.
-* Auto-generated text and labels from crispy forms being untargetable: Labels were set as a general rule to have their display property set to none (besides some circumstances such as checkboxes) and the general colour of a container was set to target non-tagged elements of text.
+#### General Bugs:
+**Bug**: Stripe.js is sourced from the [create fixed-price subscription](https://stripe.com/docs/billing/subscriptions/fixed-price) tutorial, however it does not allow for a transaction requiring authorisation to successfully complete, even if authorization if accepted.
+**Fix**: This occurrs because the javascript does not have any way of accommodating the `status==incomplete` which is generated during authorization so looks for a payment_intent to succeed. To correct for this, if payment_intent does succeed, the status is changed to `active` so the chain can pass to the successful end point.
+
+**Bug**: In django testing, forms would not validate without an image file, but mock NamedTemporaryFiles were not deleted following testing even though it was supposedly part of their function.
+**Fix**: A temporary fake directory was used instead with SimpleUploadedFiles set to contain and RGB value. The file was deleted after the test suite completed to keep media and memory clear.
+
+**Bug**: CSS not loading on live website: Checkout and some subscription pages did not load CSS files due to Cross Origin Resource Sharing security.
+**Fix**: Was resolved when the attribute of cross-origin = "anonymous" was removed from the CSS link in the header.
+
+**Bug**:Auto-generated text and labels from crispy forms being untargetable.
+**Fix**: Labels were set as a general rule to have their display property set to none (besides some circumstances such as checkboxes) and the general colour of a container was set to target non-tagged elements of text.
 
 #### Edge cases:
 * While they should not need to be deleted often, it is possible to delete products without their recipes being deleted or updated with a new product. This can cause errors in the loading of HTML as there is no object to satisfy the django template criteria. To account for these cases, any HTML which requires an object instance from python can assess if it is available (i.e. if it is None or if the number is 0) and prepare a message to accomodate the lack of products/recipes,etc.

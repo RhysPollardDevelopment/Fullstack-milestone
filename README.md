@@ -109,7 +109,8 @@ The structure for the apps within the Freebees site was the group similar inform
 Django was required as the framework language, PostgresSQL was used for the deployed database on Heroku.
 
 The main app was split into the following models, with invoice and recipes being presented together through their dates in the subscription history:
-![alt text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/entity-relationship-diagram.png "Entity relationship Diagram")
+
+![alt-text](https://github.com/RhysPollardDevelopment/Fullstack-milestone/blob/master/readmedocs/entity-relationship-diagram.png "Entity Relationship Diagram")
 
 * **CustomerService**:  
 Used to control manage views for pages regarding information about the company to customers or communication from customers.
