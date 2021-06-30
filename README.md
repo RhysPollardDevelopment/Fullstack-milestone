@@ -344,6 +344,7 @@ Webhooks from stripe are used to not only create and update subscription models,
 
 #### Future goals:
 Goals to be implemented should the project be continued at a future point in further releases.
+* Regex for phone number and UK post code. 
 * Filter for recipes on main recipe list.
 * Social accounts for registration and sign in.
 * Two factor authentication.
